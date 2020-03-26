@@ -20,11 +20,10 @@ package org.likeapp.likeapp.externalevents;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import org.likeapp.likeapp.GBApplication;
 import org.likeapp.likeapp.database.PeriodicExporter;
-
-import su.ulm.android.lib.Log;
 
 public class AutoStartReceiver extends BroadcastReceiver {
     private static final String TAG = AutoStartReceiver.class.getName();

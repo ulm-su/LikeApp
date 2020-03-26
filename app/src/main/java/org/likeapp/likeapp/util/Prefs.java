@@ -17,11 +17,10 @@
 package org.likeapp.likeapp.util;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import su.ulm.android.lib.Log;
 
 /**
  * Wraps SharedPreferences to avoid ClassCastExceptions and others.

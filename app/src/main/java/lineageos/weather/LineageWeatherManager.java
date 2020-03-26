@@ -24,6 +24,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.ArraySet;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -39,7 +40,6 @@ import java.util.Set;
 
 import lineageos.app.LineageContextConstants;
 import lineageos.providers.WeatherContract;
-import su.ulm.android.lib.Log;
 
 /**
  * Provides access to the weather services in the device.

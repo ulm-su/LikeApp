@@ -17,14 +17,13 @@
 package org.likeapp.likeapp.service.btle;
 
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.util.Log;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-
-import su.ulm.android.lib.Log;
 
 public class GattCharacteristic {
 
