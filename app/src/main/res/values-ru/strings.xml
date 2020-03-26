@@ -803,7 +803,7 @@
     <string name="prefs_button_triple_press_action_selection_title">Реакция на Событие 3</string>
     <string name="prefs_button_variable_actions">Детальная настройка реакции на нажатие кнопки</string>
     <string name="prefs_button_long_press_action_selection_title">Реакция на долгое нажатие</string>
-    <string name="myamazfit_ru">MyAmazFit.ru Ваш путеводитель по миру умных устройств</string>
+    <string name="myamazfit_ru">MyAmazFit.ru - Ваш путеводитель по миру умных устройств</string>
     <string name="pref_header_auto_fetch">Автозагрузка из устройства</string>
     <string name="pref_disable_new_ble_scanning">Отключить новое BLE сканирование</string>
     <string name="pref_summary_disable_new_ble_scanning">Включите, если устройство не видно как доступное</string>

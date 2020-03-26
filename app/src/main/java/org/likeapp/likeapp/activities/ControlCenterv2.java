@@ -35,6 +35,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -59,6 +60,10 @@ import org.likeapp.likeapp.model.NotificationType;
 import org.likeapp.likeapp.service.audio.MicReader;
 import org.likeapp.likeapp.service.audio.MicReaderListener;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -74,6 +79,8 @@ import org.likeapp.likeapp.model.RecordedDataTypes;
 import org.likeapp.likeapp.util.AndroidUtils;
 import org.likeapp.likeapp.util.GB;
 import org.likeapp.likeapp.util.Prefs;
+
+import javax.net.ssl.HttpsURLConnection;
 
 //TODO: extend AbstractGBActivity, but it requires actionbar that is not available
 public class ControlCenterv2 extends AppCompatActivity
@@ -348,6 +355,43 @@ public class ControlCenterv2 extends AppCompatActivity
                 requestPermissions (permissions, 0);
             }
         }
+
+        changeAd ();
+    }
+
+    private void changeAd ()
+    {
+        new Thread (new Runnable ()
+        {
+            @Override
+            public void run ()
+            {
+                try
+                {
+                    String url = "https://likeapp.org/constr/?slogan&lang=" + Locale.getDefault ().getLanguage ();
+                    HttpsURLConnection connection = (HttpsURLConnection) new URL (url).openConnection ();
+                    connection.setRequestMethod ("GET");
+
+                    try (BufferedReader in = new BufferedReader (new InputStreamReader (connection.getInputStream ())))
+                    {
+                        String line = in.readLine ();
+                        if (line != null && line.length () < 500)
+                        {
+                            TextView ad = findViewById (R.id.ad);
+                            ad.setText (line);
+                        }
+                    }
+                    catch (IOException ignored)
+                    {
+                    }
+
+                    connection.disconnect ();
+                }
+                catch (IOException ignored)
+                {
+                }
+            }
+        }).start ();
     }
 
     @Override
