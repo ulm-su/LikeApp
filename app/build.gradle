@@ -28,7 +28,7 @@ android {
         versionName "0.43.0"
         versionCode 169
         vectorDrawables.useSupportLibrary = true
-        versionNameSuffix = '.2'
+        versionNameSuffix = '.3'
     }
     buildTypes {
         release {
