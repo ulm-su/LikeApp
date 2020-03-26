@@ -882,7 +882,7 @@
     <string name="pref_woke_up_restore_ringer_mode">Restore ringer mode to smartphone</string>
     <string name="pref_woke_up_ringer_normal">Turn on normal ringer mode in smartphone</string>
     <string name="pref_woke_up_ringer_vibrate">Turn on vibrate ringer mode in smartphone</string>
-    <string name="myamazfit_ru">The latest versions only on MyAmazFit.ru</string>
+    <string name="myamazfit_ru">MyAmazFit.ru your guide to the world of smart devices</string>
     <string name="pref_header_auto_fetch">Auto fetch</string>
     <string name="pref_title_weather_moon">Display moon phases (○ ◑ ● ◐)</string>
     <string name="pref_title_weather_wind">Display wind direction (↑↑) and strength (m/s)</string>
