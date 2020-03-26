@@ -26,7 +26,7 @@ android {
 
         // Note: always bump BOTH versionCode and versionName!
         versionName "0.43.0"
-        versionCode 169
+        versionCode 430005
         vectorDrawables.useSupportLibrary = true
         versionNameSuffix = '.5'
     }
