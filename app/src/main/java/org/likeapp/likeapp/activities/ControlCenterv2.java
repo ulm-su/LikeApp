@@ -374,11 +374,18 @@ public class ControlCenterv2 extends AppCompatActivity
 
                     try (BufferedReader in = new BufferedReader (new InputStreamReader (connection.getInputStream ())))
                     {
-                        String line = in.readLine ();
+                        final String line = in.readLine ();
                         if (line != null && line.length () < 500)
                         {
-                            TextView ad = findViewById (R.id.ad);
-                            ad.setText (line);
+                            runOnUiThread (new Runnable ()
+                            {
+                                @Override
+                                public void run ()
+                                {
+                                    TextView ad = findViewById (R.id.ad);
+                                    ad.setText (line);
+                                }
+                            });
                         }
                     }
                     catch (IOException ignored)
