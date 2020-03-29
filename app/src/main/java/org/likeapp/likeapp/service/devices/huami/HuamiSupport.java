@@ -1367,47 +1367,50 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
                     String nameAction = "ACTION";
                     if (appName.toString ().equals (nameAction))
                     {
-                        String packageName = "org.like" + "app.a" + "ction";
-                        String permission = packageName + ".pe" + "rmission." + nameAction;
-                        if (ActivityCompat.checkSelfPermission (getContext (), permission) == PackageManager.PERMISSION_GRANTED)
+                        if ("com.android.vending".equals (getContext ().getPackageManager ().getInstallerPackageName (getContext ().getPackageName ())))
                         {
-                            GBApplication app = GBApplication.app ();
-                            if (app != null)
+                            String packageName = "org.like" + "app.a" + "ction";
+                            String permission = packageName + ".pe" + "rmission." + nameAction;
+                            if (ActivityCompat.checkSelfPermission (getContext (), permission) == PackageManager.PERMISSION_GRANTED)
                             {
-                                DeviceManager dm = app.getDeviceManager ();
-                                if (dm != null)
+                                GBApplication app = GBApplication.app ();
+                                if (app != null)
                                 {
-                                    GBDevice device = dm.getSelectedDevice ();
-                                    if (device != null)
+                                    DeviceManager dm = app.getDeviceManager ();
+                                    if (dm != null)
                                     {
-                                        List<ItemWithDetails> details = device.getDeviceInfos ();
-                                        if (details != null)
+                                        GBDevice device = dm.getSelectedDevice ();
+                                        if (device != null)
                                         {
-                                            for (ItemWithDetails item : details)
+                                            List<ItemWithDetails> details = device.getDeviceInfos ();
+                                            if (details != null)
                                             {
-                                                String name = item.getName ();
-                                                if (DEVINFO_UID.equals (name))
+                                                for (ItemWithDetails item : details)
                                                 {
-                                                    String uid = item.getDetails ();
+                                                    String name = item.getName ();
+                                                    if (DEVINFO_UID.equals (name))
+                                                    {
+                                                        String uid = item.getDetails ();
 
-                                                    Intent intent = new Intent (packageName + "." + nameAction);
-                                                    intent.setPackage (packageName);
-                                                    intent.putExtra ("ID", uid);
-                                                    intent.putExtra ("NAME", appData.toString ());
-                                                    getContext ().sendBroadcast (intent);
+                                                        Intent intent = new Intent (packageName + "." + nameAction);
+                                                        intent.setPackage (packageName);
+                                                        intent.putExtra ("ID", uid);
+                                                        intent.putExtra ("NAME", appData.toString ());
+                                                        getContext ().sendBroadcast (intent);
 
-                                                    LOG.debug ("Send " + nameAction + ": " + appData.toString ());
-                                                    break;
+                                                        LOG.debug ("Send " + nameAction + ": " + appData.toString ());
+                                                        break;
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
                             }
-                        }
-                        else
-                        {
-                            ControlCenterv2.requestPermissions (new String[] {permission});
+                            else
+                            {
+                                ControlCenterv2.requestPermissions (new String[] { permission });
+                            }
                         }
                     }
                 }
