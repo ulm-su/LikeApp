@@ -396,8 +396,7 @@
         <receiver
             android:name=".service.receivers.LikeAppActionInstallReceiver"
             android:enabled="true"
-            android:exported="true"
-            android:permission="org.likeapp.action.permission.INSTALL">
+            android:exported="true">
             <intent-filter>
                 <action android:name="org.likeapp.likeapp.GET_SELECTED_DEVICE" />
             </intent-filter>

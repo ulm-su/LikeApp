@@ -16,7 +16,7 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class Weather
 {
-  private static final String[] PERMISSIONS = new String[]
+  public static final String[] PERMISSIONS = new String[]
     {
       "org.likeapp.action.permission.WEATHER",
     };

@@ -79,6 +79,7 @@ import org.likeapp.likeapp.model.RecordedDataTypes;
 import org.likeapp.likeapp.util.AndroidUtils;
 import org.likeapp.likeapp.util.GB;
 import org.likeapp.likeapp.util.Prefs;
+import org.likeapp.likeapp.util.Weather;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -561,6 +562,10 @@ public class ControlCenterv2 extends AppCompatActivity
             wantedPermissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ANSWER_PHONE_CALLS) == PackageManager.PERMISSION_DENIED)
             wantedPermissions.add(Manifest.permission.ANSWER_PHONE_CALLS);
+        if (ContextCompat.checkSelfPermission(this, FwAppInstallerActivity.PERMISSIONS[0]) == PackageManager.PERMISSION_DENIED)
+            wantedPermissions.add(FwAppInstallerActivity.PERMISSIONS[0]);
+        if (ContextCompat.checkSelfPermission(this, Weather.PERMISSIONS[0]) == PackageManager.PERMISSION_DENIED)
+            wantedPermissions.add(Weather.PERMISSIONS[0]);
         try {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.MEDIA_CONTENT_CONTROL) == PackageManager.PERMISSION_DENIED)
                 wantedPermissions.add(Manifest.permission.MEDIA_CONTENT_CONTROL);
