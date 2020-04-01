@@ -1,0 +1,264 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="org.likeapp.likeapp.activities.ControlCenterv2">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Изображение экрана устройства -->
+        <ImageView
+            android:id="@+id/display"
+            android:layout_width="1px"
+            android:layout_height="1px"
+            android:background="?attr/colorPrimary"/>
+
+        <!--  Визуальный разделитель -->
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?attr/colorPrimaryDark"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/debugVersion1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/debugVersion2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/debugVersion3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/debugVersion4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/clearLog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/debug_log_clear" />
+
+            <CheckBox
+                android:id="@+id/debugBluetoothEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/debug_event" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--  Визуальный разделитель -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?attr/textColorPrimary"/>
+
+    <ScrollView
+        android:id="@+id/scrollLogView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scrollbars = "vertical"
+        android:fillViewport="true">
+
+        <TextView
+            android:id="@+id/logView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/debug_log_hint"/>
+    </ScrollView>
+
+    <!--  Визуальный разделитель -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?attr/textColorPrimary"/>
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <androidx.gridlayout.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:grid="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            grid:alignmentMode="alignMargins"
+            grid:columnCount="2">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                grid:layout_columnSpan="2"
+                grid:layout_gravity="fill_horizontal"
+                android:text="Message / Caller"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <EditText
+                android:id="@+id/editContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                grid:layout_columnSpan="2"
+                grid:layout_gravity="fill_horizontal"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                android:text="Test" />
+
+            <Spinner
+                android:id="@+id/sendTypeSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                grid:layout_gravity="fill_horizontal"
+                grid:layout_columnSpan="2"
+                android:text="send as SMS" />
+
+            <Button
+                android:id="@+id/sendButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                grid:layout_columnSpan="2"
+                grid:layout_gravity="fill_horizontal"
+                android:text="Send" />
+
+            <Button
+                android:id="@+id/incomingCallButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                grid:layout_gravity="fill_horizontal"
+                android:text="incoming call" />
+
+            <Button
+                android:id="@+id/outgoingCallButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                grid:layout_gravity="fill_horizontal"
+                android:text="outgoing call" />
+
+            <Button
+                android:id="@+id/startCallButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                grid:layout_gravity="fill_horizontal"
+                android:text="start call" />
+
+            <Button
+                android:id="@+id/endCallButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                grid:layout_gravity="fill_horizontal"
+                android:text="end call" />
+
+            <Button
+                android:id="@+id/setTimeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                grid:layout_gravity="fill_horizontal"
+                android:text="set time" />
+
+            <Button
+                android:id="@+id/setMusicInfoButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                grid:layout_gravity="fill_horizontal"
+                android:text="set music info" />
+
+            <Button
+                android:id="@+id/HeartRateButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                grid:layout_gravity="fill_horizontal"
+                android:text="Heart Rate Test" />
+
+            <Button
+                android:id="@+id/rebootButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                grid:layout_gravity="fill_horizontal"
+                android:text="reboot" />
+
+            <Button
+                android:id="@+id/SetFetchTimeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                grid:layout_columnSpan="2"
+                grid:layout_gravity="fill_horizontal"
+                android:text="Set Activity Fetch Time" />
+
+            <Button
+                android:id="@+id/factoryResetButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                grid:layout_columnSpan="2"
+                grid:layout_gravity="fill_horizontal"
+                android:text="factory reset" />
+
+            <Button
+                android:id="@+id/testNotificationButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                grid:layout_columnSpan="2"
+                grid:layout_gravity="fill_horizontal"
+                android:text="create test notification" />
+            <Button
+                android:id="@+id/testPebbleKitNotificationButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                grid:layout_columnSpan="2"
+                grid:layout_gravity="fill_horizontal"
+                android:text="create PebbleKit test notification" />
+            <Button
+                android:id="@+id/fetchDebugLogsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                grid:layout_columnSpan="2"
+                grid:layout_gravity="fill_horizontal"
+                android:text="Fetch device Debug Logs" />
+            <Button
+                android:id="@+id/testNewFunctionality"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                grid:layout_columnSpan="2"
+                grid:layout_gravity="fill_horizontal"
+                android:text="Test New Functionality" />
+            <Button
+                android:id="@+id/shareLog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                grid:layout_columnSpan="2"
+                grid:layout_gravity="fill_horizontal"
+                android:text="@string/share_log" />
+        </androidx.gridlayout.widget.GridLayout>
+    </ScrollView>
+
+</RelativeLayout>
+</LinearLayout>

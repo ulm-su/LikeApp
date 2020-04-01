@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorPrimaryDark"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="org.likeapp.likeapp.activities.ControlCenterv2"
+    tools:showIn="@layout/activity_controlcenterv2_app_bar_main">
+
+
+    <ImageView
+        android:id="@+id/no_items_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:alpha="0.2"
+        android:tint="?attr/textColorPrimary"
+        app:srcCompat="@drawable/likeapp_img" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/deviceListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:divider="@null" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layoutDirection="rtl">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_add"
+                android:layout_gravity="bottom"
+                android:layout_margin="10dp" />
+
+            <LinearLayout
+                android:id="@+id/babyMonitor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp"
+                android:layoutDirection="ltr"
+                android:visibility="gone">
+
+                <CheckBox
+                    android:id="@+id/babyMonitorEnable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <SeekBar
+                    android:id="@+id/babyMonitorProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:max="50" />
+
+                <SeekBar
+                    android:id="@+id/babyMonitorLimit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="50" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/myamazfit_ru"
+            android:gravity="center"
+            android:textColor="#F37934"/>
+    </LinearLayout>
+
+</RelativeLayout>
