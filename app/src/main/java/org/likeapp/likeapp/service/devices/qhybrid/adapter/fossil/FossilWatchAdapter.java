@@ -20,6 +20,7 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.widget.Toast;
 
@@ -385,6 +386,11 @@ public class FossilWatchAdapter extends WatchAdapter {
     }
 
     @Override
+    public void onInstallApp(Uri uri) {
+
+    }
+
+    @Override
     public boolean supportsFindDevice() {
         return false;
     }
@@ -436,7 +442,8 @@ public class FossilWatchAdapter extends WatchAdapter {
                 activeAlarms.add(new org.likeapp.likeapp.service.devices.qhybrid.requests.fossil.alarm.Alarm(
                         (byte) alarm.getMinute(),
                         (byte) alarm.getHour(),
-                        false
+                        alarm.getTitle(),
+                        alarm.getDescription()
                 ));
                 continue;
             }
@@ -445,7 +452,9 @@ public class FossilWatchAdapter extends WatchAdapter {
             activeAlarms.add(new org.likeapp.likeapp.service.devices.qhybrid.requests.fossil.alarm.Alarm(
                     (byte) alarm.getMinute(),
                     (byte) alarm.getHour(),
-                    (byte) repitition
+                    (byte) repitition,
+                    alarm.getTitle(),
+                    alarm.getDescription()
             ));
         }
         queueWrite(new AlarmsSetRequest(activeAlarms.toArray(new org.likeapp.likeapp.service.devices.qhybrid.requests.fossil.alarm.Alarm[0]), this){

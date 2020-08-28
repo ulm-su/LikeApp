@@ -25,6 +25,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.likeapp.likeapp.GBApplication;
 import org.likeapp.likeapp.R;
 import org.likeapp.likeapp.deviceevents.GBDeviceEventCallControl;
 import org.likeapp.likeapp.deviceevents.GBDeviceEventFindPhone;
@@ -45,6 +46,7 @@ import org.likeapp.likeapp.service.btle.AbstractBTLEDeviceSupport;
 import org.likeapp.likeapp.service.btle.TransactionBuilder;
 import org.likeapp.likeapp.util.AlarmUtils;
 import org.likeapp.likeapp.util.GB;
+import org.likeapp.likeapp.util.Prefs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,11 +54,10 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.TimeZone;
+import java.util.SimpleTimeZone;
 import java.util.UUID;
 
-public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport
-{
+public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(BangleJSDeviceSupport.class);
     private BluetoothGattCharacteristic rxCharacteristic = null;
     private BluetoothGattCharacteristic txCharacteristic = null;
@@ -81,7 +82,10 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport
         builder.notify(rxCharacteristic, true);
 
         uartTx(builder, " \u0003"); // clear active line
-        setTime(builder);
+
+        Prefs prefs = GBApplication.getPrefs();
+        if (prefs.getBoolean("datetime_synconconnect", true))
+          setTime(builder);
         //sendSettings(builder);
 
         // get version
@@ -98,7 +102,7 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport
     private void uartTx(TransactionBuilder builder, String str) {
         LOG.info("UART TX: " + str);
         byte[] bytes;
-        bytes = str.getBytes(StandardCharsets.UTF_8);
+        bytes = str.getBytes(StandardCharsets.ISO_8859_1);
         for (int i=0;i<bytes.length;i+=20) {
             int l = bytes.length-i;
             if (l>20) l=20;
@@ -234,7 +238,15 @@ public class BangleJSDeviceSupport extends AbstractBTLEDeviceSupport
 
 
     void setTime(TransactionBuilder builder) {
-        uartTx(builder, "\u0010setTime("+(System.currentTimeMillis()/1000)+");E.setTimeZone("+(TimeZone.getDefault().getRawOffset()/3600000)+");\n");
+      long ts = System.currentTimeMillis();
+      float tz = SimpleTimeZone.getDefault().getOffset(ts) / (1000 * 60 * 60.0f);
+      // set time
+      String cmd = "\u0010setTime("+(ts/1000)+");";
+      // set timezone
+      cmd += "E.setTimeZone("+tz+");";
+      // write timezone to settings
+      cmd += "(s=>{s&&(s.timezone="+tz+")&&require('Storage').write('setting.json',s);})(require('Storage').readJSON('setting.json',1))";
+      uartTx(builder, cmd+"\n");
     }
 
     @Override

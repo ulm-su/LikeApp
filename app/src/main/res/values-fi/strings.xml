@@ -3,8 +3,8 @@
     <string name="action_settings">Asetukset</string>
     <string name="controlcenter_fetch_activity_data">Synkronisoi</string>
     <string name="controlcenter_find_device">Löydä kadonnut laite</string>
-    <string name="app_name">Gadgetbridge</string>
-    <string name="title_activity_controlcenter">Gadgetbridge</string>
+    <string name="app_name">LikeApp</string>
+    <string name="title_activity_controlcenter">LikeApp</string>
     <string name="action_quit">Sulje</string>
     <string name="action_donate">Lahjoita</string>
     <string name="controlcenter_take_screenshot">Ota ruutukaappaus</string>

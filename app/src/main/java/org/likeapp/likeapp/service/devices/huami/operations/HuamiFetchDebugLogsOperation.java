@@ -17,8 +17,12 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package org.likeapp.likeapp.service.devices.huami.operations;
 
+import android.content.Intent;
 import android.widget.Toast;
 
+import org.likeapp.likeapp.GBApplication;
+import org.likeapp.likeapp.activities.DebugActivity;
+import org.likeapp.likeapp.model.RecordedDataTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,6 +94,32 @@ public class HuamiFetchDebugLogsOperation extends AbstractFetchOperation {
             return;
         }
         super.handleActivityFetchFinish(success);
+
+        // Если запрошено автоматическое чтение log-файла
+        if (DebugActivity.getLogAuto ())
+        {
+            new Thread (new Runnable ()
+            {
+                @Override
+                public void run ()
+                {
+                    try
+                    {
+                        Thread.sleep (500);
+                    }
+                    catch (InterruptedException ignored)
+                    {
+                    }
+
+                    // Если запрошено автоматическое чтение log-файла
+                    if (DebugActivity.getLogAuto ())
+                    {
+                        // Выполнить запрос
+                        GBApplication.deviceService ().onFetchRecordedData (RecordedDataTypes.TYPE_DEBUGLOGS);
+                    }
+                }
+            }).start ();
+        }
     }
 
     @Override
@@ -111,6 +141,18 @@ public class HuamiFetchDebugLogsOperation extends AbstractFetchOperation {
 
     @Override
     protected void bufferActivityData(@NonNull byte[] value) {
+
+        // Отправить отладочный лог в окно отладки
+        getContext ().sendBroadcast (new Intent (DebugActivity.ACTION_DEBUG)
+          .setPackage (getContext ().getPackageName ())
+          .putExtra (DebugActivity.EXTRA_LOG, new String (value, 1, value.length - 1)));
+
+        // Отправить отладочный лог в приложение LikeApp+
+        getContext ().sendOrderedBroadcast (new Intent ("org.likeapp.action.DEBUG_LOG")
+            .setPackage ("org.likeapp.action")
+            .putExtra ("data", value),
+          "org.likeapp.action.permission.ACTION");
+
         try {
             logOutputStream.write(value, 1, value.length - 1);
         } catch (IOException e) {

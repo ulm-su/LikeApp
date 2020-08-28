@@ -1,7 +1,6 @@
 package org.likeapp.likeapp.service.devices.qhybrid.requests.fossil_hr.file;
 
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.widget.Toast;
 
 import org.likeapp.likeapp.service.btle.TransactionBuilder;
 import org.likeapp.likeapp.service.devices.qhybrid.adapter.fossil.FossilWatchAdapter;
@@ -13,8 +12,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 import java.util.zip.CRC32;
 
-public class FilePutRawRequest extends FossilRequest
-{
+public class FilePutRawRequest extends FossilRequest {
     public enum UploadState {INITIALIZED, UPLOADING, CLOSING, UPLOADED}
 
     public UploadState state;
@@ -69,8 +67,10 @@ public class FilePutRawRequest extends FossilRequest
 
                     this.prepareFilePackets(this.file);
 
-                    for (byte[] packet : packets) {
+                    for (int i = 0, packetCount = packets.size(); i < packetCount; i++) {
+                        byte[] packet = packets.get(i);
                         transactionBuilder.write(uploadCharacteristic, packet);
+                        onPacketWritten(transactionBuilder, i, packetCount);
                     }
 
                     transactionBuilder.queue(adapter.getDeviceSupport().getQueue());
@@ -195,6 +195,11 @@ public class FilePutRawRequest extends FossilRequest
     }
 
     public void onFilePut(boolean success) {
+
+    }
+
+    public void onPacketWritten(TransactionBuilder transactionBuilder, int packetNr, int packetCount) {
+
     }
 
     @Override

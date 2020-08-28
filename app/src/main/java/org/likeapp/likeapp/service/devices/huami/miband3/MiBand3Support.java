@@ -17,19 +17,24 @@
 package org.likeapp.likeapp.service.devices.huami.miband3;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.widget.Toast;
 
+import org.likeapp.likeapp.GBApplication;
+import org.likeapp.likeapp.R;
+import org.likeapp.likeapp.devices.huami.HuamiConst;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.Set;
 
-import org.likeapp.likeapp.devices.huami.HuamiCoordinator;
 import org.likeapp.likeapp.devices.huami.HuamiFWHelper;
 import org.likeapp.likeapp.devices.huami.HuamiService;
 import org.likeapp.likeapp.devices.huami.miband3.MiBand3Coordinator;
@@ -51,7 +56,8 @@ public class MiBand3Support extends AmazfitBipSupport {
 
     @Override
     protected MiBand3Support setDisplayItems(TransactionBuilder builder) {
-        Set<String> pages = HuamiCoordinator.getDisplayItems(gbDevice.getAddress());
+        SharedPreferences prefs = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress());
+        Set<String> pages = prefs.getStringSet(HuamiConst.PREF_DISPLAY_ITEMS, new HashSet<>(Arrays.asList(getContext().getResources().getStringArray(R.array.pref_miband3_display_items_default))));
 
         LOG.info("Setting display items to " + (pages == null ? "none" : pages));
         byte[] command = MiBand3Service.COMMAND_CHANGE_SCREENS.clone();
@@ -90,15 +96,14 @@ public class MiBand3Support extends AmazfitBipSupport {
                 command[2] |= 0x01;
                 command[11] = pos++;
             }
-        }
-
-        for (int i = 4; i <= 11; i++) {
-            if (command[i] == 0) {
-                command[i] = pos++;
+            for (int i = 4; i <= 11; i++) {
+                if (command[i] == 0) {
+                    command[i] = pos++;
+                }
             }
-        }
 
-        builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_3_CONFIGURATION), command);
+            builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_3_CONFIGURATION), command);
+        }
 
         return this;
     }

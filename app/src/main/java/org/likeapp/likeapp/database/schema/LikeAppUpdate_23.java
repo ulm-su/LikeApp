@@ -22,14 +22,16 @@ import org.likeapp.likeapp.database.DBHelper;
 import org.likeapp.likeapp.database.DBUpdateScript;
 import org.likeapp.likeapp.entities.AlarmDao;
 
-public class GadgetbridgeUpdate_22 implements DBUpdateScript
+public class LikeAppUpdate_23 implements DBUpdateScript
 {
     @Override
     public void upgradeSchema(SQLiteDatabase db) {
-        if (!DBHelper.existsColumn(AlarmDao.TABLENAME, AlarmDao.Properties.Unused.columnName, db)) {
-            String ADD_COLUMN_UNUSED = "ALTER TABLE " + AlarmDao.TABLENAME + " ADD COLUMN "
-                    + AlarmDao.Properties.Unused.columnName + " INTEGER NOT NULL DEFAULT 0;";
-            db.execSQL(ADD_COLUMN_UNUSED);
+        if (!DBHelper.existsColumn(AlarmDao.TABLENAME, AlarmDao.Properties.Snooze.columnName, db)) {
+            // Setting default value of SNOOZE column to 1 (true), so that existing MiBand2 alarms
+            // behave as before
+            String ADD_COLUMN_SNOOZE = "ALTER TABLE " + AlarmDao.TABLENAME + " ADD COLUMN "
+                    + AlarmDao.Properties.Snooze.columnName + " INTEGER NOT NULL DEFAULT 1;";
+            db.execSQL(ADD_COLUMN_SNOOZE);
         }
     }
 

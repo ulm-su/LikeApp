@@ -38,6 +38,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.snackbar.Snackbar;
 import com.jaredrummler.android.colorpicker.ColorPickerDialog;
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
@@ -45,10 +50,6 @@ import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
 import java.util.List;
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.recyclerview.widget.RecyclerView;
 import org.likeapp.likeapp.GBApplication;
 import org.likeapp.likeapp.R;
 import org.likeapp.likeapp.activities.ActivitySummariesActivity;
@@ -56,9 +57,12 @@ import org.likeapp.likeapp.activities.ConfigureAlarms;
 import org.likeapp.likeapp.activities.VibrationActivity;
 import org.likeapp.likeapp.activities.charts.ChartsActivity;
 import org.likeapp.likeapp.activities.devicesettings.DeviceSettingsActivity;
+import org.likeapp.likeapp.database.DBHandler;
+import org.likeapp.likeapp.database.DBHelper;
 import org.likeapp.likeapp.devices.DeviceCoordinator;
 import org.likeapp.likeapp.devices.DeviceManager;
-import org.likeapp.likeapp.devices.watch9.Watch9CalibrationActivity;
+import org.likeapp.likeapp.entities.DaoSession;
+import org.likeapp.likeapp.entities.Device;
 import org.likeapp.likeapp.impl.GBDevice;
 import org.likeapp.likeapp.model.BatteryState;
 import org.likeapp.likeapp.model.DeviceType;
@@ -350,11 +354,11 @@ public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.Vi
 
         );
 
-        holder.calibrateDevice.setVisibility(device.isInitialized() && device.getType() == DeviceType.WATCH9 ? View.VISIBLE : View.GONE);
+        holder.calibrateDevice.setVisibility(device.isInitialized() && (coordinator.getCalibrationActivity() != null) ? View.VISIBLE : View.GONE);
         holder.calibrateDevice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent startIntent = new Intent(context, Watch9CalibrationActivity.class);
+                Intent startIntent = new Intent(context, coordinator.getCalibrationActivity());
                 startIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
                 context.startActivity(startIntent);
             }
@@ -383,9 +387,9 @@ public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.Vi
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                float frequency = Float.valueOf(input.getText().toString());
+                                float frequency = Float.parseFloat(input.getText().toString());
                                 // Trim to 1 decimal place, discard the rest
-                                frequency = Float.valueOf(String.format(Locale.getDefault(), "%.1f", frequency));
+                                frequency = Float.parseFloat(String.format(Locale.getDefault(), "%.1f", frequency));
                                 if (frequency < 87.5 || frequency > 108.0) {
                                     new AlertDialog.Builder(context)
                                             .setTitle(R.string.pref_invalid_frequency_title)
@@ -499,6 +503,47 @@ public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.Vi
             }
         });
 
+        //set alias, hidden under details
+        holder.setAlias.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                final EditText input = new EditText(context);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                input.setText(device.getAlias());
+                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+
+                new AlertDialog.Builder(context)
+                        .setView(input)
+                        .setCancelable(true)
+                        .setTitle(context.getString(R.string.controlcenter_set_alias))
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                try (DBHandler dbHandler = GBApplication.acquireDB()) {
+                                    DaoSession session = dbHandler.getDaoSession();
+                                    Device dbDevice = DBHelper.getDevice(device, session);
+                                    String alias = input.getText().toString();
+                                    dbDevice.setAlias(alias);
+                                    dbDevice.update();
+                                    device.setAlias(alias);
+                                } catch (Exception ex) {
+                                    GB.toast(context, "Error setting alias: " + ex.getMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
+                                } finally {
+                                    Intent refreshIntent = new Intent(DeviceManager.ACTION_REFRESH_DEVICELIST);
+                                    LocalBroadcastManager.getInstance(context).sendBroadcast(refreshIntent);
+                                }
+                            }
+                        })
+                        .setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .show();
+            }
+        });
     }
 
     @Override
@@ -538,6 +583,7 @@ public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.Vi
         ListView deviceInfoList;
         ImageView findDevice;
         ImageView removeDevice;
+        ImageView setAlias;
         LinearLayout fmFrequencyBox;
         TextView fmFrequencyLabel;
         ImageView ledColor;
@@ -574,6 +620,7 @@ public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.Vi
             deviceInfoList = view.findViewById(R.id.device_item_infos);
             findDevice = view.findViewById(R.id.device_action_find);
             removeDevice = view.findViewById(R.id.device_action_remove);
+            setAlias = view.findViewById(R.id.device_action_set_alias);
             fmFrequencyBox = view.findViewById(R.id.device_fm_frequency_box);
             fmFrequencyLabel = view.findViewById(R.id.fm_frequency);
             ledColor = view.findViewById(R.id.device_led_color);
@@ -601,7 +648,8 @@ public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.Vi
     }
 
     private String getUniqueDeviceName(GBDevice device) {
-        String deviceName = device.getName();
+        String deviceName = device.getAliasOrName();
+
         if (!isUniqueDeviceName(device, deviceName)) {
             if (device.getModel() != null) {
                 deviceName = deviceName + " " + device.getModel();

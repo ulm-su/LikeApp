@@ -19,7 +19,7 @@ package org.likeapp.likeapp.service.devices.qhybrid.adapter.misfit;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Intent;
-import android.util.Log;
+import android.net.Uri;
 import android.util.SparseArray;
 import android.widget.Toast;
 
@@ -416,6 +416,11 @@ public class MisfitWatchAdapter extends WatchAdapter {
     @Override
     public void setTimezoneOffsetMinutes(short offset) {
         GB.toast("old firmware does't support timezones", Toast.LENGTH_LONG, GB.ERROR);
+    }
+
+    @Override
+    public void onInstallApp(Uri uri) {
+
     }
 
     @Override

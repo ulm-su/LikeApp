@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.ContactsContract;
 
 import java.util.ArrayList;
@@ -45,6 +46,8 @@ import org.likeapp.likeapp.model.WeatherSpec;
 import org.likeapp.likeapp.service.DeviceCommunicationService;
 import org.likeapp.likeapp.util.LanguageUtils;
 import org.likeapp.likeapp.util.RtlUtils;
+
+import su.ulm.android.lib.ClientLog;
 
 import static org.likeapp.likeapp.util.JavaExtensions.coalesce;
 
@@ -78,10 +81,28 @@ public class GBDeviceService implements DeviceService {
     }
 
     protected void invokeService(Intent intent) {
+        ClientLog.send (mContext, intent);
+
         if (LanguageUtils.transliterate()) {
             for (String extra : transliterationExtras) {
                 if (intent.hasExtra(extra)) {
                     intent.putExtra(extra, LanguageUtils.transliterate(intent.getStringExtra(extra)));
+                }
+            }
+        }
+
+        if (LanguageUtils.cyrillicToLatin ())
+        {
+            Bundle bundle = intent.getExtras ();
+            if (bundle != null)
+            {
+                for (String extra : bundle.keySet ().toArray (new String[0]))
+                {
+                    String v = intent.getStringExtra (extra);
+                    if (v != null)
+                    {
+                        intent.putExtra (extra, LanguageUtils.cyrillicToLatin (v));
+                    }
                 }
             }
         }

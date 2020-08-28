@@ -32,6 +32,7 @@ import android.os.Looper;
 import android.widget.Toast;
 
 import org.likeapp.likeapp.activities.FwAppInstallerActivity;
+import org.likeapp.likeapp.model.ActivityKind;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,6 +58,7 @@ import org.likeapp.likeapp.model.DeviceService;
 import org.likeapp.likeapp.service.DeviceCommunicationService;
 
 import static org.likeapp.likeapp.GBApplication.isRunningOreoOrLater;
+import static org.likeapp.likeapp.model.DeviceService.EXTRA_RECORDED_DATA_TYPES;
 
 public class GB {
 
@@ -92,7 +94,7 @@ public class GB {
     }
 
     public static Notification createNotification(GBDevice device, Context context) {
-        String deviceName = device.getName();
+        String deviceName = device.getAliasOrName();
         String text = device.getStateString();
         if (device.getBatteryLevel() != GBDevice.BATTERY_UNKNOWN) {
             text += ": " + context.getString(R.string.battery) + " " + device.getBatteryLevel() + "%";
@@ -115,6 +117,7 @@ public class GB {
             builder.addAction(R.drawable.ic_notification_disconnected, context.getString(R.string.controlcenter_disconnect), disconnectPendingIntent);
             if (GBApplication.isRunningLollipopOrLater() && DeviceHelper.getInstance().getCoordinator(device).supportsActivityDataFetching()) { //for some reason this fails on KK
                 deviceCommunicationServiceIntent.setAction(DeviceService.ACTION_FETCH_RECORDED_DATA);
+                deviceCommunicationServiceIntent.putExtra(EXTRA_RECORDED_DATA_TYPES, ActivityKind.TYPE_ACTIVITY);
                 PendingIntent fetchPendingIntent = PendingIntent.getService(context, 1, deviceCommunicationServiceIntent, PendingIntent.FLAG_ONE_SHOT);
                 builder.addAction(R.drawable.ic_action_fetch_activity_data, context.getString(R.string.controlcenter_fetch_activity_data), fetchPendingIntent);
             }

@@ -38,10 +38,22 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
+import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_ALTITUDE_CALIBRATE;
 import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BUTTON_1_FUNCTION;
 import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BUTTON_2_FUNCTION;
 import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BUTTON_3_FUNCTION;
+import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BUTTON_BP_CALIBRATE;
 import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_DATEFORMAT;
+import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_DISCONNECTNOTIF_NOSHED;
+import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_DO_NOT_DISTURB_NOAUTO;
+import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_HYBRID_HR_DRAW_WIDGET_CIRCLES;
+import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_HYBRID_HR_FORCE_WHITE_COLOR;
+import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_HYBRID_HR_SAVE_RAW_ACTIVITY_FILES;
+import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_LANGUAGE;
+import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_LIFTWRIST_NOSHED;
+import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_LONGSIT_PERIOD;
+import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_LONGSIT_SWITCH;
+import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_POWER_MODE;
 import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_SCREEN_ORIENTATION;
 import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_TIMEFORMAT;
 import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_VIBRATION_STRENGH_PERCENTAGE;
@@ -54,7 +66,7 @@ import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_DISPLAY_ITEMS;
 import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_DISPLAY_ON_LIFT_END;
 import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_DISPLAY_ON_LIFT_START;
 import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_EXPOSE_HR_THIRDPARTY;
-import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_LANGUAGE;
+import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_SHORTCUTS;
 import static org.likeapp.likeapp.devices.miband.MiBandConst.PREF_DO_NOT_DISTURB;
 import static org.likeapp.likeapp.devices.miband.MiBandConst.PREF_DO_NOT_DISTURB_END;
 import static org.likeapp.likeapp.devices.miband.MiBandConst.PREF_DO_NOT_DISTURB_OFF;
@@ -311,6 +323,7 @@ public class DeviceSpecificSettingsFragment extends PreferenceFragmentCompat {
         addPreferenceHandlerFor(PREF_MI2_DATEFORMAT);
         addPreferenceHandlerFor(PREF_DATEFORMAT);
         addPreferenceHandlerFor(PREF_DISPLAY_ITEMS);
+        addPreferenceHandlerFor(PREF_SHORTCUTS);
         addPreferenceHandlerFor(PREF_LANGUAGE);
         addPreferenceHandlerFor(PREF_EXPOSE_HR_THIRDPARTY);
         addPreferenceHandlerFor(PREF_WEARLOCATION);
@@ -320,6 +333,19 @@ public class DeviceSpecificSettingsFragment extends PreferenceFragmentCompat {
         addPreferenceHandlerFor(PREF_BUTTON_2_FUNCTION);
         addPreferenceHandlerFor(PREF_BUTTON_3_FUNCTION);
         addPreferenceHandlerFor(PREF_VIBRATION_STRENGH_PERCENTAGE);
+        addPreferenceHandlerFor(PREF_POWER_MODE);
+        addPreferenceHandlerFor(PREF_LIFTWRIST_NOSHED);
+        addPreferenceHandlerFor(PREF_DISCONNECTNOTIF_NOSHED);
+        addPreferenceHandlerFor(PREF_BUTTON_BP_CALIBRATE);
+        addPreferenceHandlerFor(PREF_ALTITUDE_CALIBRATE);
+        addPreferenceHandlerFor(PREF_LONGSIT_PERIOD);
+        addPreferenceHandlerFor(PREF_LONGSIT_SWITCH);
+        addPreferenceHandlerFor(PREF_DO_NOT_DISTURB_NOAUTO);
+
+        addPreferenceHandlerFor(PREF_HYBRID_HR_DRAW_WIDGET_CIRCLES);
+        addPreferenceHandlerFor(PREF_HYBRID_HR_FORCE_WHITE_COLOR);
+        addPreferenceHandlerFor(PREF_HYBRID_HR_SAVE_RAW_ACTIVITY_FILES);
+
 
         String displayOnLiftState = prefs.getString(PREF_ACTIVATE_DISPLAY_ON_LIFT, PREF_DO_NOT_DISTURB_OFF);
         boolean displayOnLiftScheduled = displayOnLiftState.equals(PREF_DO_NOT_DISTURB_SCHEDULED);

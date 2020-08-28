@@ -114,7 +114,7 @@ class HPlusHandlerThread extends GBDeviceIoThread {
                     try {
                         waitObject.wait(waitTime);
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        e.printStackTrace(System.out);
                     }
                 }
             }

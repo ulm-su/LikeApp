@@ -17,11 +17,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package org.likeapp.likeapp.devices;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.ScanFilter;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +66,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
 
     @Override
     public GBDevice createDevice(GBDeviceCandidate candidate) {
-        return new GBDevice(candidate.getDevice().getAddress(), candidate.getName(), getDeviceType());
+        return new GBDevice(candidate.getDevice().getAddress(), candidate.getName(), null, getDeviceType());
     }
 
     @Override
@@ -152,6 +154,11 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
+    public boolean supportsAlarmDescription(GBDevice device) {
+        return false;
+    }
+
+    @Override
     public boolean supportsMusicInfo() {
         return false;
     }
@@ -177,6 +184,12 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
 
     @Override
     public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public Class<? extends Activity> getCalibrationActivity() {
         return null;
     }
 }

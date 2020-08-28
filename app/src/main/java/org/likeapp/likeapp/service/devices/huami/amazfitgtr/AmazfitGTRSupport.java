@@ -24,11 +24,11 @@ import org.likeapp.likeapp.devices.huami.amazfitgtr.AmazfitGTRFWHelper;
 import org.likeapp.likeapp.model.NotificationSpec;
 import org.likeapp.likeapp.service.btle.TransactionBuilder;
 import org.likeapp.likeapp.service.devices.huami.amazfitbip.AmazfitBipSupport;
+import org.likeapp.likeapp.service.devices.huami.operations.UpdateFirmwareOperationNew;
 
 import java.io.IOException;
 
-public class AmazfitGTRSupport extends AmazfitBipSupport
-{
+public class AmazfitGTRSupport extends AmazfitBipSupport {
 
     @Override
     public byte getCryptFlags() {
@@ -50,9 +50,4 @@ public class AmazfitGTRSupport extends AmazfitBipSupport
         return new AmazfitGTRFWHelper (uri, context);
     }
 
-    @Override
-    protected AmazfitGTRSupport setDisplayItems(TransactionBuilder builder) {
-        // not supported yet
-        return this;
-    }
 }

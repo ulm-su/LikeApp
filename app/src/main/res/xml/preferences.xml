@@ -74,6 +74,11 @@
                 android:key="transliteration"
                 android:summary="@string/pref_summary_transliteration"
                 android:title="@string/pref_title_transliteration" />
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="convert_cyrillic_to_latin"
+                android:summary="@string/pref_summary_convert_cyrillic_to_latin"
+                android:title="@string/pref_title_convert_cyrillic_to_latin" />
 
             <PreferenceScreen
                 android:title="@string/preferences_rtl_settings">
@@ -99,8 +104,12 @@
             </PreferenceScreen>
         </PreferenceScreen>
 
-        <PreferenceScreen android:title="@string/pref_title_weather">
+        <PreferenceScreen
+            android:title="@string/pref_title_weather"
+            android:summary="@string/pref_title_weather_summary">
+
             <EditTextPreference
+                android:inputType="text"
                 android:key="weather_city"
                 android:summary="%s"
                 android:title="@string/pref_title_weather_location" />
@@ -115,6 +124,11 @@
                 android:title="@string/pref_title_weather_server"
                 android:summaryOff="@string/pref_weather_server_off"
                 android:summaryOn="@string/pref_weather_server_on" />
+            <CheckBoxPreference
+                android:layout="@layout/preference_checkbox"
+                android:defaultValue="true"
+                android:key="weather_phrases"
+                android:title="@string/pref_title_weather_phrases" />
             <CheckBoxPreference
                 android:layout="@layout/preference_checkbox"
                 android:defaultValue="false"
@@ -347,6 +361,11 @@
                 android:defaultValue="false"
                 android:key="notifications_battery_80"
                 android:title="@string/pref_notifications_battery_80" />
+            <CheckBoxPreference
+                android:layout="@layout/preference_checkbox"
+                android:defaultValue="false"
+                android:key="notifications_battery_90"
+                android:title="@string/pref_notifications_battery_90" />
             <CheckBoxPreference
                 android:layout="@layout/preference_checkbox"
                 android:defaultValue="true"

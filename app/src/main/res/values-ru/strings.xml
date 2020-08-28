@@ -511,7 +511,7 @@
 \n 
 \nНЕ ПРОВЕРЯЛОСЬ, ЕСТЬ ВЕРОЯТНОСТЬ СЛОМАТЬ ВАШЕ УСТРОЙСТВО. ВЫ ДЕЙСТВУЕТЕ НА СВОЙ СТРАХ И РИСК!</string>
     <string name="pref_title_weather_location">Местоположение (населённый пункт или координаты GPS)</string>
-    <string name="pref_title_weather_language">Язык отображения погоды (en, ru, es, pl, и др.)</string>
+    <string name="pref_title_weather_language">Язык отображения погоды (en, ru, es, it, pl, hy, pt и др.)</string>
     <string name="pref_title_weather_server">Использовать погоду от провайдера DarkSky</string>
     <string name="pref_weather_server_off">Включена погода от иного провайдера</string>
     <string name="pref_weather_server_on">Включена погода от DarkSky</string>
@@ -652,21 +652,21 @@
     <string name="firmware_not_found">Прошивка не найдена</string>
     <string name="activity_DB_ExportButton">Экспорт базы данных</string>
     <string name="activity_DB_delete_legacy_button">Удалить старую базу данных</string>
-    <string name="activity_DB_empty_button">Создать пустую базу данных</string>
+    <string name="activity_DB_empty_button">Очистить базу данных</string>
     <string name="activity_DB_import_button">Импорт базы данных</string>
     <string name="activity_DB_test_export_button">Запустить Авто-экспорт сейчас</string>
     <string name="activity_DB_test_export_message">Экспортирование базы данных…</string>
-    <string name="activity_db_management_autoexport_explanation">Авто-экспорт базы данных будет выполняться в:</string>
+    <string name="activity_db_management_autoexport_explanation">Местоположение авто-экспорта базы данных установлено:</string>
     <string name="activity_db_management_autoexport_label">Авто-экспорт</string>
-    <string name="activity_db_management_empty_DB">Пустая база данных</string>
-    <string name="activity_db_management_empty_db_warning">Предупреждение! Нажав кнопку, Вы очистите базу данных и начнете с нуля.</string>
-    <string name="activity_db_management_exportimport_label">Экспорт и импорт</string>
+    <string name="activity_db_management_empty_DB">Сброс базы данных</string>
+    <string name="activity_db_management_empty_db_warning">Предупреждение! Нажав кнопку, вы очистите базу данных и начнете с нуля.</string>
+    <string name="activity_db_management_exportimport_label">Экспорт и Импорт</string>
     <string name="activity_prefs_activetime_minutes">Ежедневная цель: время активности, в минутах</string>
     <string name="activity_prefs_alarm_max_heart_rate">Максимальный пульс</string>
     <string name="activity_prefs_alarm_min_heart_rate">Минимальный пульс</string>
     <string name="activity_prefs_calories_burnt">Ежедневная цель: расход калорий</string>
     <string name="activity_prefs_distance_meters">Ежедневная цель: дистанция в метрах</string>
-    <string name="appwidget_sleep_alarm_widget_label">Будильник сна</string>
+    <string name="appwidget_sleep_alarm_widget_label">Сигнализация сна</string>
     <string name="arabic">Арабский язык</string>
     <string name="average">В среднем: %1$s</string>
     <string name="debugactivity_really_factoryreset">Сброс настроек приведёт к удалению всех данных с подключённого устройства (если поддерживается). Устройства Xiaomi / Huami также меняют MAC-адрес Bluetooth, поэтому для LikeApp они отображаются как новые устройства.</string>
@@ -783,10 +783,11 @@
     <string name="send_via">Отправить …</string>
     <string name="debug_log_clear">Очистить лог</string>
     <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.ButtonPressed</string>
-    <string name="debug_event">События Bluetooth</string>
+    <string name="debug_event">События\nBluetooth</string>
     <string name="baby_monitor">Радионяня %d</string>
     <string name="baby_monitor_limit">Радионяня %1$d, порог %2$d</string>
     <string name="baby_monitor_enabled">Радионяня включена</string>
+    <string name="baby_monitor_disabled">Радионяня отключена</string>
     <string name="change_version">Изменить версию на</string>
     <string name="pref_header_sleep">Сон</string>
     <string name="pref_title_fell_asleep">Действие при засыпании</string>
@@ -803,7 +804,7 @@
     <string name="prefs_button_triple_press_action_selection_title">Реакция на Событие 3</string>
     <string name="prefs_button_variable_actions">Детальная настройка реакции на нажатие кнопки</string>
     <string name="prefs_button_long_press_action_selection_title">Реакция на долгое нажатие</string>
-    <string name="myamazfit_ru">MyAmazFit.ru - Ваш путеводитель по миру умных устройств</string>
+    <string name="myamazfit_ru">Установите дополнительное приложение LikeApp+ для использования расширенных возможностей ваших часов Amazfit Bip</string>
     <string name="pref_header_auto_fetch">Автозагрузка из устройства</string>
     <string name="pref_disable_new_ble_scanning">Отключить новое BLE сканирование</string>
     <string name="pref_summary_disable_new_ble_scanning">Включите, если устройство не видно как доступное</string>
@@ -813,6 +814,7 @@
     <string name="pref_weather_wind_type_2">Ю ЮЗ З СЗ С СВ В ЮВ</string>
     <string name="pref_title_weather_precip_probability">Отображать вероятность выпадения осадков (☔%)</string>
     <string name="pref_title_weather_feels_like">Отображать ощущаемую температуру (℃)</string>
+    <string name="pref_title_weather_phrases">Отображать фразы</string>
     <string name="pref_title_weather_short_phrases">Короткие фразы</string>
     <string name="pref_title_weather_hPa">Отображать атмосферное давление в гПа</string>
     <string name="pref_weather_hPa_off">Атмосферное давление в мм рт.ст.</string>
@@ -896,4 +898,12 @@
     <string name="find_my_phone_notification">Найти телефон</string>
     <string name="pref_title_custom_deviceicon">Показывать собственную иконку устройства</string>
     <string name="pref_summary_custom_deviceicon">При подключении показывать в уведомлении собственную иконку устройства вместо иконки LikeApp</string>
+    <string name="ota_token_invalid">Недействительный токен</string>
+    <string name="ota_connect_to_watch">Подключите LikeApp к часам</string>
+    <string name="ota_start_app">Запустите LikeApp</string>
+    <string name="pref_theme_system">Системная</string>
+    <string name="pref_title_dont_change_configuration">Отключить изменение конфигурации часов</string>
+    <string name="pref_title_convert_cyrillic_to_latin">Преобразовать кириллические символы в латинские аналоги</string>
+    <string name="pref_summary_convert_cyrillic_to_latin">Активируйте это, если используете кириллический шрифт, чтобы увеличить количество отображаемых символов в уведомлениях</string>
+    <string name="debugLogAuto">Автоматически запрашивать отладочные сообщения</string>
 </resources>

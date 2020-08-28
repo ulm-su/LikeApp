@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -76,6 +77,7 @@ import org.likeapp.likeapp.adapter.GBDeviceAdapterv2;
 import org.likeapp.likeapp.devices.DeviceManager;
 import org.likeapp.likeapp.impl.GBDevice;
 import org.likeapp.likeapp.model.RecordedDataTypes;
+import org.likeapp.likeapp.service.receivers.BabyMonitorReceiver;
 import org.likeapp.likeapp.util.AndroidUtils;
 import org.likeapp.likeapp.util.GB;
 import org.likeapp.likeapp.util.Prefs;
@@ -90,6 +92,11 @@ public class ControlCenterv2 extends AppCompatActivity
     @SuppressLint ("StaticFieldLeak")
     private static ControlCenterv2 activity;
 
+    public static boolean isLive ()
+    {
+        return activity != null && !activity.isDestroyed ();
+    }
+
     public static void requestPermissions (String[] permissions)
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
@@ -101,7 +108,7 @@ public class ControlCenterv2 extends AppCompatActivity
             else
             {
                 Context context = GBApplication.getContext ();
-                context.getApplicationContext ().startActivity (new Intent (context, ControlCenterv2.class).putExtra ("PERMISSIONS", permissions));
+                context.getApplicationContext ().startActivity (new Intent (context, ControlCenterv2.class).addFlags (Intent.FLAG_ACTIVITY_NEW_TASK).putExtra ("PERMISSIONS", permissions));
             }
         }
     }
@@ -141,10 +148,48 @@ public class ControlCenterv2 extends AppCompatActivity
                 case DeviceManager.ACTION_DEVICES_CHANGED:
                     refreshPairedDevices();
                     break;
-                case GBApplication.ACTION_DISABLE_BABY_MONITOR:
-                    // Отключить радионяню
-                    babyMonitorEnable.setChecked (false);
+                case BabyMonitorReceiver.ACTION_BABY_MONITOR:
+                {
+                    boolean enabled = babyMonitorEnable.isChecked ();
+                    int limit = babyMonitorLimit.getProgress ();
+                    if (intent.hasExtra (BabyMonitorReceiver.DISABLE))
+                    {
+                        // Отключить радионяню
+                        MicReader.stop ();
+                        enabled = false;
+                    }
+                    if (intent.hasExtra (BabyMonitorReceiver.ENABLE))
+                    {
+                        // Включить радионяню
+                        MicReader.start ();
+                        enabled = true;
+                    }
+                    if (intent.hasExtra (BabyMonitorReceiver.LIMIT_UP))
+                    {
+                        // Повысить порог для радионяни
+                        limit++;
+                    }
+                    if (intent.hasExtra (BabyMonitorReceiver.LIMIT_DOWN))
+                    {
+                        // Понизить порог для радионяни
+                        limit--;
+                    }
+
+                    babyMonitorEnable.setChecked (enabled);
+                    babyMonitorLimit.setProgress (limit);
+
+                    GBApplication.getPrefs ().getPreferences ().edit ()
+                      .putBoolean ("BABY MONITOR ENABLED", enabled)
+                      .putInt ("BABY MONITOR LIMIT", limit)
+                      .apply ();
+
+                    NotificationSpec notificationSpec = new NotificationSpec ();
+                    notificationSpec.type = NotificationType.BLUETOOTH;
+                    notificationSpec.sender = getString (enabled ? R.string.baby_monitor_enabled : R.string.baby_monitor_disabled);
+                    notificationSpec.subject = getString (R.string.baby_monitor_limit, (int) MicReader.getValue (), limit);
+                    GBApplication.deviceService ().onNotification (notificationSpec);
                     break;
+                }
             }
         }
     };
@@ -239,7 +284,7 @@ public class ControlCenterv2 extends AppCompatActivity
         filterLocal.addAction(GBApplication.ACTION_LANGUAGE_CHANGE);
         filterLocal.addAction(GBApplication.ACTION_QUIT);
         filterLocal.addAction(DeviceManager.ACTION_DEVICES_CHANGED);
-        filterLocal.addAction (GBApplication.ACTION_DISABLE_BABY_MONITOR);
+        filterLocal.addAction (BabyMonitorReceiver.ACTION_BABY_MONITOR);
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, filterLocal);
 
         refreshPairedDevices();
@@ -362,44 +407,53 @@ public class ControlCenterv2 extends AppCompatActivity
 
     private void changeAd ()
     {
-        new Thread (new Runnable ()
+        PackageManager packageManager = getPackageManager ();
+        List<ApplicationInfo> list = packageManager.getInstalledApplications (PackageManager.GET_META_DATA);
+        for (ApplicationInfo ai : list)
         {
-            @Override
-            public void run ()
+            if ("org.likeapp.action".equals (ai.packageName))
             {
-                try
+                new Thread (new Runnable ()
                 {
-                    String url = "https://likeapp.org/constr/?slogan&lang=" + Locale.getDefault ().getLanguage ();
-                    HttpsURLConnection connection = (HttpsURLConnection) new URL (url).openConnection ();
-                    connection.setRequestMethod ("GET");
-
-                    try (BufferedReader in = new BufferedReader (new InputStreamReader (connection.getInputStream ())))
+                    @Override
+                    public void run ()
                     {
-                        final String line = in.readLine ();
-                        if (line != null && line.length () < 500)
+                        try
                         {
-                            runOnUiThread (new Runnable ()
+                            String url = "https://likeapp.org/constr/?slogan&lang=" + Locale.getDefault ().getLanguage ();
+                            HttpsURLConnection connection = (HttpsURLConnection) new URL (url).openConnection ();
+                            connection.setRequestMethod ("GET");
+
+                            try (BufferedReader in = new BufferedReader (new InputStreamReader (connection.getInputStream ())))
                             {
-                                @Override
-                                public void run ()
+                                final String line = in.readLine ();
+                                if (line != null && line.length () < 500)
                                 {
-                                    TextView ad = findViewById (R.id.ad);
-                                    ad.setText (line);
+                                    runOnUiThread (new Runnable ()
+                                    {
+                                        @Override
+                                        public void run ()
+                                        {
+                                            TextView ad = findViewById (R.id.ad);
+                                            ad.setText (line);
+                                        }
+                                    });
                                 }
-                            });
+                            }
+                            catch (IOException ignored)
+                            {
+                            }
+
+                            connection.disconnect ();
+                        }
+                        catch (IOException ignored)
+                        {
                         }
                     }
-                    catch (IOException ignored)
-                    {
-                    }
-
-                    connection.disconnect ();
-                }
-                catch (IOException ignored)
-                {
-                }
+                }).start ();
+                break;
             }
-        }).start ();
+        }
     }
 
     @Override
@@ -489,6 +543,10 @@ public class ControlCenterv2 extends AppCompatActivity
                 } catch (Exception ignored) {
                     GB.toast(getBaseContext(), "Error showing Changelog", Toast.LENGTH_LONG, GB.ERROR);
                 }
+                return true;
+            case R.id.about:
+                Intent aboutIntent = new Intent(this, AboutActivity.class);
+                startActivity(aboutIntent);
                 return true;
         }
 

@@ -35,6 +35,7 @@ fw.dirs
 **/.settings
 **/.classpath
 
+/app/src/main/java/su/ulm/android
 /app/gradle/
 /app/gradlew*
 /app/release/output.json

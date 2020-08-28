@@ -18,14 +18,23 @@ package org.likeapp.likeapp.database.schema;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import org.likeapp.likeapp.database.DBHelper;
 import org.likeapp.likeapp.database.DBUpdateScript;
+import org.likeapp.likeapp.entities.AlarmDao;
 
-public class GadgetbridgeUpdate_24 implements DBUpdateScript
-{
+public class LikeAppUpdate_26 implements DBUpdateScript {
     @Override
     public void upgradeSchema(SQLiteDatabase db) {
-        // Probably it isbetter to hardcode then using constants since constants could change after refactoring and potentially break migration
-        db.execSQL("UPDATE DEVICE SET Type=170 where (Type=80 and Manufacturer like 'Fossil%')");
+        if (!DBHelper.existsColumn(AlarmDao.TABLENAME, AlarmDao.Properties.Title.columnName, db)) {
+            String ADD_COLUMN_TITLE = "ALTER TABLE " + AlarmDao.TABLENAME + " ADD COLUMN "
+                    + AlarmDao.Properties.Title.columnName + " TEXT";
+            db.execSQL(ADD_COLUMN_TITLE);
+        }
+        if (!DBHelper.existsColumn(AlarmDao.TABLENAME, AlarmDao.Properties.Description.columnName, db)) {
+            String ADD_COLUMN_TITLE = "ALTER TABLE " + AlarmDao.TABLENAME + " ADD COLUMN "
+                    + AlarmDao.Properties.Description.columnName + " TEXT";
+            db.execSQL(ADD_COLUMN_TITLE);
+        }
     }
 
     @Override

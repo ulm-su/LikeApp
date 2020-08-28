@@ -36,6 +36,7 @@ import org.likeapp.likeapp.deviceevents.LikeAppDeviceEventDebugLog;
 import org.likeapp.likeapp.deviceevents.LikeAppDeviceEventSleep;
 import org.likeapp.likeapp.devices.miband.MiBandCoordinator;
 import org.likeapp.likeapp.service.audio.MicReader;
+import org.likeapp.likeapp.service.receivers.BabyMonitorReceiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -251,12 +252,10 @@ public abstract class AbstractDeviceSupport implements DeviceSupport {
             // Если включена радионяня
             if (MicReader.isRunning ())
             {
-                // Отключить чтение из микрофона
-                MicReader.stop ();
-
                 // Отправить запрос на отключение радионяни
                 LOG.info ("Sending intent for disable baby monitor");
-                Intent intent = new Intent (GBApplication.ACTION_DISABLE_BABY_MONITOR);
+                Intent intent = new Intent (BabyMonitorReceiver.ACTION_BABY_MONITOR);
+                intent.putExtra (BabyMonitorReceiver.DISABLE, true);
                 LocalBroadcastManager.getInstance (context).sendBroadcast (intent);
                 return;
             }

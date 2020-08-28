@@ -366,10 +366,18 @@ public class SettingsActivity extends AbstractSettingsActivity {
         pref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object autoFetchInterval) {
-                String summary = String.format(
-                        getApplicationContext().getString(R.string.pref_auto_fetch_limit_fetches_summary),
-                        Integer.valueOf((String) autoFetchInterval));
-                preference.setSummary(summary);
+                try
+                {
+                    String summary = String.format(
+                      getApplicationContext().getString(R.string.pref_auto_fetch_limit_fetches_summary),
+                      Integer.valueOf((String) autoFetchInterval));
+                    preference.setSummary(summary);
+                }
+                catch (java.lang.NumberFormatException e)
+                {
+                    e.printStackTrace ();
+                }
+
                 return true;
             }
         });

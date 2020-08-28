@@ -29,10 +29,13 @@ import org.likeapp.likeapp.devices.banglejs.BangleJSCoordinator;
 import org.likeapp.likeapp.devices.huami.amazfitbip.AmazfitBipLiteCoordinator;
 import org.likeapp.likeapp.devices.huami.amazfitbips.AmazfitBipSCoordinator;
 import org.likeapp.likeapp.devices.huami.amazfitgtr.AmazfitGTRCoordinator;
+import org.likeapp.likeapp.devices.huami.amazfitgtr.AmazfitGTRLiteCoordinator;
 import org.likeapp.likeapp.devices.huami.amazfitgts.AmazfitGTSCoordinator;
+import org.likeapp.likeapp.devices.huami.amazfittrex.AmazfitTRexCoordinator;
 import org.likeapp.likeapp.devices.itag.ITagCoordinator;
 import org.likeapp.likeapp.devices.jyou.TeclastH30.TeclastH30Coordinator;
 import org.likeapp.likeapp.devices.jyou.y5.Y5Coordinator;
+import org.likeapp.likeapp.devices.lenovo.watchxplus.WatchXPlusDeviceCoordinator;
 import org.likeapp.likeapp.devices.qhybrid.QHybridCoordinator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -152,14 +155,14 @@ public class DeviceHelper {
         Prefs prefs = GBApplication.getPrefs();
         String miAddr = prefs.getString(MiBandConst.PREF_MIBAND_ADDRESS, "");
         if (miAddr.length() > 0) {
-            GBDevice miDevice = new GBDevice(miAddr, "MI", DeviceType.MIBAND);
+            GBDevice miDevice = new GBDevice(miAddr, "MI", null,  DeviceType.MIBAND);
             availableDevices.add(miDevice);
         }
 
         String pebbleEmuAddr = prefs.getString("pebble_emu_addr", "");
         String pebbleEmuPort = prefs.getString("pebble_emu_port", "");
         if (pebbleEmuAddr.length() >= 7 && pebbleEmuPort.length() > 0) {
-            GBDevice pebbleEmuDevice = new GBDevice(pebbleEmuAddr + ":" + pebbleEmuPort, "Pebble qemu", DeviceType.PEBBLE);
+            GBDevice pebbleEmuDevice = new GBDevice(pebbleEmuAddr + ":" + pebbleEmuPort, "Pebble qemu", "", DeviceType.PEBBLE);
             availableDevices.add(pebbleEmuDevice);
         }
         return availableDevices;
@@ -216,8 +219,10 @@ public class DeviceHelper {
         result.add(new AmazfitCorCoordinator());
         result.add(new AmazfitCor2Coordinator());
         result.add(new AmazfitGTRCoordinator());
-        result.add(new AmazfitGTSCoordinator ());
-        result.add(new AmazfitBipSCoordinator ());
+        result.add(new AmazfitGTRLiteCoordinator());
+        result.add(new AmazfitTRexCoordinator());
+        result.add(new AmazfitGTSCoordinator());
+        result.add(new AmazfitBipSCoordinator());
         result.add(new MiBand3Coordinator());
         result.add(new MiBand4Coordinator());
         result.add(new MiBand2HRXCoordinator());
@@ -237,6 +242,7 @@ public class DeviceHelper {
         result.add(new ZeTimeCoordinator());
         result.add(new ID115Coordinator());
         result.add(new Watch9DeviceCoordinator());
+        result.add(new WatchXPlusDeviceCoordinator());
         result.add(new Roidmi1Coordinator());
         result.add(new Roidmi3Coordinator());
         result.add(new Y5Coordinator());
@@ -276,7 +282,7 @@ public class DeviceHelper {
      */
     public GBDevice toGBDevice(Device dbDevice) {
         DeviceType deviceType = DeviceType.fromKey(dbDevice.getType());
-        GBDevice gbDevice = new GBDevice(dbDevice.getIdentifier(), dbDevice.getName(), deviceType);
+        GBDevice gbDevice = new GBDevice(dbDevice.getIdentifier(), dbDevice.getName(), dbDevice.getAlias(), deviceType);
         List<DeviceAttributes> deviceAttributesList = dbDevice.getDeviceAttributesList();
         if (deviceAttributesList.size() > 0) {
             gbDevice.setModel(dbDevice.getModel());

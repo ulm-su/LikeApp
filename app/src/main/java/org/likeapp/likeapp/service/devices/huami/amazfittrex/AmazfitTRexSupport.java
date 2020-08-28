@@ -14,29 +14,22 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
-package org.likeapp.likeapp.service.devices.huami.amazfitbip;
+package org.likeapp.likeapp.service.devices.huami.amazfittrex;
 
 import android.content.Context;
 import android.net.Uri;
 
 import org.likeapp.likeapp.devices.huami.HuamiFWHelper;
+import org.likeapp.likeapp.devices.huami.amazfittrex.AmazfitTRexFWHelper;
+import org.likeapp.likeapp.service.devices.huami.amazfitgts.AmazfitGTSSupport;
 
 import java.io.IOException;
 
-public class AmazfitBipSSupport extends AmazfitBipSupport {
-
-    @Override
-    public byte getCryptFlags() {
-        return (byte) 0x80;
-    }
-    
-    @Override
-    protected byte getAuthFlags() {
-        return 0x00;
-    }
+public class AmazfitTRexSupport extends AmazfitGTSSupport {
 
     @Override
     public HuamiFWHelper createFWHelper(Uri uri, Context context) throws IOException {
-        return null;
+        return new AmazfitTRexFWHelper(uri, context);
     }
+
 }

@@ -22,6 +22,7 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -52,10 +53,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -148,6 +152,7 @@ import org.likeapp.likeapp.util.Version;
 
 import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_ALLOW_HIGH_MTU;
 import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_DATEFORMAT;
+import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_LANGUAGE;
 import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_RESERVER_ALARMS_CALENDAR;
 import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_SYNC_CALENDAR;
 import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_TIMEFORMAT;
@@ -204,9 +209,9 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
     private RealtimeSamplesSupport realtimeSamplesSupport;
     private boolean alarmClockRinging;
 
-    private boolean isMusicAppStarted = false;
-    private MusicSpec bufferMusicSpec = null;
-    private MusicStateSpec bufferMusicStateSpec = null;
+    protected boolean isMusicAppStarted = false;
+    protected MusicSpec bufferMusicSpec = null;
+    protected MusicStateSpec bufferMusicStateSpec = null;
     private boolean heartRateNotifyEnabled;
     private int badAuthenticationCounter;
     private int mMTU = 23;
@@ -627,6 +632,10 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
      This works on all Huami devices except Mi Band 2
      */
     protected void sendNotificationNew(NotificationSpec notificationSpec, boolean hasExtraHeader) {
+        sendNotificationNew(notificationSpec, hasExtraHeader, 230);
+    }
+
+    protected void sendNotificationNew(NotificationSpec notificationSpec, boolean hasExtraHeader, int maxLength) {
 //        if (notificationSpec.type == NotificationType.GENERIC_ALARM_CLOCK) {
 //            onAlarmClock(notificationSpec);
 //            return;
@@ -639,7 +648,7 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
             message += StringUtils.truncate(notificationSpec.subject, 128) + "\n\n";
         }
         if (notificationSpec.body != null) {
-            message += StringUtils.truncate(notificationSpec.body, 128);
+            message += StringUtils.truncate(notificationSpec.body, 512);
         }
 
         try {
@@ -657,7 +666,6 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
                 alertCategory = AlertCategory.Email;
             }
 
-            int maxLength = 230;
             if (characteristicChunked != null) {
                 int prefixlength = 2;
 
@@ -690,6 +698,9 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
 
                 byte[] rawmessage = message.getBytes();
                 int length = Math.min(rawmessage.length, maxLength - prefixlength);
+                if (length < rawmessage.length) {
+                    length = StringUtils.utf8ByteLength(message, length);
+                }
 
                 byte[] command = new byte[length + prefixlength + suffixlength];
                 int pos = 0;
@@ -830,11 +841,12 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
             return;
         }
 
-        if (bufferMusicStateSpec != stateSpec) {
+        if (stateSpec != null && !stateSpec.equals(bufferMusicStateSpec)) {
             bufferMusicStateSpec = stateSpec;
-            sendMusicStateToDevice();
+            if (isMusicAppStarted) {
+                sendMusicStateToDevice(null, bufferMusicStateSpec);
+            }
         }
-
     }
 
     @Override
@@ -844,55 +856,60 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
             return;
         }
 
-        if (bufferMusicSpec != musicSpec) {
+        if (musicSpec != null && !musicSpec.equals(bufferMusicSpec)) {
             bufferMusicSpec = musicSpec;
+            if (bufferMusicStateSpec != null) {
+                bufferMusicStateSpec.state = 0;
+                bufferMusicStateSpec.position = 0;
+            }
             if (isMusicAppStarted) {
-                sendMusicStateToDevice();
+                sendMusicStateToDevice(bufferMusicSpec, bufferMusicStateSpec);
             }
         }
-
     }
 
 
     private void sendMusicStateToDevice() {
+        sendMusicStateToDevice(bufferMusicSpec, bufferMusicStateSpec);
+    }
+
+    protected void sendMusicStateToDevice(MusicSpec musicSpec, MusicStateSpec musicStateSpec) {
         if (characteristicChunked == null) {
             return;
         }
-        if (bufferMusicSpec == null || bufferMusicStateSpec == null) {
-            try {
-                TransactionBuilder builder = performInitialized("send dummy playback info to enable music controls");
-                writeToChunked(builder, 3, new byte[]{1, 0, 1, 0, 0, 0, 1, 0});
-                builder.queue(getQueue());
-            } catch (IOException e) {
-                LOG.error("Unable to send dummy music controls");
-            }
+
+        if (musicStateSpec == null) {
             return;
         }
 
         byte flags = 0x00;
         flags |= 0x01;
-        int length = 8;
-        if (bufferMusicSpec.track != null && bufferMusicSpec.track.getBytes().length > 0) {
-            length += bufferMusicSpec.track.getBytes().length + 1;
-            flags |= 0x02;
-        }
-        if (bufferMusicSpec.album != null && bufferMusicSpec.album.getBytes().length > 0) {
-            length += bufferMusicSpec.album.getBytes().length + 1;
-            flags |= 0x04;
-        }
-        if (bufferMusicSpec.artist != null && bufferMusicSpec.artist.getBytes().length > 0) {
-            length += bufferMusicSpec.artist.getBytes().length + 1;
-            flags |= 0x08;
+        int length = 5;
+        if (musicSpec != null) {
+            if (musicSpec.artist != null && musicSpec.artist.getBytes().length > 0) {
+                length += musicSpec.artist.getBytes().length + 1;
+                flags |= 0x02;
+            }
+            if (musicSpec.album != null && musicSpec.album.getBytes().length > 0) {
+                length += musicSpec.album.getBytes().length + 1;
+                flags |= 0x04;
+            }
+            if (musicSpec.track != null && musicSpec.track.getBytes().length > 0) {
+                length += musicSpec.track.getBytes().length + 1;
+                flags |= 0x08;
+            }
+            if (musicSpec.duration != 0) {
+                length += 2;
+                flags |= 0x10;
+            }
         }
 
-
-//        LOG.info("Music flags are: " + (flags & 0xff));
         try {
             ByteBuffer buf = ByteBuffer.allocate(length);
             buf.order(ByteOrder.LITTLE_ENDIAN);
             buf.put(flags);
             byte state;
-            switch (bufferMusicStateSpec.state) {
+            switch (musicStateSpec.state) {
                 case MusicStateSpec.STATE_PLAYING:
                     state = 1;
                     break;
@@ -901,24 +918,26 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
             }
 
             buf.put(state);
-            buf.put(new byte[]{0x1, 0x0, 0x0, 0x0}); //unknown
-            buf.put(new byte[]{0x1,0x0}); //show track
-//            buf.put(new byte[]{0x1,0x1}); //show album
+            buf.put((byte) 0);
+            buf.putShort((short) musicStateSpec.position);
 
-
-            if (bufferMusicSpec.track != null && bufferMusicSpec.track.getBytes().length > 0) {
-                buf.put(bufferMusicSpec.track.getBytes());
-                buf.put((byte) 0);
+            if (musicSpec != null) {
+                if (musicSpec.artist != null && musicSpec.artist.getBytes().length > 0) {
+                    buf.put(musicSpec.artist.getBytes());
+                    buf.put((byte) 0);
+                }
+                if (musicSpec.album != null && musicSpec.album.getBytes().length > 0) {
+                    buf.put(musicSpec.album.getBytes());
+                    buf.put((byte) 0);
+                }
+                if (musicSpec.track != null && musicSpec.track.getBytes().length > 0) {
+                    buf.put(musicSpec.track.getBytes());
+                    buf.put((byte) 0);
+                }
+                if (musicSpec.duration != 0) {
+                    buf.putShort((short) musicSpec.duration);
+                }
             }
-            if (bufferMusicSpec.album != null && bufferMusicSpec.album.getBytes().length > 0) {
-                buf.put(bufferMusicSpec.album.getBytes());
-                buf.put((byte) 0);
-            }
-            if (bufferMusicSpec.artist != null && bufferMusicSpec.artist.getBytes().length > 0) {
-                buf.put(bufferMusicSpec.artist.getBytes());
-                buf.put((byte) 0);
-            }
-
 
             TransactionBuilder builder = performInitialized("send playback info");
             writeToChunked(builder, 3, buf.array());
@@ -927,9 +946,7 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
         } catch (IOException e) {
             LOG.error("Unable to send playback state");
         }
-
-//        LOG.info("Sent music: " + bufferMusicSpec.toString() + " " + bufferMusicStateSpec.toString());
-
+        LOG.info("sendMusicStateToDevice: " + musicSpec + " " + musicStateSpec);
     }
 
     @Override
@@ -1205,7 +1222,7 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
 
         LikeAppDeviceEventDebugLog debugCommand = new LikeAppDeviceEventDebugLog ();
 
-        if (value [0] != HuamiDeviceEvent.DEBUG_LOG)
+        if (value [0] != HuamiDeviceEvent.DEBUG_LOG && value [0] != HuamiDeviceEvent.DEBUG_LOG_2)
         {
             debugCommand.value = value;
         }
@@ -1336,6 +1353,7 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
             }
 
             case HuamiDeviceEvent.DEBUG_DISPLAY_DATA:
+            case HuamiDeviceEvent.DEBUG_DISPLAY_DATA_2:
             {
                 debugCommand.displayData = value;
                 break;
@@ -1348,6 +1366,7 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
             }
 
             case HuamiDeviceEvent.APP_NAME:
+            case HuamiDeviceEvent.APP_NAME_2:
             {
                 appName.append (new String (value, 1, value.length - 1));
                 appData.reset ();
@@ -1355,6 +1374,7 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
             }
 
             case HuamiDeviceEvent.APP_DATA:
+            case HuamiDeviceEvent.APP_DATA_2:
             {
                 appData.write (value, 1, value.length - 1);
                 break;
@@ -1367,7 +1387,7 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
                     String nameAction = "ACTION";
                     if (appName.toString ().equals (nameAction))
                     {
-                        if ("com.android.vending".equals (getContext ().getPackageManager ().getInstallerPackageName (getContext ().getPackageName ())))
+//                        if ("com.android.vending".equals (getContext ().getPackageManager ().getInstallerPackageName (getContext ().getPackageName ())))
                         {
                             String packageName = "org.like" + "app.a" + "ction";
                             String permission = packageName + ".pe" + "rmission." + nameAction;
@@ -1395,10 +1415,38 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
                                                         Intent intent = new Intent (packageName + "." + nameAction);
                                                         intent.setPackage (packageName);
                                                         intent.putExtra ("ID", uid);
-                                                        intent.putExtra ("NAME", appData.toString ());
+
+                                                        byte[] b = appData.toByteArray ();
+                                                        String nameA = null;
+                                                        for (int i = 0; i < b.length; i++)
+                                                        {
+                                                            if (b[i] == 0)
+                                                            {
+                                                                nameA = new String (b, 0, i++, StandardCharsets.UTF_8);
+
+                                                                try
+                                                                {
+                                                                    intent.putExtra ("ACTION_INDEX", b[i++] & 0xff);
+                                                                    int image = (b[i++] & 0xff) | ((b[i++] & 0xff) << 8);
+                                                                    intent.putExtra ("ACTION_IMAGE", image);
+                                                                }
+                                                                catch (Exception ignored)
+                                                                {
+                                                                }
+
+                                                                break;
+                                                            }
+                                                        }
+
+                                                        if (nameA == null)
+                                                        {
+                                                            nameA = new String (b, StandardCharsets.UTF_8);
+                                                        }
+
+                                                        intent.putExtra ("NAME", nameA);
                                                         getContext ().sendBroadcast (intent);
 
-                                                        LOG.debug ("Send " + nameAction + ": " + appData.toString ());
+                                                        LOG.debug ("Send " + nameAction + ": " + nameA);
                                                         break;
                                                     }
                                                 }
@@ -2044,6 +2092,11 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
 
     @Override
     public void onSendConfiguration(String config) {
+        if (GBApplication.getPrefs ().getBoolean ("mi_dont_change_configuration", false))
+        {
+            return;
+        }
+
         TransactionBuilder builder;
         try {
             builder = performInitialized("Sending configuration for option: " + config);
@@ -2066,6 +2119,9 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
                     break;
                 case HuamiConst.PREF_DISPLAY_ITEMS:
                     setDisplayItems(builder);
+                    break;
+                case HuamiConst.PREF_SHORTCUTS:
+                    setShortcuts(builder);
                     break;
                 case MiBandConst.PREF_MI2_ROTATE_WRIST_TO_SWITCH_INFO:
                     setRotateWristToSwitchInfo(builder);
@@ -2099,7 +2155,7 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
                 case PREF_DATEFORMAT:
                     setDateFormat(builder);
                     break;
-                case HuamiConst.PREF_LANGUAGE:
+                case PREF_LANGUAGE:
                     setLanguage(builder);
                     break;
                 case HuamiConst.PREF_EXPOSE_HR_THIRDPARTY:
@@ -2253,7 +2309,9 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
 
         try {
             TransactionBuilder builder = performInitialized("Sending weather forecast");
-
+            if (weatherSpec.forecasts.size() > 6) { //TDOD: find out the limits for each device
+                weatherSpec.forecasts.subList(6, weatherSpec.forecasts.size()).clear();
+            }
             final byte NR_DAYS = (byte) (1 + weatherSpec.forecasts.size());
             int bytesPerDay = 4;
 
@@ -2476,7 +2534,9 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
     }
 
     protected HuamiSupport setDisplayItems(TransactionBuilder builder) {
-        Set<String> pages = HuamiCoordinator.getDisplayItems(gbDevice.getAddress());
+        SharedPreferences prefs = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress());
+        Set<String> pages = prefs.getStringSet(HuamiConst.PREF_DISPLAY_ITEMS, new HashSet<>(Arrays.asList(getContext().getResources().getStringArray(R.array.pref_mi2_display_items_default))));
+
         LOG.info("Setting display items to " + (pages == null ? "none" : pages));
 
         byte[] data = HuamiService.COMMAND_CHANGE_SCREENS.clone();
@@ -2497,9 +2557,13 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
             if (pages.contains(MiBandConst.PREF_MI2_DISPLAY_ITEM_BATTERY)) {
                 data[HuamiService.SCREEN_CHANGE_BYTE] |= HuamiService.DISPLAY_ITEM_BIT_BATTERY;
             }
+            builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_3_CONFIGURATION), data);
         }
 
-        builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_3_CONFIGURATION), data);
+        return this;
+    }
+
+    protected HuamiSupport setShortcuts(TransactionBuilder builder) {
         return this;
     }
 
@@ -2724,7 +2788,7 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
         return this;
     }
 
-    private void writeToChunked(TransactionBuilder builder, int type, byte[] data) {
+    protected void writeToChunked(TransactionBuilder builder, int type, byte[] data) {
         final int MAX_CHUNKLENGTH = mMTU - 6;
         int remaining = data.length;
         byte count = 0;
@@ -2777,6 +2841,7 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
     private String convertEmojiToCustomFont(String str) {
         StringBuilder sb = new StringBuilder();
         int i = 0;
+        str = str.replaceAll("[\uFE0E\uFE0F\\x{1F3FB}\\x{1F3FC}\\x{1F3FD}\\x{1F3FE}\\x{1F3FF}]", "");
         while (i < str.length()) {
             char charAt = str.charAt(i);
             if (Character.isHighSurrogate(charAt)) {

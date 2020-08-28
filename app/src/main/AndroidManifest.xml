@@ -368,9 +368,22 @@
         <receiver
             android:name=".externalevents.WeatherReceiver"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true"
+            android:permission="org.likeapp.action.permission.WEATHER">
             <intent-filter>
                 <action android:name="org.likeapp.likeapp.SET_WEATHER" />
+                <action android:name="org.likeapp.likeapp.REQUEST_WEATHER" />
+                <action android:name="org.likeapp.likeapp.REQUEST_VERSION" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".externalevents.ActionReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="org.likeapp.action.permission.ACTION">
+            <intent-filter>
+                <action android:name="org.likeapp.likeapp.ACTION_SMS_SEND_TO" />
             </intent-filter>
         </receiver>
 
@@ -398,7 +411,30 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
+                <action android:name="org.likeapp.likeapp.OPEN_DEVICE_SETTINGS" />
                 <action android:name="org.likeapp.likeapp.GET_SELECTED_DEVICE" />
+                <action android:name="org.likeapp.likeapp.DISPLAY_ITEMS_SORT" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".service.receivers.PreferencesReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="org.likeapp.PREFERENCES_SAVE" />
+                <action android:name="org.likeapp.PREFERENCES_REQUEST" />
+                <action android:name="org.likeapp.PREFERENCES_RESTORE" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".service.receivers.BabyMonitorReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="org.likeapp.action.permission.ACTION">
+            <intent-filter>
+                <action android:name="org.likeapp.likeapp.BABY_MONITOR" />
             </intent-filter>
         </receiver>
 
@@ -412,6 +448,13 @@
             android:parentActivityName=".activities.ControlCenterv2"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.AboutActivity"
+            android:label="@string/about_activity_title"
+            android:parentActivityName=".activities.ControlCenterv2"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+
         <activity
             android:name=".activities.DbManagementActivity"
             android:label="@string/title_activity_db_management"
@@ -437,6 +480,12 @@
         <activity
             android:name=".devices.watch9.Watch9CalibrationActivity"
             android:label="@string/title_activity_watch9_calibration" />
+        <activity
+            android:name=".devices.lenovo.LenovoWatchPairingActivity"
+            android:label="@string/title_activity_watch9_pairing"  />
+        <activity
+            android:name=".devices.lenovo.LenovoWatchCalibrationActivity"
+            android:label="@string/title_activity_LenovoWatch_calibration"  />
         <activity
             android:name=".activities.charts.ChartsActivity"
             android:label="@string/title_activity_charts"
@@ -538,6 +587,9 @@
             android:exported="true" />
         <activity
             android:name=".devices.qhybrid.HRConfigActivity"
+            android:exported="true" />
+        <activity
+            android:name=".devices.qhybrid.ImageEditActivity"
             android:exported="true" />
     </application>
 

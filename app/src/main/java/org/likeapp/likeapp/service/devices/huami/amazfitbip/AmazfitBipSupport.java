@@ -18,17 +18,21 @@
 package org.likeapp.likeapp.service.devices.huami.amazfitbip;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 
+import org.likeapp.likeapp.GBApplication;
 import org.likeapp.likeapp.R;
+import org.likeapp.likeapp.devices.huami.HuamiConst;
 import org.likeapp.likeapp.service.audio.MicReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
-import org.likeapp.likeapp.devices.huami.HuamiCoordinator;
 import org.likeapp.likeapp.devices.huami.HuamiFWHelper;
 import org.likeapp.likeapp.devices.huami.HuamiService;
 import org.likeapp.likeapp.devices.huami.amazfitbip.AmazfitBipFWHelper;
@@ -76,9 +80,24 @@ public class AmazfitBipSupport extends HuamiSupport {
             return this;
         }
 
-        Set<String> pages = HuamiCoordinator.getDisplayItems(gbDevice.getAddress());
+        SharedPreferences prefs = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress());
+        String[] items = getContext().getResources().getStringArray(R.array.pref_bip_display_items_default);
+        Set<String> pages = prefs.getStringSet(HuamiConst.PREF_DISPLAY_ITEMS, new HashSet<>(Arrays.asList(items)));
+
         LOG.info("Setting display items to " + (pages == null ? "none" : pages));
         byte[] command = AmazfitBipService.COMMAND_CHANGE_SCREENS.clone();
+
+        String sort = prefs.getString (HuamiConst.PREF_DISPLAY_ITEMS_SORT, "");
+        assert sort != null;
+
+        for (int i = 0; i < items.length; i++)
+        {
+            int index = sort.indexOf (items[i]);
+            if (index > 0)
+            {
+                command[i + 4] = (byte) (sort.charAt (index - 1) - '0');
+            }
+        }
 
         boolean shortcut_weather = false;
         boolean shortcut_alipay = false;
@@ -114,9 +133,9 @@ public class AmazfitBipSupport extends HuamiSupport {
             if (pages.contains("shortcut_alipay")) {
                 shortcut_alipay = true;
             }
+            builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_3_CONFIGURATION), command);
+            setShortcuts(builder, shortcut_weather, shortcut_alipay);
         }
-        builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_3_CONFIGURATION), command);
-        setShortcuts(builder, shortcut_weather, shortcut_alipay);
 
         return this;
     }
@@ -124,11 +143,17 @@ public class AmazfitBipSupport extends HuamiSupport {
     private void setShortcuts(TransactionBuilder builder, boolean weather, boolean alipay) {
         LOG.info("Setting shortcuts: weather=" + weather + " alipay=" + alipay);
 
+        SharedPreferences prefs = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress());
+        boolean exchange = weather && alipay && prefs.getBoolean (HuamiConst.PREF_DISPLAY_SHORTCUTS_EXCHANGE, false);
+
+        byte codeWeather = (byte) (exchange ? 1 : 2);
+        byte codeAlipay = (byte) (exchange ? 2 : 1);
+
         // Basically a hack to put weather first always, if alipay is the only enabled one
         // there are actually two alipays set but the second one disabled.... :P
         byte[] command = new byte[]{0x10,
-                (byte) ((alipay || weather) ? 0x80 : 0x00), (byte) (weather ? 0x02 : 0x01),
-                (byte) ((alipay && weather) ? 0x81 : 0x01), 0x01,
+                (byte) ((alipay || weather) ? 0x80 : 0x00), weather ? codeWeather : codeAlipay,
+                (byte) ((alipay && weather) ? 0x81 : 0x01), codeAlipay,
         };
 
         builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_3_CONFIGURATION), command);

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2017-2020 protomors
+/*  Copyright (C) 2017-2020 Andreas Shimokawa, protomors
 
     This file is part of Gadgetbridge.
 
@@ -18,18 +18,14 @@ package org.likeapp.likeapp.database.schema;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import org.likeapp.likeapp.database.DBHelper;
 import org.likeapp.likeapp.database.DBUpdateScript;
-import org.likeapp.likeapp.entities.No1F1ActivitySampleDao;
 
-public class GadgetbridgeUpdate_17 implements DBUpdateScript {
+public class LikeAppUpdate_24 implements DBUpdateScript
+{
     @Override
     public void upgradeSchema(SQLiteDatabase db) {
-        if (!DBHelper.existsColumn(No1F1ActivitySampleDao.TABLENAME, No1F1ActivitySampleDao.Properties.HeartRate.columnName, db)) {
-            String ADD_COLUMN_HEART_RATE = "ALTER TABLE " + No1F1ActivitySampleDao.TABLENAME + " ADD COLUMN "
-                    + No1F1ActivitySampleDao.Properties.HeartRate.columnName + " INTEGER NOT NULL DEFAULT 0;";
-            db.execSQL(ADD_COLUMN_HEART_RATE);
-        }
+        // Probably it isbetter to hardcode then using constants since constants could change after refactoring and potentially break migration
+        db.execSQL("UPDATE DEVICE SET Type=170 where (Type=80 and Manufacturer like 'Fossil%')");
     }
 
     @Override

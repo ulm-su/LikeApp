@@ -16,9 +16,15 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package org.likeapp.likeapp.model;
 
+import android.content.Context;
+import android.preference.PreferenceManager;
+
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import su.ulm.android.lib.ClientLog;
 
 public class NotificationSpec {
     public int flags;
@@ -61,7 +67,7 @@ public class NotificationSpec {
         return id;
     }
 
-    public static class Action implements Serializable {
+  public static class Action implements Serializable {
         static final int TYPE_UNDEFINED = -1;
         public static final int TYPE_WEARABLE_SIMPLE = 0;
         public static final int TYPE_WEARABLE_REPLY = 1;

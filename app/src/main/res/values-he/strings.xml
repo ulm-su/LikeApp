@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Gadgetbridge</string>
-    <string name="title_activity_controlcenter">Gadgetbridge</string>
+    <string name="app_name">LikeApp</string>
+    <string name="title_activity_controlcenter">LikeApp</string>
     <string name="action_settings">הגדרות</string>
     <string name="action_debug">ניפוי שגיאות</string>
     <string name="action_quit">יציאה</string>
@@ -840,4 +840,71 @@
     <string name="pref_title_upper_button_function">כפתור עליון</string>
     <string name="pref_title_middle_button_function">כפתור אמצעי</string>
     <string name="pref_title_lower_button_function">כפתור תחתון</string>
+    <string name="pref_title_vibration_strength">עצמת הרטט</string>
+    <string name="devicetype_amazfit_bips">Amazfit Bip S</string>
+    <string name="pref_title_relax_firmware_checks">יש להפעיל זאת אם מטרתך היא לצרוב קושחה שאינה מיועדת להתקן שלך (באחריותך הבלעדית)</string>
+    <string name="pref_summary_relax_firmware_checks">הפחתת בדיקות חומרה</string>
+    <string name="pref_header_auto_fetch">קבלה אוטומטית</string>
+    <string name="pref_qhybrid_title_widget_draw_circles">ציור עיגולי וידג׳טים</string>
+    <string name="pref_qhybrid_save_raw_activity_files">שמירת קובצי פעילות גולמיים</string>
+    <string name="menuitem_workout">התעמלות</string>
+    <string name="menuitem_eventreminder">תזכורת אירועים</string>
+    <string name="menuitem_hr">דופק</string>
+    <string name="menuitem_pai">בינת פעילות</string>
+    <string name="devicetype_watchxplus">Watch X Plus</string>
+    <string name="devicetype_watchx">Watch X</string>
+    <string name="power_mode_title">צריכת חשמל בשעון</string>
+    <string name="pref_summary_notifications_and_calls_title_shake_reject">כפיל של פעולת כפתור השעון</string>
+    <string name="power_mode_watch">שעון בלבד</string>
+    <string name="power_mode_saving">חיסכון בחשמל</string>
+    <string name="power_mode_normal">רגיל</string>
+    <string name="prefs_sensors_button_bp_calibration_sum">יש ללחוץ כאן כדי להתחיל כיול</string>
+    <string name="prefs_sensors_button_bp_calibration">כיול</string>
+    <string name="pref_sensors_bp_calibration_high">לחץ דם סיסטולי (גבוה)</string>
+    <string name="pref_sensors_bp_calibration_low">לחץ דם דיאסטולי (נמוך)</string>
+    <string name="pref_sensors_bp_calibration">כיוון לחץ דם</string>
+    <string name="pref_title_sensors_altitude">כיוון גובה</string>
+    <string name="pref_summary_device_spec_settings_title_force_time">אילוץ סנכרון השעון בעת התחברות מחדש. מחוגים אנלוגיים עשויים להציג שעה שגויה!</string>
+    <string name="pref_header_sensors_calibration">כיול חיישנים</string>
+    <string name="pref_title_device_spec_settings_force_time">אילוץ סנכרון השעון</string>
+    <string name="pref_header_device_spec_settings">הגדרות התקן</string>
+    <string name="prefs_notifications_and_calls_shake_reject">ניעור פרק כף היד כדי להתעלם/לדחות שיחות</string>
+    <string name="pref_summary_notifications_and_calls_title_reject">כבוי - התעלמות, פעיל - דחייה</string>
+    <string name="prefs_notifications_and_calls_reject">התעלמות/דחייה עם כפתור</string>
+    <string name="pref_header_notifications_and_calls_callhandling">טיפול בשיחות</string>
+    <string name="pref_title_notifications_and_calls_repeat_on_misscall">חזרה למשך X דקות</string>
+    <string name="pref_summary_notifications_and_calls_enable_misscall">חוזרת כל דקה</string>
+    <string name="pref_notifications_and_calls_enable_misscall">התראה על שיחה שהוחמצה</string>
+    <string name="pref_header_notifications_and_calls">התראות ושיחות</string>
+    <string name="pref_title_notifications_and_calls_repeat_on_call">חזרה על התראות על שיחות</string>
+    <string name="prefs_notifications_and_calls_continious_ring">התראה במהלך צלצול טלפון</string>
+    <string name="title_activity_LenovoWatch_calibration">כיול Watch X Plus</string>
+    <string name="pref_title_device_spec_settings_show_raw_graph">הצגת נתונים גולמיים בתרשים הפעילות</string>
+    <string name="pref_theme_system">מערכת</string>
+    <string name="hungarian">הונגרית</string>
+    <string name="romanian">רומנית</string>
+    <string name="czesh">צ׳כית</string>
+    <string name="swedish">שבדית</string>
+    <string name="hebrew">עברית</string>
+    <string name="greek">יוונית</string>
+    <string name="menuitem_unknown">לא ידוע</string>
+    <string name="bip_prefs_shotcuts_summary">נא לבחור את קיצורי הדרך על מסך הצמיד</string>
+    <string name="bip_prefs_shortcuts">קיצורי דרך</string>
+    <string name="hr_widget_last_notification">התראה אחרונה</string>
+    <string name="controlcenter_set_alias">הגדרת כינוי</string>
+    <string name="fw_upgrade_notice_amazfit_trex">פעולה זו תתקין את הקושחה %s ב־Amazfit T-Rex שלך. 
+\n 
+\nנא לוודא את התקנת קובץ ה־‎.fw בהתחלה, לאחר מכן את קובץ ה־‎.res ולבסוף קובץ ה־‎.gps השעון שלך יופעל מחדש לאחר התקנת קובץ ה־fw. 
+\n 
+\nלתשומת לבך: אין צורך בהתקנת קובצי ה־‎.res וה־‎.gps אם הם כבר זהים לאלו שהתקנת בעבר. 
+\n 
+\nהמשך התהליך הוא על אחריותך!</string>
+    <string name="devicetype_amazfit_trex">Amazfit T-Rex</string>
+    <string name="about_additional_contributions">תודתנו נתונה לכל התורמים שתרמו קוד, תמיכה, רעיונות, מוטיבציה, דיווחי תקלות, כסף… ✊</string>
+    <string name="about_additional_device_support">תמיכה במכשירים נוספים</string>
+    <string name="about_contributors">תורמים</string>
+    <string name="about_core_team_title">צוות הליבה (מסודרים לפי מועד תרומת הקוד הראשונה)</string>
+    <string name="about_description">חלופה חופשית ונטולת ענן ליישומוני ה־Android עם הקוד הסגור של ספק הגאדג׳טים שלך.</string>
+    <string name="about_activity_title">על אודות Gadgetbridge</string>
+    <string name="about_title">על אודות</string>
 </resources>

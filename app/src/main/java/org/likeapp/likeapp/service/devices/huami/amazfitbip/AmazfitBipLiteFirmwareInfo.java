@@ -16,17 +16,19 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package org.likeapp.likeapp.service.devices.huami.amazfitbip;
 
+import org.likeapp.likeapp.GBApplication;
+import org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst;
 import org.likeapp.likeapp.impl.GBDevice;
 import org.likeapp.likeapp.model.DeviceType;
 import org.likeapp.likeapp.service.devices.huami.HuamiFirmwareInfo;
 import org.likeapp.likeapp.service.devices.huami.HuamiFirmwareType;
 import org.likeapp.likeapp.util.ArrayUtils;
+import org.likeapp.likeapp.util.Prefs;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class AmazfitBipLiteFirmwareInfo extends HuamiFirmwareInfo
-{
+public class AmazfitBipLiteFirmwareInfo extends HuamiFirmwareInfo {
     // this is the same as Bip and Cor
     private static final byte[] FW_HEADER = new byte[]{
             0x00, (byte) 0x98, 0x00, 0x20, (byte) 0xA5, 0x04, 0x00, 0x20, (byte) 0xAD, 0x04, 0x00, 0x20, (byte) 0xC5, 0x04, 0x00, 0x20
@@ -65,6 +67,15 @@ public class AmazfitBipLiteFirmwareInfo extends HuamiFirmwareInfo
         if (ArrayUtils.startsWith(bytes, FW_HEADER)) {
             if (searchString32BitAligned(bytes, "Amazfit Bip Lite")) {
                 return HuamiFirmwareType.FIRMWARE;
+            }
+            GBDevice device = GBApplication.app().getDeviceManager().getSelectedDevice();
+            if (device != null) {
+                Prefs prefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(device.getAddress()));
+                if (prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_RELAX_FIRMWARE_CHECKS, false)) {
+                    if (searchString32BitAligned(bytes, "Amazfit Bip")) {
+                        return HuamiFirmwareType.FIRMWARE;
+                    }
+                }
             }
             return HuamiFirmwareType.INVALID;
         }

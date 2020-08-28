@@ -445,6 +445,11 @@ public class Weather {
 
     public static String getConditionString(int openWeatherMapCondition) {
         Prefs prefs = GBApplication.getPrefs ();
+        if (!prefs.getBoolean ("weather_phrases", true))
+        {
+            return "";
+        }
+
         String lang = prefs.getString("weather_language", "en");
         boolean shortPhrases = prefs.getBoolean ("weather_short_phrases", false);
 
@@ -452,158 +457,158 @@ public class Weather {
             if (!shortPhrases)
             switch (openWeatherMapCondition) {
                 case 200:
-                    return "гроза с небольшим дождём";
+                    return "дoждь c гpoзой";
                 case 201:
-                    return "гроза с дождем";
+                    return "дoждь c гpoзой";
                 case 202:
-                    return "гроза с проливным дождём";
+                    return "ливeнь, гpoза";
                 case 210:
-                    return "легкая гроза";
+                    return "лeгк.гpoза";
                 case 211:
-                    return "гроза";
+                    return "гpoза";
                 case 230:
-                    return "гроза с лёгкой моросью";
+                    return "гpoза,мopocь";
                 case 231:
-                    return "гроза с моросью";
+                    return "гpoза,мopocь";
                 case 232:
-                    return "гроза с сильным моросящим дождём";
+                    return "дoждь c гpoзой";
                 case 212:
-                    return "сильная гроза";
+                    return "cильн.гpoза";
                 case 221:
-                    return "рваная гроза";
+                    return "pвaнaя гpoза";
                 //Group 3xx: Drizzle
                 case 300:
-                    return "лёгкая морось";
+                    return "лeгк.мopocь";
                 case 301:
-                    return "морось";
+                    return "мopocь";
                 case 302:
-                    return "сильная морось";
+                    return "cильн.мopocь";
                 case 310:
-                    return "лёгкий моросящий дождь";
+                    return "лeгк.дoждь";
                 case 311:
-                    return "моросящий дождь";
+                    return "мopoc.дoждь";
                 case 312:
-                    return "сильный моросящий дождь";
+                    return "мopoc.дoждь";
                 case 313:
-                    return "ливень и морось";
+                    return "ливeнь,мopocь";
                 case 314:
-                    return "сильный ливень и морось";
+                    return "ливeнь, мopocь";
                 case 321:
-                    return "моросящий дождь";
+                    return "мopoc.дoждь";
                 //Group 5xx: Rain
                 case 500:
-                    return "лёгкий дождь";
+                    return "лeгк.дoждь";
                 case 501:
-                    return "дождь";
+                    return "дoждь";
                 case 502:
-                    return "сильный дождь";
+                    return "cильн.дoждь";
                 case 503:
-                    return "очень сильный дождь";
+                    return "ливeнь";
                 case 504:
-                    return "экстримальный дождь";
+                    return "cильн.ливeнь";
                 case 511:
-                    return "холодный дождь";
+                    return "xoлoд.дoждь";
                 case 520:
-                    return "лёгкий дождь";
+                    return "лeгк.дoждь";
                 case 521:
-                    return "ливень";
+                    return "ливeнь";
                 case 522:
-                    return "сильный ливень";
+                    return "cильн.ливeнь";
                 case 531:
-                    return "рваный ливень";
+                    return "pвaн.ливeнь";
                 //Group 6xx: Snow
                 case 600:
-                    return "небольшой снег";
+                    return "нeбoльш.cнeг";
                 case 601:
-                    return "снег";
+                    return "cнeг";
                 case 620:
-                    return "лёгкий снегопад";
+                    return "лeгк.cнeгoпaд";
                 case 602:
-                    return "сильный снег";
+                    return "cильн.cнeг";
                 case 611:
-                    return "дождь со снегом";
+                    return "cнeг c дoждeм";
                 case 612:
-                    return "ливень со снегом";
+                    return "cнeг c ливнeм";
                 case 621:
-                    return "снегопад";
+                    return "cнeгoпaд";
                 case 622:
-                    return "сильный снегопад";
+                    return "cильн.cнeг";
                 case 615:
-                    return "лёгкий дождь со снегом";
+                    return "cнeг c дoждeм";
                 case 616:
-                    return "дождь со снегом";
+                    return "cнeг c дoждeм";
                 //Group 7xx: Atmosphere
                 case 701:
-                    return "туман";
+                    return "тyмaн";
                 case 711:
-                    return "туман";
+                    return "тyмaн";
                 case 721:
-                    return "густой туман";
+                    return "гycтoй тyмaн";
                 case 731:
-                    return "песчанная буря";
+                    return "пecч.бypя";
                 case 741:
-                    return "густой туман";
+                    return "гycтoй тyмaн";
                 case 751:
-                    return "песок";
+                    return "пecoк";
                 case 761:
                     return "пыль";
                 case 762:
-                    return "вулканический пепел";
+                    return "вyлк.пeпeл";
                 case 771:
-                    return "шквал";
+                    return "шквaл";
                 case 781:
-                    return "торнадо";
+                    return "тopнaдo";
                 case 900:
-                    return "торнадо";
+                    return "тopнaдo";
                 case 800:
-                    return "чистое небо";
+                    return "чиcтoe нeбo";
                 //Group 80x: Clouds
                 case 801:
-                    return "малооблачно";
+                    return "мaлooблaчнo";
                 case 802:
-                    return "рассеянные облака";
+                    return "pacceян.oблaч.";
                 case 803:
-                    return "облачность";
+                    return "oблaчнo";
                 case 804:
-                    return "пасмурно";
+                    return "пacмypнo";
                 //Group 90x: Extreme
                 case 901:
-                    return "тропический шторм";
+                    return "тpoпич. штopм";
                 case 903:
-                    return "холодно";
+                    return "xoлoд";
                 case 904:
-                    return "жарко";
+                    return "жapa";
                 case 905:
-                    return "ветренно";
+                    return "вeтpeннo";
                 case 906:
-                    return "град";
+                    return "гpaд";
                 //Group 9xx: Additional
                 case 951:
                     return "штиль";
                 case 952:
-                    return "лёгкий ветер";
+                    return "лeгк.вeтep";
                 case 953:
-                    return "слабый ветер";
+                    return "слабый вeтep";
                 case 954:
-                    return "ветер";
+                    return "вeтep";
                 case 955:
-                    return "свежий бриз";
+                    return "cвeжий бpиз";
                 case 956:
-                    return "сильный ветер";
+                    return "cильн.вeтep";
                 case 957:
-                    return "штормовой ветер";
+                    return "штopм.вeтep";
                 case 958:
-                    return "шторм";
+                    return "штopм";
                 case 959:
-                    return "сильный шторм";
+                    return "cильн.штopм";
                 case 960:
-                    return "шторм";
+                    return "штopм";
                 case 961:
-                    return "сильный шторм";
+                    return "cильн.штopм";
                 case 902:
-                    return "ураган";
+                    return "ypaгaн";
                 case 962:
-                    return "ураган";
+                    return "ypaгaн";
             }
 
             switch (openWeatherMapCondition)
@@ -922,6 +927,165 @@ public class Weather {
                     return "huracán";
             }
         }
+        else if ("it".equals (lang))
+        {
+            switch (openWeatherMapCondition)
+            {
+                case 200:
+                    return "temporale con pioggia leggera";
+                case 201:
+                    return "temporale con pioggia";
+                case 202:
+                    return "temporale con forti piogge";
+                case 210:
+                    return "temporale leggero:";
+                case 211:
+                    return "temporale";
+                case 230:
+                    return "temporale con leggera pioviggine";
+                case 231:
+                    return "temporale con pioviggine";
+                case 232:
+                    return "temporale con forte pioviggine";
+                case 212:
+                    return "temporale forte";
+                case 221:
+                    return "temporali irregolari";
+                //Group 3xx: Drizzle
+                case 300:
+                    return "pioviggine leggera";
+                case 301:
+                    return "pioviggine";
+                case 302:
+                    return "pioviggine intensa";
+                case 310:
+                    return "pioggia leggera";
+                case 311:
+                    return "pioviggine";
+                case 312:
+                    return "pioggia pioviggine intensa";
+                case 313:
+                    return "pioggia, pioggia e pioggia";
+                case 314:
+                    return "pioggia battente";
+                case 321:
+                    return "pioggia a catinelle";
+                //Group 5xx: Rain
+                case 500:
+                    return "pioggia leggera";
+                case 501:
+                    return "pioggia moderata";
+                case 502:
+                    return "pioggia intensa";
+                case 503:
+                    return "pioggia molto intensa";
+                case 504:
+                    return "pioggia estrema";
+                case 511:
+                    return "pioggia gelata";
+                case 520:
+                    return "pioggia di intensitа della luce";
+                case 521:
+                    return "pioggia pioggia";
+                case 522:
+                    return "pioggia intensa";
+                case 531:
+                    return "pioggia irregolare";
+                //Group 6xx: Snow
+                case 600:
+                    return "neve leggera";
+                case 601:
+                    return "neve";
+                case 620:
+                    return "neve leggera";
+                case 602:
+                    return "forti nevicate";
+                case 611:
+                    return "nevischio";
+                case 612:
+                    return "nevischio intenso";
+                case 621:
+                    return "neve intensa";
+                case 622:
+                    return "neve molto intensa";
+                case 615:
+                    return "pioggia leggera e neve";
+                case 616:
+                    return "pioggia e neve";
+                //Group 7xx: Atmosphere
+                case 701:
+                    return "mist";
+                case 711:
+                    return "fumo";
+                case 721:
+                    return "foschia";
+                case 731:
+                    return "piccoli vortici di polvere";
+                case 741:
+                    return "nebbia";
+                case 751:
+                    return "sabbia";
+                case 761:
+                    return "polvere";
+                case 762:
+                    return "cenere vulcanica";
+                case 771:
+                    return "burrasche";
+                case 781:
+                    return "tornado";
+                case 900:
+                    return "tornado";
+                case 800:
+                    return "cielo sereno";
+                //Group 80x: Clouds
+                case 801:
+                    return "poche nuvole";
+                case 802:
+                    return "nuvole sparse";
+                case 803:
+                    return "nuvole irregolari";
+                case 804:
+                    return "molte nuvole";
+                //Group 90x: Extreme
+                case 901:
+                    return "tempesta tropicale";
+                case 903:
+                    return "freddo";
+                case 904:
+                    return "caldo";
+                case 905:
+                    return "ventoso";
+                case 906:
+                    return "grandine";
+                //Group 9xx: Additional
+                case 951:
+                    return "calma";
+                case 952:
+                    return "brezza leggera";
+                case 953:
+                    return "brezza leggera";
+                case 954:
+                    return "brezza moderata";
+                case 955:
+                    return "brezza fresca";
+                case 956:
+                    return "forte brezza";
+                case 957:
+                    return "vento forte vicino alla tempesta";
+                case 958:
+                    return "burrasca";
+                case 959:
+                    return "forte burrasca";
+                case 960:
+                    return "tempesta";
+                case 961:
+                    return "violenta tempesta";
+                case 902:
+                    return "uragano";
+                case 962:
+                    return "uragano";
+            }
+        }
         else if ("pl".equals (lang))
         {
             switch (openWeatherMapCondition)
@@ -1079,6 +1243,324 @@ public class Weather {
                     return "huragan";
                 case 962:
                     return "huragan";
+            }
+        }
+        else if ("hy".equals (lang))
+        {
+            switch (openWeatherMapCondition)
+            {
+                case 200:
+                    return "ամպրոպ և թեթև անձրև";
+                case 201:
+                    return "ամպրոպ և անձրև";
+                case 202:
+                    return "ամպրոպ և հորդառատ անձրև";
+                case 210:
+                    return "թեթև ամպրոպ";
+                case 211:
+                    return "ամպրոպ";
+                case 230:
+                    return "թեթև անձրև և ամպրոպ";
+                case 231:
+                    return "անձրև և ամպրոտ";
+                case 232:
+                    return "հորդառատ անձրև և ամպրոպ";
+                case 212:
+                    return "ուժեղ ամպրոպ";
+                case 221:
+                    return "կտրտված ամպրոպ";
+                //Group 3xx: Drizzle
+                case 300:
+                    return "թեթև ինտենսիվ անձրև";
+                case 301:
+                    return "մանր անձրև";
+                case 302:
+                    return "հորդառատ ինտենսիվ անձրև";
+                case 310:
+                    return "թեթև ինտենսիվ սառը անձրև";
+                case 311:
+                    return "սառը անձրև";
+                case 312:
+                    return "հորդառատ ինտենսիվ սառը անձրև";
+                case 313:
+                    return "սառը անձրև";
+                case 314:
+                    return "հորդառատ սառը անձրև";
+                case 321:
+                    return "shower drizzle";
+                //Group 5xx: Rain
+                case 500:
+                    return "թեթև անձրև";
+                case 501:
+                    return "չափավոր անձրև";
+                case 502:
+                    return "ուժեղ ինտենսիվ անձրև";
+                case 503:
+                    return "շատ ուժեղ անձրև";
+                case 504:
+                    return "էքստրեմալ անձրև";
+                case 511:
+                    return "սառեցնող անձրև";
+                case 520:
+                    return "թեթև ինտենսիվ անձրև";
+                case 521:
+                    return "հորդառատ անձրև";
+                case 522:
+                    return "հորդառատ ինտենսիվ անձրև";
+                case 531:
+                    return "ցնցուղով անձրև";
+                //Group 6xx: Snow
+                case 600:
+                    return "թեթև ձյուն";
+                case 601:
+                    return "ձյուն";
+                case 620:
+                    return "թեթև անձրև և ձյուն";
+                case 602:
+                    return "հորդառատ ձյուն";
+                case 611:
+                    return "մանրակարկուտ";
+                case 612:
+                    return "հորդառատ թաց ձյուն";
+                case 621:
+                    return "տեղատարափ ձյուն";
+                case 622:
+                    return "տեղատարափ ձյուն";
+                case 615:
+                    return "թեթև անձրև և ձյուն";
+                case 616:
+                    return "անձրև և ձյուն";
+                //Group 7xx: Atmosphere
+                case 701:
+                    return "մառախուղ";
+                case 711:
+                    return "ծուխ";
+                case 721:
+                    return "թեթև մառախուղ";
+                case 731:
+                    return "պտտվող ավազի փոշի";
+                case 741:
+                    return "մառախուղ";
+                case 751:
+                    return "ավազ";
+                case 761:
+                    return "փոշի";
+                case 762:
+                    return "հրաբխային մոխիր";
+                case 771:
+                    return "տարափ";
+                case 781:
+                    return "տորնադո";
+                case 900:
+                    return "տորնադո";
+                case 800:
+                    return "պայծառ երկինք";
+                //Group 80x: Clouds
+                case 801:
+                    return "թեթև ամպեր";
+                case 802:
+                    return "ցրված ամպեր";
+                case 803:
+                    return "ցրված ամպեր";
+                case 804:
+                    return "ամպամած";
+                //Group 90x: Extreme
+                case 901:
+                    return "արևադարձային փոթորիկ";
+                case 903:
+                    return "ցուրտ";
+                case 904:
+                    return "տապ";
+                case 905:
+                    return "քամոտ";
+                case 906:
+                    return "կարկուտ";
+                //Group 9xx: Additional
+                case 951:
+                    return "հանգիստ եղանակ";
+                case 952:
+                    return "թեթև քամի";
+                case 953:
+                    return "թույլ քամի";
+                case 954:
+                    return "չափավոր քամի";
+                case 955:
+                    return "թարմեցնող քամի";
+                case 956:
+                    return "ուժեղ քամի";
+                case 957:
+                    return "փոթորիկին մոտ քամի";
+                case 958:
+                    return "փոթորիկ";
+                case 959:
+                    return "ուժեղ փոթորիկ";
+                case 960:
+                    return "փոթորիկ";
+                case 961:
+                    return "վտանգավոր փոթորիկ";
+                case 902:
+                    return "մրրիկ";
+                case 962:
+                    return "մրրիկ";
+            }
+        }
+        else if ("pt".equals (lang) || "pt-br".equals (lang))
+        {
+            switch (openWeatherMapCondition)
+            {
+                case 200:
+                    return "Trovoada com chuva fraca";
+                case 201:
+                    return "Trovoada com chuva";
+                case 202:
+                    return "Trovoada com chuva forte";
+                case 210:
+                    return "Trovoada leve:";
+                case 211:
+                    return "Trovoada";
+                case 230:
+                    return "Trovoada com garoa leve";
+                case 231:
+                    return "Trovoada com garoa";
+                case 232:
+                    return "Trovoada com garoa pesada";
+                case 212:
+                    return "Trovoada intensa";
+                case 221:
+                    return "Tempestade irregular";
+                //Group 3xx: Garoa
+                case 300:
+                    return "Garoa leve";
+                case 301:
+                    return "Garoa";
+                case 302:
+                    return "Garoa pesada";
+                case 310:
+                    return "Garoa leve com chuva";
+                case 311:
+                    return "Garoa com chuva";
+                case 312:
+                    return "Garoa pesada com chuva";
+                case 313:
+                    return "Chuvas isoladas com garoa";
+                case 314:
+                    return "Chuvas isoladas pesadas com garoa";
+                case 321:
+                    return "Garoas isoladas";
+                //Group 5xx: Chuva
+                case 500:
+                    return "Chuva leve";
+                case 501:
+                    return "Chuva moderada";
+                case 502:
+                    return "Chuva pesada";
+                case 503:
+                    return "Chuva intensa";
+                case 504:
+                    return "Chuva muito intensa";
+                case 511:
+                    return "Chuva congelante";
+                case 520:
+                    return "Chuvas isoladas leves";
+                case 521:
+                    return "Chuvas isoladas";
+                case 522:
+                    return "Chuva isoladas intensas";
+                case 531:
+                    return "Chuvas isoladas irregulares";
+                //Group 6xx: Snow
+                case 600:
+                    return "Neve leve";
+                case 601:
+                    return "Neve";
+                case 620:
+                    return "Neve isolada leve";
+                case 602:
+                    return "Neve pesada";
+                case 611:
+                    return "Granizo";
+                case 612:
+                    return "Granizo isolado";
+                case 621:
+                    return "Neve isolada";
+                case 622:
+                    return "Neve isolada pesada";
+                case 615:
+                    return "Chuva leve com neve";
+                case 616:
+                    return "Chuva e neve";
+                //Group 7xx: Atmosfera
+                case 701:
+                    return "Nevoa";
+                case 711:
+                    return "Fumaca";
+                case 721:
+                    return "Neblina";
+                case 731:
+                    return "Redemoinho de areia";
+                case 741:
+                    return "Nevoeiro";
+                case 751:
+                    return "Areia";
+                case 761:
+                    return "Poeira";
+                case 762:
+                    return "Cinzas vulcanicas";
+                case 771:
+                    return "Rajadas";
+                case 781:
+                    return "Tornado";
+                case 900:
+                    return "Tornado";
+                case 800:
+                    return "Ceu limpo";
+                //Group 80x: Nuvens
+                case 801:
+                    return "Poucas nuvens";
+                case 802:
+                    return "Nuvens esparsas";
+                case 803:
+                    return "Ceu nebuloso";
+                case 804:
+                    return "Ceu encoberto";
+                //Group 90x: Extremo
+                case 901:
+                    return "Tempestade tropical";
+                case 903:
+                    return "Frio";
+                case 904:
+                    return "Quente";
+                case 905:
+                    return "Ventania";
+                case 906:
+                    return "Pedras de gelo";
+                //Group 9xx: Adicional
+                case 951:
+                    return "Calmo";
+                case 952:
+                    return "Brisa leve";
+                case 953:
+                    return "Brisa suave";
+                case 954:
+                    return "Brisa moderada";
+                case 955:
+                    return "Brisa fresca";
+                case 956:
+                    return "Brisa forte";
+                case 957:
+                    return "Ventania proxima de vendaval";
+                case 958:
+                    return "Vendaval";
+                case 959:
+                    return "Vendaval severo";
+                case 960:
+                    return "Tempestade";
+                case 961:
+                    return "Tempestade severa";
+                case 902:
+                    return "Furacao";
+                case 962:
+                    return "Furacao";
             }
         }
 

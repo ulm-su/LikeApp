@@ -32,11 +32,15 @@ public class HuamiDeviceEvent {
     public static final byte FIND_PHONE_STOP = 0x0f;
     public static final byte MTU_REQUEST = 0x16;
     public static final byte DEBUG_LOG = (byte) 0x80;
+    public static final byte DEBUG_LOG_2 = (byte) 0x90;
     public static final byte DEBUG_VERSION = (byte) 0x81;
     public static final byte DEBUG_DISPLAY_SIZE = (byte) 0x82;
     public static final byte DEBUG_DISPLAY_DATA = (byte) 0x83;
+    public static final byte DEBUG_DISPLAY_DATA_2 = (byte) 0x93;
     public static final byte APP_NAME = (byte) 0x84;
+    public static final byte APP_NAME_2 = (byte) 0x94;
     public static final byte APP_DATA = (byte) 0x85;
+    public static final byte APP_DATA_2 = (byte) 0x95;
     public static final byte APP_DATA_END = (byte) 0x86;
     public static final byte MUSIC_CONTROL = (byte) 0xfe;
 }

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2016-2020 Andreas Shimokawa
+/*  Copyright (C) 2017-2020 Andreas Shimokawa, protomors
 
     This file is part of Gadgetbridge.
 
@@ -20,19 +20,16 @@ import android.database.sqlite.SQLiteDatabase;
 
 import org.likeapp.likeapp.database.DBHelper;
 import org.likeapp.likeapp.database.DBUpdateScript;
-import org.likeapp.likeapp.entities.DeviceAttributesDao;
+import org.likeapp.likeapp.entities.AlarmDao;
 
-/*
- * adds heart rate column to health table
- */
-
-public class GadgetbridgeUpdate_15 implements DBUpdateScript {
+public class LikeAppUpdate_22 implements DBUpdateScript
+{
     @Override
     public void upgradeSchema(SQLiteDatabase db) {
-        if (!DBHelper.existsColumn(DeviceAttributesDao.TABLENAME, DeviceAttributesDao.Properties.VolatileIdentifier.columnName, db)) {
-            String ADD_COLUMN_VOLATILE_IDENTIFIER = "ALTER TABLE " + DeviceAttributesDao.TABLENAME + " ADD COLUMN "
-                    + DeviceAttributesDao.Properties.VolatileIdentifier.columnName + " TEXT;";
-            db.execSQL(ADD_COLUMN_VOLATILE_IDENTIFIER);
+        if (!DBHelper.existsColumn(AlarmDao.TABLENAME, AlarmDao.Properties.Unused.columnName, db)) {
+            String ADD_COLUMN_UNUSED = "ALTER TABLE " + AlarmDao.TABLENAME + " ADD COLUMN "
+                    + AlarmDao.Properties.Unused.columnName + " INTEGER NOT NULL DEFAULT 0;";
+            db.execSQL(ADD_COLUMN_UNUSED);
         }
     }
 

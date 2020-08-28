@@ -41,6 +41,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import org.likeapp.likeapp.externalevents.TinyWeatherForecastGermanyReceiver;
 import org.likeapp.likeapp.service.receivers.AutoConnectIntervalReceiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -198,6 +199,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
     private CalendarReceiver mCalendarReceiver = null;
     private CMWeatherReceiver mCMWeatherReceiver = null;
     private LineageOsWeatherReceiver mLineageOsWeatherReceiver = null;
+    private TinyWeatherForecastGermanyReceiver mTinyWeatherForecastGermanyReceiver = null;
     private OmniJawsObserver mOmniJawsObserver = null;
     private Intent notificationSaved;
 
@@ -403,7 +405,14 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 if (mDeviceSupport == null || mGBDevice == null) {
                     LOG.warn("device support:" + mDeviceSupport + ", device: " + mGBDevice + ", aborting");
                 } else {
-                    handleAction(intent, action, prefs);
+                    try
+                    {
+                        handleAction(intent, action, prefs);
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace ();
+                    }
                 }
                 break;
         }
@@ -804,25 +813,35 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
 
                 registerReceiver(mAlarmClockReceiver, filter);
             }
-            if (mCMWeatherReceiver == null && coordinator != null && coordinator.supportsWeather()) {
-                mCMWeatherReceiver = new CMWeatherReceiver();
-                registerReceiver(mCMWeatherReceiver, new IntentFilter("GB_UPDATE_WEATHER"));
-            }
-            if (GBApplication.isRunningOreoOrLater()) {
-                if (mLineageOsWeatherReceiver == null && coordinator != null && coordinator.supportsWeather()) {
 
-                    mLineageOsWeatherReceiver = new LineageOsWeatherReceiver();
-                    registerReceiver(mLineageOsWeatherReceiver, new IntentFilter("GB_UPDATE_WEATHER"));
+            // Weather receivers
+            if ( coordinator != null && coordinator.supportsWeather()) {
+                if (GBApplication.isRunningOreoOrLater()) {
+                    if (mLineageOsWeatherReceiver == null) {
+                        mLineageOsWeatherReceiver = new LineageOsWeatherReceiver();
+                        registerReceiver(mLineageOsWeatherReceiver, new IntentFilter("GB_UPDATE_WEATHER"));
+                    }
+                }
+                else {
+                    if (mCMWeatherReceiver == null) {
+                        mCMWeatherReceiver = new CMWeatherReceiver();
+                        registerReceiver(mCMWeatherReceiver, new IntentFilter("GB_UPDATE_WEATHER"));
+                    }
+                }
+                if (mTinyWeatherForecastGermanyReceiver == null) {
+                    mTinyWeatherForecastGermanyReceiver = new TinyWeatherForecastGermanyReceiver();
+                    registerReceiver(mTinyWeatherForecastGermanyReceiver, new IntentFilter("de.kaffeemitkoffein.broadcast.WEATHERDATA"));
+                }
+                if (mOmniJawsObserver == null) {
+                    try {
+                        mOmniJawsObserver = new OmniJawsObserver(new Handler());
+                        getContentResolver().registerContentObserver(OmniJawsObserver.WEATHER_URI, true, mOmniJawsObserver);
+                    } catch (PackageManager.NameNotFoundException e) {
+                        //Nothing wrong, it just means we're not running on omnirom.
+                    }
                 }
             }
-            if (mOmniJawsObserver == null && coordinator != null && coordinator.supportsWeather()) {
-                try {
-                    mOmniJawsObserver = new OmniJawsObserver(new Handler());
-                    getContentResolver().registerContentObserver(OmniJawsObserver.WEATHER_URI, true, mOmniJawsObserver);
-                } catch (PackageManager.NameNotFoundException e) {
-                    //Nothing wrong, it just means we're not running on omnirom.
-                }
-            }
+
             if (GBApplication.getPrefs().getBoolean("auto_fetch_enabled", false) &&
                     coordinator != null && coordinator.supportsActivityDataFetching() && mGBAutoFetchReceiver == null) {
                 mGBAutoFetchReceiver = new GBAutoFetchReceiver();
@@ -879,6 +898,11 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             }
             if (mOmniJawsObserver != null) {
                 getContentResolver().unregisterContentObserver(mOmniJawsObserver);
+                mOmniJawsObserver = null;
+            }
+            if (mTinyWeatherForecastGermanyReceiver != null) {
+                unregisterReceiver(mTinyWeatherForecastGermanyReceiver);
+                mTinyWeatherForecastGermanyReceiver = null;
             }
             if (mGBAutoFetchReceiver != null) {
                 unregisterReceiver(mGBAutoFetchReceiver);

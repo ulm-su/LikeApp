@@ -285,9 +285,16 @@ public class DbManagementActivity extends AbstractGBActivity {
                 .setPositiveButton(R.string.Delete, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (GBApplication.deleteActivityDatabase(DbManagementActivity.this)) {
-                            GB.toast(DbManagementActivity.this, getString(R.string.dbmanagementactivity_database_successfully_deleted), Toast.LENGTH_SHORT, GB.INFO);
-                        } else {
+                        try
+                        {
+                            if (GBApplication.deleteActivityDatabase(DbManagementActivity.this)) {
+                                GB.toast(DbManagementActivity.this, getString(R.string.dbmanagementactivity_database_successfully_deleted), Toast.LENGTH_SHORT, GB.INFO);
+                            } else {
+                                GB.toast(DbManagementActivity.this, getString(R.string.dbmanagementactivity_db_deletion_failed), Toast.LENGTH_SHORT, GB.INFO);
+                            }
+                        }
+                        catch (IllegalStateException e)
+                        {
                             GB.toast(DbManagementActivity.this, getString(R.string.dbmanagementactivity_db_deletion_failed), Toast.LENGTH_SHORT, GB.INFO);
                         }
                     }

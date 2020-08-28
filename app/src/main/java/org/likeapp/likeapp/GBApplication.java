@@ -22,6 +22,7 @@ import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.NotificationManager.Policy;
+import android.app.UiModeManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
@@ -119,7 +120,6 @@ public class GBApplication extends Application {
             = "org.likeapp.likeapp.gbapplication.action.quit";
     public static final String ACTION_LANGUAGE_CHANGE = "org.likeapp.likeapp.gbapplication.action.language_change";
     public static final String ACTION_NEW_DATA = "org.likeapp.likeapp.action.new_data";
-    public static final String ACTION_DISABLE_BABY_MONITOR = "org.likeapp.likeapp.action.disable_baby_monitor";
 
     private static GBApplication app;
 
@@ -256,7 +256,7 @@ public class GBApplication extends Application {
         else
         {
             ClientLog.setOut (null);
-            ClientLog.setErr (null);
+            ClientLog.setErr (TAG);
         }
     }
 
@@ -975,7 +975,14 @@ public class GBApplication extends Application {
     }
 
     public static boolean isDarkThemeEnabled() {
-        return prefs.getString("pref_key_theme", context.getString(R.string.pref_theme_value_dark)).equals(context.getString(R.string.pref_theme_value_dark));
+//        return prefs.getString("pref_key_theme", context.getString(R.string.pref_theme_value_dark)).equals(context.getString(R.string.pref_theme_value_dark));
+        String selectedTheme = prefs.getString("pref_key_theme", context.getString(R.string.pref_theme_value_dark));
+
+        UiModeManager umm = (UiModeManager) context.getSystemService(Context.UI_MODE_SERVICE);
+
+        return selectedTheme.equals(context.getString(R.string.pref_theme_value_dark)) ||
+                (selectedTheme.equals(context.getString(R.string.pref_theme_value_system))
+                        && (umm.getNightMode() == UiModeManager.MODE_NIGHT_YES));
     }
 
     public static int getTextColor(Context context) {

@@ -22,11 +22,8 @@ import org.likeapp.likeapp.service.devices.qhybrid.requests.fossil.configuration
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.ArrayList;
-import java.util.HashMap;
 
-public class ConfigurationPutRequest extends FileEncryptedPutRequest
-{
+public class ConfigurationPutRequest extends FileEncryptedPutRequest {
     public ConfigurationPutRequest(ConfigItem item, FossilHRWatchAdapter adapter) {
         super((short) 0x0800, createFileContent(new ConfigItem[]{item}), adapter);
     }

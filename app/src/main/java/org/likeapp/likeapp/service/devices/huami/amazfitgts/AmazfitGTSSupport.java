@@ -17,18 +17,29 @@
 package org.likeapp.likeapp.service.devices.huami.amazfitgts;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 
+import org.likeapp.likeapp.GBApplication;
+import org.likeapp.likeapp.R;
+import org.likeapp.likeapp.devices.huami.HuamiConst;
+import org.likeapp.likeapp.devices.huami.HuamiCoordinator;
 import org.likeapp.likeapp.devices.huami.HuamiFWHelper;
 import org.likeapp.likeapp.devices.huami.amazfitgts.AmazfitGTSFWHelper;
 import org.likeapp.likeapp.model.NotificationSpec;
 import org.likeapp.likeapp.service.btle.TransactionBuilder;
 import org.likeapp.likeapp.service.devices.huami.amazfitbip.AmazfitBipSupport;
+import org.likeapp.likeapp.service.devices.huami.operations.UpdateFirmwareOperationNew;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
-public class AmazfitGTSSupport extends AmazfitBipSupport
-{
+public class AmazfitGTSSupport extends AmazfitBipSupport {
+    private static final Logger LOG = LoggerFactory.getLogger(AmazfitGTSSupport.class);
 
     @Override
     public byte getCryptFlags() {
@@ -52,9 +63,65 @@ public class AmazfitGTSSupport extends AmazfitBipSupport
     }
 
     @Override
-    protected AmazfitGTSSupport setDisplayItems(TransactionBuilder builder) {
-        // not supported yet
-        return this;
+    public UpdateFirmwareOperationNew createUpdateFirmwareOperation(Uri uri) {
+        return new UpdateFirmwareOperationNew(uri, this);
     }
 
+    @Override
+    protected AmazfitGTSSupport setDisplayItems(TransactionBuilder builder) {
+        if (gbDevice.getFirmwareVersion() == null) {
+            LOG.warn("Device not initialized yet, won't set menu items");
+            return this;
+        }
+
+        SharedPreferences prefs = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress());
+        Set<String> pages = prefs.getStringSet(HuamiConst.PREF_DISPLAY_ITEMS, new HashSet<>(Arrays.asList(getContext().getResources().getStringArray(R.array.pref_gts_display_items_default))));
+        LOG.info("Setting display items to " + (pages == null ? "none" : pages));
+        byte[] command = new byte[]{
+                0x1E,
+                0x00, 0x00, (byte) 0xFF, 0x01, // Status
+                0x01, 0x00, (byte) 0xFF, 0x19, // PAI
+                0x02, 0x00, (byte) 0xFF, 0x02, // HR
+                0x03, 0x00, (byte) 0xFF, 0x03, // Workout
+                0x04, 0x00, (byte) 0xFF, 0x14, // Activities
+                0x05, 0x00, (byte) 0xFF, 0x04, // Weather
+                0x06, 0x00, (byte) 0xFF, 0x0B, // Music
+                0x07, 0x00, (byte) 0xFF, 0x06, // Notifications
+                0x08, 0x00, (byte) 0xFF, 0x09, // Alarm
+                0x09, 0x00, (byte) 0xFF, 0x15, // Event reminder
+                0x0A, 0x00, (byte) 0xFF, 0x07, // More
+                0x0B, 0x00, (byte) 0xFF, 0x13  // Settings
+        };
+
+        String[] keys = {"status", "pai", "hr", "workout", "activity", "weather", "music", "notifications", "alarm", "eventreminder", "more", "settings"};
+        byte[] ids = {1, 25, 2, 3, 20, 4, 11, 6, 9, 21, 7, 19};
+
+        if (pages != null) {
+            pages.add("settings");
+            // it seem that we first have to put all ENABLED items into the array
+            int pos = 1;
+            for (int i = 0; i < keys.length; i++) {
+                String key = keys[i];
+                byte id = ids[i];
+                if (pages.contains(key)) {
+                    command[pos + 1] = 0x00;
+                    command[pos + 3] = id;
+                    pos += 4;
+                }
+            }
+            // And then all DISABLED ones
+            for (int i = 0; i < keys.length; i++) {
+                String key = keys[i];
+                byte id = ids[i];
+                if (!pages.contains(key)) {
+                    command[pos + 1] = 0x01;
+                    command[pos + 3] = id;
+                    pos += 4;
+                }
+            }
+            writeToChunked(builder, 2, command);
+        }
+
+        return this;
+    }
 }

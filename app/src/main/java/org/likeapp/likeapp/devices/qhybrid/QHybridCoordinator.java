@@ -82,12 +82,13 @@ public class QHybridCoordinator extends AbstractDeviceCoordinator {
 
     @Override
     public boolean supportsActivityDataFetching() {
-        return true;
+        GBDevice connectedDevice = GBApplication.app().getDeviceManager().getSelectedDevice();
+        return connectedDevice != null && connectedDevice.getType() == DeviceType.FOSSILQHYBRID && connectedDevice.getState() == GBDevice.State.INITIALIZED;
     }
 
     @Override
     public boolean supportsActivityTracking() {
-        return false;
+        return true;
     }
 
     @Override
@@ -97,11 +98,15 @@ public class QHybridCoordinator extends AbstractDeviceCoordinator {
 
     @Override
     public SampleProvider<? extends ActivitySample> getSampleProvider(GBDevice device, DaoSession session) {
-        return null;
+        return new HybridHRActivitySampleProvider(device, session);
     }
 
     @Override
     public InstallHandler findInstallHandler(Uri uri, Context context) {
+        if (isHybridHR()) {
+            FossilHRInstallHandler installHandler = new FossilHRInstallHandler(uri, context);
+            return installHandler.isValid() ? installHandler : null;
+        }
         return null;
     }
 
@@ -124,13 +129,18 @@ public class QHybridCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
+    public boolean supportsAlarmDescription(GBDevice device) {
+        return isHybridHR();
+    }
+
+    @Override
     public boolean supportsSmartWakeup(GBDevice device) {
         return false;
     }
 
     @Override
     public boolean supportsHeartRateMeasurement(GBDevice device) {
-        return false;
+        return this.isHybridHR();
     }
 
     @Override

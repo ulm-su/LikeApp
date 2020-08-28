@@ -41,7 +41,7 @@ public class LanguageUtils {
             
             //german characters
             put('ä',"ae"); put('ö',"oe"); put('ü',"ue");
-            put('Ä',"Ae"); put('Ö',"Oe"); put('Ü',"Üe");
+            put('Ä',"Ae"); put('Ö',"Oe"); put('Ü',"Ue");
             put('ß',"ss"); put('ẞ',"SS");
 
             //russian chars
@@ -77,12 +77,14 @@ public class LanguageUtils {
             put('ق', "q"); put('ك', "k"); put('ل', "l"); put('م', "m"); put('ن', "n"); put('ه', "h");
             put('و', "w"); put('ي', "y"); put('ى', "a"); put('ﺓ', "");
             put('آ', "2"); put('ئ', "2"); put('إ', "2"); put('ؤ', "2"); put('أ', "2"); put('ء', "2");
+            put('٠', "0"); put('١', "1"); put('٢', "2"); put('٣', "3"); put('٤', "4"); put('٥', "5");
+            put('٦', "6"); put('٧', "7"); put('٨', "8"); put('٩', "9");
 
             // Persian(Farsi)
             put('پ', "p"); put('چ', "ch"); put('ژ', "zh"); put('ک', "k"); put('گ', "g"); put('ی', "y"); put('‌', " "); 
             put('؟', "?"); put('٪', "%"); put('؛', ";"); put('،', ","); put('۱', "1"); put('۲', "2"); put('۳', "3"); 
             put('۴', "4"); put('۵', "5"); put('۶', "6"); put('۷', "7"); put('۸', "8"); put('۹', "9"); put('۰', "0"); 
-	    put('»', "<"); put('«', ">"); put('ِ', "e"); put('َ', "a"); put('ُ', "o"); put('ّ', "");
+            put('»', "<"); put('«', ">"); put('ِ', "e"); put('َ', "a"); put('ُ', "o"); put('ّ', "");
 
             // Polish
             put('Ł', "L"); put('ł', "l");
@@ -94,6 +96,43 @@ public class LanguageUtils {
             //all or nothing is really bad here
         }
     };
+
+//    private static Map<Character, String> cyrillicToLatinMap = new HashMap<Character, String>()
+//    {
+//        {
+//            put ('а', "a"); put ('о', "o"); put ('е', "e"); put ('р', "p"); put ('х', "x"); put ('с', "c"); put ('у', "y");
+//            put ('А', "A"); put ('О', "O"); put ('Е', "E"); put ('Р', "P"); put ('Х', "X"); put ('С', "C"); put ('Н', "H");
+//            put ('Т', "T"); put ('В', "B"); put ('М', "M"); put ('К', "K"); put ('и', "u"); put ('т', "m");
+//        }
+//    };
+
+    public static boolean cyrillicToLatin ()
+    {
+        return GBApplication.getPrefs ().getBoolean ("convert_cyrillic_to_latin", false);
+    }
+
+    public static String cyrillicToLatin (String txt)
+    {
+        if (txt == null || txt.isEmpty ())
+        {
+            return txt;
+        }
+
+        StringBuilder sb = new StringBuilder ();
+        char[] chars = txt.toCharArray();
+        for (char c : chars)
+        {
+            int index = "аоерхсуОАЕРХСНТВМК".indexOf (c);
+            if (index >= 0)
+            {
+                c = "aoepxcyOAEPXCHTBMK".charAt (index);
+            }
+
+            sb.append (c);
+        }
+
+        return sb.toString ();
+    }
 
     /**
      * Checks the status of transliteration option
@@ -114,18 +153,21 @@ public class LanguageUtils {
             return txt;
         }
 
-        StringBuilder message = new StringBuilder();
+        StringBuilder messageBuilder = new StringBuilder();
 
+        // Simple, char-by-char transliteration.
         char[] chars = txt.toCharArray();
-
         for (char c : chars)
         {
-            message.append(transliterate(c));
+            messageBuilder.append(transliterate(c));
         }
+        String message = messageBuilder.toString();
 
-        String messageString = BengaliLanguageUtils.transliterate(message.toString());
+        // More complex transliteration for specific languages.
+        message = BengaliLanguageUtils.transliterate(message);
+        message = KoreanLanguageUtils.transliterate(message);
 
-        return flattenToAscii(messageString);
+        return flattenToAscii(message);
     }
 
     /**

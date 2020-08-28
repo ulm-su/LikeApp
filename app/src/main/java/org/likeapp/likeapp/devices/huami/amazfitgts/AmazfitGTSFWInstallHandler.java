@@ -20,7 +20,6 @@ import android.content.Context;
 import android.net.Uri;
 
 import org.likeapp.likeapp.R;
-import org.likeapp.likeapp.devices.huami.amazfitgtr.AmazfitGTRFWHelper;
 import org.likeapp.likeapp.devices.miband.AbstractMiBandFWHelper;
 import org.likeapp.likeapp.devices.miband.AbstractMiBandFWInstallHandler;
 import org.likeapp.likeapp.impl.GBDevice;
@@ -41,7 +40,7 @@ class AmazfitGTSFWInstallHandler extends AbstractMiBandFWInstallHandler
 
     @Override
     protected AbstractMiBandFWHelper createHelper(Uri uri, Context context) throws IOException {
-        return new AmazfitGTRFWHelper (uri, context);
+        return new AmazfitGTSFWHelper(uri, context);
     }
 
     @Override

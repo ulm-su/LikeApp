@@ -206,7 +206,7 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
             }
         }
 
-        if ("com.android.vending".equals (getPackageManager ().getInstallerPackageName (getPackageName ())))
+//        if ("com.android.vending".equals (getPackageManager ().getInstallerPackageName (getPackageName ())))
         {
             immediately = getIntent ().getBooleanExtra ("IMMEDIATELY", false);
             if (immediately)
@@ -316,7 +316,7 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
 
     public static void update (Context context, int percentage, boolean ongoing)
     {
-        if ("com.android.vending".equals (context.getPackageManager ().getInstallerPackageName (context.getPackageName ())))
+//        if ("com.android.vending".equals (context.getPackageManager ().getInstallerPackageName (context.getPackageName ())))
         {
             String permission = PERMISSIONS[0];
             if (ActivityCompat.checkSelfPermission (context, permission) == PERMISSION_GRANTED)

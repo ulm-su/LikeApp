@@ -21,7 +21,9 @@ package org.likeapp.likeapp.service;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.net.Uri;
+import android.widget.Toast;
 
+import org.likeapp.likeapp.util.GB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -128,7 +130,7 @@ public class ServiceDeviceSupport implements DeviceSupport {
             return false;
         }
         if (getDevice().isBusy()) {
-            LOG.info("Ignoring " + notificationKind + " because we're busy with " + getDevice().getBusyTask());
+            GB.toast ("Ignoring " + notificationKind + " because we're busy with " + getDevice().getBusyTask(), Toast.LENGTH_SHORT, GB.WARN);
             return true;
         }
         return false;

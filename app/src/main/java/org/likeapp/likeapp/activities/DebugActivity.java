@@ -31,11 +31,13 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -92,6 +94,8 @@ public class DebugActivity extends AbstractGBActivity {
     public static final String EXTRA_DISPLAY_DATA = "display data";
     public static final String EXTRA_VERSION = "version";
     public static final String EXTRA_VALUE = "value";
+
+    public static final String PREF_LOG_AUTO = "log auto";
 
     private Bitmap displayBitmap;
     private int displayBitPerPixel = 1;
@@ -308,6 +312,9 @@ public class DebugActivity extends AbstractGBActivity {
 
         logView = findViewById (R.id.logView);
 
+        // Включить автоматическую прокрутку в окне отладочных сообщений
+        logView.setMovementMethod (new ScrollingMovementMethod ());
+
         IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_REPLY);
         filter.addAction(ACTION_DEBUG);
@@ -508,7 +515,7 @@ public class DebugActivity extends AbstractGBActivity {
             }
         });
 
-        Button fetchDebugLogsButton = findViewById(R.id.fetchDebugLogsButton);
+        final Button fetchDebugLogsButton = findViewById(R.id.fetchDebugLogsButton);
         fetchDebugLogsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -544,32 +551,53 @@ public class DebugActivity extends AbstractGBActivity {
 
         debugBluetoothEvent = findViewById (R.id.debugBluetoothEvent);
 
+        CheckBox debugLogAuto = findViewById (R.id.debugLogAuto);
+        debugLogAuto.setOnCheckedChangeListener (new CompoundButton.OnCheckedChangeListener ()
+        {
+            @Override
+            public void onCheckedChanged (CompoundButton buttonView, boolean isChecked)
+            {
+                // Установить признак автоматического чтения log-файла
+                setLogAuto (isChecked);
+
+                if (isChecked)
+                {
+                    fetchDebugLogsButton.callOnClick ();
+                }
+            }
+        });
+
+        debugLogAuto.setChecked (getLogAuto ());
+
         displayView = findViewById (R.id.display);
         displayView.setOnClickListener (new View.OnClickListener ()
         {
             @Override
             public void onClick (View v)
             {
-                try
+                if (displayBitmap != null)
                 {
-                    File outputDir = new File (FileUtils.getExternalFilesDir ().getAbsolutePath ());
-                    File outputFile = File.createTempFile ("temp_display", ".png", outputDir);
-                    try (FileOutputStream fileOutputStream = new FileOutputStream (outputFile))
+                    try
                     {
-                        displayBitmap.compress (Bitmap.CompressFormat.PNG, 100, fileOutputStream);
-                    }
+                        File outputDir = new File (FileUtils.getExternalFilesDir ().getAbsolutePath ());
+                        File outputFile = File.createTempFile ("temp_display", ".png", outputDir);
+                        try (FileOutputStream fileOutputStream = new FileOutputStream (outputFile))
+                        {
+                            displayBitmap.compress (Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+                        }
 
-                    Intent shareIntent = new Intent ();
-                    shareIntent.setFlags (Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    shareIntent.setAction (Intent.ACTION_SEND);
-                    Uri outputUri = FileProvider.getUriForFile (DebugActivity.this, getApplicationContext ().getPackageName () + ".screenshot_provider", outputFile);
-                    shareIntent.putExtra (Intent.EXTRA_STREAM, outputUri);
-                    shareIntent.setDataAndType (outputUri, "image/png");
-                    startActivity (Intent.createChooser (shareIntent, getResources ().getText (R.string.send_via)));
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace ();
+                        Intent shareIntent = new Intent ();
+                        shareIntent.setFlags (Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        shareIntent.setAction (Intent.ACTION_SEND);
+                        Uri outputUri = FileProvider.getUriForFile (DebugActivity.this, getApplicationContext ().getPackageName () + ".screenshot_provider", outputFile);
+                        shareIntent.putExtra (Intent.EXTRA_STREAM, outputUri);
+                        shareIntent.setDataAndType (outputUri, "image/png");
+                        startActivity (Intent.createChooser (shareIntent, getResources ().getText (R.string.send_via)));
+                    }
+                    catch (IOException e)
+                    {
+                        e.printStackTrace ();
+                    }
                 }
             }
         });
@@ -608,10 +636,12 @@ public class DebugActivity extends AbstractGBActivity {
                 return;
             }
 
+            Uri uri = FileProvider.getUriForFile (this, getApplicationContext ().getPackageName () + ".screenshot_provider", logFile);
+
             Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
             emailIntent.setType("*/*");
             emailIntent.putExtra(EXTRA_SUBJECT, "LikeApp log file");
-            emailIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(logFile));
+            emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
             startActivity(Intent.createChooser(emailIntent, "Share File"));
         }
     }
@@ -675,6 +705,18 @@ public class DebugActivity extends AbstractGBActivity {
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
         unregisterReceiver(mReceiver);
+
+        // Сбросить признак автоматического чтения log-файла
+        setLogAuto (false);
     }
 
+    public static boolean getLogAuto ()
+    {
+        return GBApplication.getContext ().getSharedPreferences ("DebugActivity", MODE_PRIVATE).getBoolean (PREF_LOG_AUTO, false);
+    }
+
+    public void setLogAuto (boolean enabled)
+    {
+        GBApplication.getContext ().getSharedPreferences ("DebugActivity", MODE_PRIVATE).edit ().putBoolean (PREF_LOG_AUTO, enabled).apply ();
+    }
 }

@@ -6,8 +6,7 @@ import org.json.JSONObject;
 import org.likeapp.likeapp.service.devices.qhybrid.adapter.fossil_hr.FossilHRWatchAdapter;
 import org.likeapp.likeapp.service.devices.qhybrid.requests.fossil_hr.json.JsonPutRequest;
 
-public class WidgetsPutRequest extends JsonPutRequest
-{
+public class WidgetsPutRequest extends JsonPutRequest {
     public WidgetsPutRequest(Widget[] widgets, FossilHRWatchAdapter adapter) {
         super(prepareFile(widgets), adapter);
     }

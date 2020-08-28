@@ -25,9 +25,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.telephony.TelephonyManager;
+import android.widget.Toast;
 
 import org.likeapp.likeapp.GBApplication;
 import org.likeapp.likeapp.model.CallSpec;
+import org.likeapp.likeapp.util.GB;
 import org.likeapp.likeapp.util.Prefs;
 
 
@@ -50,15 +52,39 @@ public class PhoneCallReceiver extends BroadcastReceiver {
 
             AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
             mLastRingerMode = audioManager.getRingerMode();
-            audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+            try
+            {
+                audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+            }
+            catch (java.lang.SecurityException e)
+            {
+                GB.toast (e.getLocalizedMessage (), Toast.LENGTH_SHORT, GB.ERROR, e);
+            }
+
             mRestoreMutedCall = true;
         } else {
+            String number = intent.getExtras().getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
+            int state = tm.getCallState();
+
             if (intent.hasExtra(TelephonyManager.EXTRA_INCOMING_NUMBER)) {
-                String number = intent.getExtras().getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
-                int state = tm.getCallState();
                 onCallStateChanged(context, state, number);
+
+                if (intent.hasExtra (TelephonyManager.EXTRA_STATE))
+                {
+                    // Отправить в приложение LikeApp+
+                    sendToLikeAppPlus (context, number, intent.getExtras ().getString (TelephonyManager.EXTRA_STATE));
+                }
             }
         }
+    }
+
+    private void sendToLikeAppPlus (Context context, String number, String state)
+    {
+        Intent intent = new Intent ("org.likeapp.likeapp.PHONE_STATE");
+        intent.setPackage ("org.likeapp.action");
+        intent.putExtra (TelephonyManager.EXTRA_INCOMING_NUMBER, number);
+        intent.putExtra (TelephonyManager.EXTRA_STATE, state);
+        context.sendBroadcast (intent);
     }
 
     public void onCallStateChanged(Context context, int state, String number) {
@@ -90,7 +116,14 @@ public class PhoneCallReceiver extends BroadcastReceiver {
                 if(mRestoreMutedCall) {
                     mRestoreMutedCall = false;
                     AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-                    audioManager.setRingerMode(mLastRingerMode);
+                    try
+                    {
+                        audioManager.setRingerMode(mLastRingerMode);
+                    }
+                    catch (java.lang.SecurityException e)
+                    {
+                        GB.toast (e.getLocalizedMessage (), Toast.LENGTH_SHORT, GB.ERROR, e);
+                    }
                 }
                 break;
         }

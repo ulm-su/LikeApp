@@ -108,14 +108,21 @@ public class MicReader
   public void run ()
   {
     AudioRecord audioRecord = getAudioRecord ();
-    audioRecord.startRecording ();
+    try
+    {
+      audioRecord.startRecording ();
+    }
+    catch (java.lang.IllegalStateException ignored)
+    {
+      return;
+    }
 
-    byte[] buffer = new byte [BUFFER_SIZE];
+    byte[] buffer = new byte[BUFFER_SIZE];
 
     while (isReading)
     {
       int readCount = audioRecord.read (buffer, 0, buffer.length);
-      if (readCount > 0)
+      if (readCount > buffer.length / 2)
       {
         double sum = 0.0;
         for (int i = 0; i < readCount; )
@@ -149,7 +156,7 @@ public class MicReader
         {
           Thread.sleep (1000);
         }
-        catch (InterruptedException e)
+        catch (InterruptedException ignored)
         {
         }
       }

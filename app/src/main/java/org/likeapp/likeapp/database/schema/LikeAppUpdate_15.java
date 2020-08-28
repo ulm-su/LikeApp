@@ -1,4 +1,4 @@
-/*  Copyright (C) 2017-2020 Andreas Shimokawa, protomors
+/*  Copyright (C) 2016-2020 Andreas Shimokawa
 
     This file is part of Gadgetbridge.
 
@@ -20,18 +20,19 @@ import android.database.sqlite.SQLiteDatabase;
 
 import org.likeapp.likeapp.database.DBHelper;
 import org.likeapp.likeapp.database.DBUpdateScript;
-import org.likeapp.likeapp.entities.AlarmDao;
+import org.likeapp.likeapp.entities.DeviceAttributesDao;
 
-public class GadgetbridgeUpdate_23 implements DBUpdateScript
-{
+/*
+ * adds heart rate column to health table
+ */
+
+public class LikeAppUpdate_15 implements DBUpdateScript {
     @Override
     public void upgradeSchema(SQLiteDatabase db) {
-        if (!DBHelper.existsColumn(AlarmDao.TABLENAME, AlarmDao.Properties.Snooze.columnName, db)) {
-            // Setting default value of SNOOZE column to 1 (true), so that existing MiBand2 alarms
-            // behave as before
-            String ADD_COLUMN_SNOOZE = "ALTER TABLE " + AlarmDao.TABLENAME + " ADD COLUMN "
-                    + AlarmDao.Properties.Snooze.columnName + " INTEGER NOT NULL DEFAULT 1;";
-            db.execSQL(ADD_COLUMN_SNOOZE);
+        if (!DBHelper.existsColumn(DeviceAttributesDao.TABLENAME, DeviceAttributesDao.Properties.VolatileIdentifier.columnName, db)) {
+            String ADD_COLUMN_VOLATILE_IDENTIFIER = "ALTER TABLE " + DeviceAttributesDao.TABLENAME + " ADD COLUMN "
+                    + DeviceAttributesDao.Properties.VolatileIdentifier.columnName + " TEXT;";
+            db.execSQL(ADD_COLUMN_VOLATILE_IDENTIFIER);
         }
     }
 

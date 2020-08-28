@@ -17,15 +17,21 @@
 package org.likeapp.likeapp.service.devices.huami.amazfitcor;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 
+import org.likeapp.likeapp.GBApplication;
+import org.likeapp.likeapp.R;
+import org.likeapp.likeapp.devices.huami.HuamiConst;
+import org.likeapp.likeapp.model.MusicStateSpec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
-import org.likeapp.likeapp.devices.huami.HuamiCoordinator;
 import org.likeapp.likeapp.devices.huami.HuamiFWHelper;
 import org.likeapp.likeapp.devices.huami.HuamiService;
 import org.likeapp.likeapp.devices.huami.amazfitcor.AmazfitCorFWHelper;
@@ -39,9 +45,10 @@ public class AmazfitCorSupport extends AmazfitBipSupport {
 
     @Override
     protected AmazfitCorSupport setDisplayItems(TransactionBuilder builder) {
-
-        Set<String> pages = HuamiCoordinator.getDisplayItems(getDevice().getAddress());
+        SharedPreferences prefs = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress());
+        Set<String> pages = prefs.getStringSet(HuamiConst.PREF_DISPLAY_ITEMS, new HashSet<>(Arrays.asList(getContext().getResources().getStringArray(R.array.pref_cor_display_items_default))));
         LOG.info("Setting display items to " + (pages == null ? "none" : pages));
+
         byte[] command = AmazfitCorService.COMMAND_CHANGE_SCREENS.clone();
 
         if (pages != null) {
@@ -72,10 +79,19 @@ public class AmazfitCorSupport extends AmazfitBipSupport {
             if (pages.contains("music")) {
                 command[2] |= 0x02;
             }
+
+            builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_3_CONFIGURATION), command);
         }
-        builder.write(getCharacteristic(HuamiService.UUID_CHARACTERISTIC_3_CONFIGURATION), command);
 
         return this;
+    }
+
+    @Override
+    public void onSetMusicState(MusicStateSpec stateSpec) {
+        if (stateSpec != null && !stateSpec.equals(bufferMusicStateSpec)) {
+            sendMusicStateToDevice(null, stateSpec);
+            bufferMusicStateSpec = stateSpec;
+        }
     }
 
     @Override

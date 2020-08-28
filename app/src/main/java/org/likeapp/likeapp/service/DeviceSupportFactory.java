@@ -32,12 +32,14 @@ import org.likeapp.likeapp.service.devices.casiogb6900.CasioGB6900DeviceSupport;
 import org.likeapp.likeapp.service.devices.hplus.HPlusSupport;
 import org.likeapp.likeapp.service.devices.huami.HuamiSupport;
 import org.likeapp.likeapp.service.devices.huami.amazfitbip.AmazfitBipLiteSupport;
-import org.likeapp.likeapp.service.devices.huami.amazfitbip.AmazfitBipSSupport;
+import org.likeapp.likeapp.service.devices.huami.amazfitbips.AmazfitBipSSupport;
 import org.likeapp.likeapp.service.devices.huami.amazfitbip.AmazfitBipSupport;
 import org.likeapp.likeapp.service.devices.huami.amazfitcor.AmazfitCorSupport;
 import org.likeapp.likeapp.service.devices.huami.amazfitcor2.AmazfitCor2Support;
+import org.likeapp.likeapp.service.devices.huami.amazfitgtr.AmazfitGTRLiteSupport;
 import org.likeapp.likeapp.service.devices.huami.amazfitgtr.AmazfitGTRSupport;
 import org.likeapp.likeapp.service.devices.huami.amazfitgts.AmazfitGTSSupport;
+import org.likeapp.likeapp.service.devices.huami.amazfittrex.AmazfitTRexSupport;
 import org.likeapp.likeapp.service.devices.huami.miband3.MiBand3Support;
 import org.likeapp.likeapp.service.devices.huami.miband4.MiBand4Support;
 import org.likeapp.likeapp.service.devices.id115.ID115Support;
@@ -45,6 +47,7 @@ import org.likeapp.likeapp.service.devices.itag.ITagSupport;
 import org.likeapp.likeapp.service.devices.jyou.BFH16DeviceSupport;
 import org.likeapp.likeapp.service.devices.jyou.TeclastH30.TeclastH30Support;
 import org.likeapp.likeapp.service.devices.jyou.y5.Y5Support;
+import org.likeapp.likeapp.service.devices.lenovo.watchxplus.WatchXPlusDeviceSupport;
 import org.likeapp.likeapp.service.devices.liveview.LiveviewSupport;
 import org.likeapp.likeapp.service.devices.makibeshr3.MakibesHR3DeviceSupport;
 import org.likeapp.likeapp.service.devices.miband.MiBandSupport;
@@ -156,6 +159,12 @@ public class DeviceSupportFactory {
                     case AMAZFITGTR:
                         deviceSupport = new ServiceDeviceSupport(new AmazfitGTRSupport (), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
                         break;
+                    case AMAZFITGTR_LITE:
+                        deviceSupport = new ServiceDeviceSupport(new AmazfitGTRLiteSupport(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
+                        break;
+                    case AMAZFITTREX:
+                        deviceSupport = new ServiceDeviceSupport(new AmazfitTRexSupport(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
+                        break;
                     case AMAZFITGTS:
                         deviceSupport = new ServiceDeviceSupport(new AmazfitGTSSupport (), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
                         break;
@@ -203,6 +212,9 @@ public class DeviceSupportFactory {
                         break;
                     case WATCH9:
                         deviceSupport = new ServiceDeviceSupport(new Watch9DeviceSupport(), EnumSet.of(ServiceDeviceSupport.Flags.THROTTLING, ServiceDeviceSupport.Flags.BUSY_CHECKING));
+                        break;
+                    case WATCHXPLUS:
+                        deviceSupport = new ServiceDeviceSupport(new WatchXPlusDeviceSupport(), EnumSet.of(ServiceDeviceSupport.Flags.THROTTLING, ServiceDeviceSupport.Flags.BUSY_CHECKING));
                         break;
                     case ROIDMI:
                         deviceSupport = new ServiceDeviceSupport(new RoidmiSupport(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));

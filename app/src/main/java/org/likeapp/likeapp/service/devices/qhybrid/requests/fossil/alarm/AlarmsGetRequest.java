@@ -16,12 +16,14 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package org.likeapp.likeapp.service.devices.qhybrid.requests.fossil.alarm;
 
+import android.widget.Toast;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 import org.likeapp.likeapp.service.devices.qhybrid.adapter.fossil.FossilWatchAdapter;
-import org.likeapp.likeapp.service.devices.qhybrid.requests.fossil.file.FileGetRequest;
 import org.likeapp.likeapp.service.devices.qhybrid.requests.fossil.file.FileLookupAndGetRequest;
+import org.likeapp.likeapp.util.GB;
 
 public class AlarmsGetRequest extends FileLookupAndGetRequest {
     public AlarmsGetRequest(FossilWatchAdapter adapter) {
@@ -57,6 +59,15 @@ public class AlarmsGetRequest extends FileLookupAndGetRequest {
 
         for(int i = 0; i < alarms.length; i++){
             alarms2[i] = Alarm.fromBytes(alarms[i].getData());
+        }
+    }
+
+    @Override
+    public void handleFileLookupError(FILE_LOOKUP_ERROR error) {
+        if(error == FILE_LOOKUP_ERROR.FILE_EMPTY){
+            GB.toast("alarm file empty yet", Toast.LENGTH_LONG,  GB.ERROR);
+        }else{
+            throw new RuntimeException("strange lookup stuff");
         }
     }
 }

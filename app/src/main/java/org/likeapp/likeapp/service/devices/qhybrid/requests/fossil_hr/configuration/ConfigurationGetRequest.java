@@ -1,5 +1,7 @@
 package org.likeapp.likeapp.service.devices.qhybrid.requests.fossil_hr.configuration;
 
+import android.widget.Toast;
+
 import org.likeapp.likeapp.deviceevents.GBDeviceEventBatteryInfo;
 import org.likeapp.likeapp.impl.GBDevice;
 import org.likeapp.likeapp.model.BatteryState;
@@ -10,8 +12,7 @@ import org.likeapp.likeapp.service.devices.qhybrid.requests.fossil.configuration
 import org.likeapp.likeapp.service.devices.qhybrid.requests.fossil_hr.file.FileEncryptedLookupAndGetRequest;
 import org.likeapp.likeapp.util.GB;
 
-public class ConfigurationGetRequest extends FileEncryptedLookupAndGetRequest
-{
+public class ConfigurationGetRequest extends FileEncryptedLookupAndGetRequest {
     public ConfigurationGetRequest(FossilHRWatchAdapter adapter) {
         super((byte) 0x08, adapter);
     }
@@ -54,5 +55,14 @@ public class ConfigurationGetRequest extends FileEncryptedLookupAndGetRequest
         GB.toast("got config", 0, GB.INFO);
 
         device.sendDeviceUpdateIntent(getAdapter().getContext());
+    }
+
+    @Override
+    public void handleFileLookupError(FILE_LOOKUP_ERROR error) {
+        if(error == FILE_LOOKUP_ERROR.FILE_EMPTY){
+            GB.toast("config file empty", Toast.LENGTH_LONG,  GB.ERROR);
+        }else{
+            throw new RuntimeException("strange lookup stuff");
+        }
     }
 }

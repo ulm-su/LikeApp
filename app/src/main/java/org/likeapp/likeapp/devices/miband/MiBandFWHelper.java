@@ -20,6 +20,7 @@ package org.likeapp.likeapp.devices.miband;
 import android.content.Context;
 import android.net.Uri;
 
+import org.likeapp.likeapp.service.devices.huami.HuamiFirmwareType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -120,6 +121,11 @@ public class MiBandFWHelper extends AbstractMiBandFWHelper {
     @Override
     public void checkValid() throws IllegalArgumentException {
         firmwareInfo.checkValid();
+    }
+
+    @Override
+    public HuamiFirmwareType getFirmwareType() {
+        return null;
     }
 
     /**

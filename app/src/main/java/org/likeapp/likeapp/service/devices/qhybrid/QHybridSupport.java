@@ -97,6 +97,7 @@ public class QHybridSupport extends QHybridBaseSupport {
     public static final String QHYBRID_COMMAND_SET_MENU_MESSAGE = "org.likeapp.likeapp.Q_SET_MENU_MESSAGE";
     public static final String QHYBRID_COMMAND_SEND_MENU_ITEMS = "org.likeapp.likeapp.Q_SEND_MENU_ITEMS";
     public static final String QHYBRID_COMMAND_SET_WIDGET_CONTENT = "org.likeapp.likeapp.Q_SET_WIDGET_CONTENT";
+    public static final String QHYBRID_COMMAND_SET_BACKGROUND_IMAGE = "org.likeapp.likeapp.Q_SET_BACKGROUND_IMAGE";
 
     private static final String QHYBRID_ACTION_SET_ACTIVITY_HAND = "org.likeapp.likeapp.Q_SET_ACTIVITY_HAND";
 
@@ -152,6 +153,7 @@ public class QHybridSupport extends QHybridBaseSupport {
         commandFilter.addAction(QHYBRID_COMMAND_NOTIFICATION_CONFIG_CHANGED);
         commandFilter.addAction(QHYBRID_COMMAND_UPDATE_WIDGETS);
         commandFilter.addAction(QHYBRID_COMMAND_SEND_MENU_ITEMS);
+        commandFilter.addAction(QHYBRID_COMMAND_SET_BACKGROUND_IMAGE);
         commandReceiver = new BroadcastReceiver() {
 
             @Override
@@ -236,6 +238,11 @@ public class QHybridSupport extends QHybridBaseSupport {
                     }
                     case QHYBRID_COMMAND_UPDATE_WIDGETS: {
                         watchAdapter.updateWidgets();
+                        break;
+                    }
+                    case QHYBRID_COMMAND_SET_BACKGROUND_IMAGE:{
+                        byte[] pixels = intent.getByteArrayExtra("EXTRA_PIXELS_ENCODED");
+                        watchAdapter.setBackgroundImage(pixels);
                         break;
                     }
                 }
@@ -452,6 +459,8 @@ public class QHybridSupport extends QHybridBaseSupport {
     public void onDeleteNotification(int id) {
         super.onDeleteNotification(id);
 
+        this.watchAdapter.onDeleteNotification(id);
+
         showNotificationsByAllActive(true);
     }
 
@@ -540,6 +549,11 @@ public class QHybridSupport extends QHybridBaseSupport {
     @Override
     public void onTestNewFunction() {
         watchAdapter.onTestNewFunction();
+    }
+
+    @Override
+    public void onInstallApp(Uri uri) {
+        watchAdapter.onInstallApp(uri);
     }
 
     private void backupFile(DownloadFileRequest request) {

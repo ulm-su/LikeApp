@@ -28,6 +28,7 @@ import org.likeapp.likeapp.R;
 import org.likeapp.likeapp.devices.miband.AbstractMiBandFWHelper;
 import org.likeapp.likeapp.impl.GBDevice;
 import org.likeapp.likeapp.service.devices.huami.HuamiFirmwareInfo;
+import org.likeapp.likeapp.service.devices.huami.HuamiFirmwareType;
 
 public abstract class HuamiFWHelper extends AbstractMiBandFWHelper {
     protected HuamiFirmwareInfo firmwareInfo;
@@ -110,6 +111,10 @@ public abstract class HuamiFWHelper extends AbstractMiBandFWHelper {
         firmwareInfo.checkValid();
     }
 
+    @Override
+    public HuamiFirmwareType getFirmwareType() {
+        return firmwareInfo.getFirmwareType();
+    }
     public HuamiFirmwareInfo getFirmwareInfo() {
         return firmwareInfo;
     }
