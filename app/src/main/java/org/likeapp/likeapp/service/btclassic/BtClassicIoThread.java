@@ -22,6 +22,8 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.os.ParcelUuid;
 
+import androidx.annotation.NonNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +33,6 @@ import java.io.OutputStream;
 import java.net.SocketTimeoutException;
 import java.util.UUID;
 
-import androidx.annotation.NonNull;
 import org.likeapp.likeapp.deviceevents.GBDeviceEvent;
 import org.likeapp.likeapp.impl.GBDevice;
 import org.likeapp.likeapp.service.serial.AbstractSerialDeviceSupport;
@@ -44,7 +45,6 @@ public abstract class BtClassicIoThread extends GBDeviceIoThread {
 
     private final GBDeviceProtocol mProtocol;
     private final AbstractSerialDeviceSupport mDeviceSupport;
-
 
     private BluetoothAdapter mBtAdapter = null;
     private BluetoothSocket mBtSocket = null;

@@ -43,7 +43,7 @@ public class GBDaoGenerator {
 
 
     public static void main(String[] args) throws Exception {
-        Schema schema = new Schema(27, MAIN_PACKAGE + ".entities");
+        Schema schema = new Schema(30, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -73,6 +73,7 @@ public class GBDaoGenerator {
         addJYouActivitySample(schema, user, device);
         addWatchXPlusHealthActivitySample(schema, user, device);
         addWatchXPlusHealthActivityKindOverlay(schema, user, device);
+        addTLW64ActivitySample(schema, user, device);
 
         addHybridHRActivitySample(schema, user, device);
         addCalendarSyncState(schema, device);
@@ -82,7 +83,7 @@ public class GBDaoGenerator {
 
         addNotificationFilterEntry(schema, notificationFilter);
 
-        addBipActivitySummary(schema, user, device);
+        addActivitySummary(schema, user, device);
 
         new DaoGenerator().generateAll(schema, "app/src/main/java");
     }
@@ -393,6 +394,16 @@ public class GBDaoGenerator {
         return activityOverlay;
     }
 
+    private static Entity addTLW64ActivitySample(Schema schema, Entity user, Entity device) {
+        Entity activitySample = addEntity(schema, "TLW64ActivitySample");
+        activitySample.implementsSerializable();
+        addCommonActivitySampleProperties("AbstractActivitySample", activitySample, user, device);
+        activitySample.addIntProperty(SAMPLE_STEPS).notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        activitySample.addIntProperty(SAMPLE_RAW_KIND).notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        activitySample.addIntProperty(SAMPLE_RAW_INTENSITY).notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        return activitySample;
+    }
+
     private static void addCommonActivitySampleProperties(String superClass, Entity activitySample, Entity user, Entity device) {
         activitySample.setSuperclass(superClass);
         activitySample.addImport(MAIN_PACKAGE + ".devices.SampleProvider");
@@ -473,7 +484,7 @@ public class GBDaoGenerator {
         return notificatonFilter;
     }
 
-    private static void addBipActivitySummary(Schema schema, Entity user, Entity device) {
+    private static void addActivitySummary(Schema schema, Entity user, Entity device) {
         Entity summary = addEntity(schema, "BaseActivitySummary");
         summary.implementsInterface(ACTIVITY_SUMMARY);
         summary.addIdProperty();
@@ -496,6 +507,8 @@ public class GBDaoGenerator {
         summary.addToOne(device, deviceId);
         Property userId = summary.addLongProperty("userId").notNull().codeBeforeGetter(OVERRIDE).getProperty();
         summary.addToOne(user, userId);
+        summary.addStringProperty("summaryData");
+        summary.addByteArrayProperty("rawSummaryData");
     }
 
     private static Property findProperty(Entity entity, String propertyName) {

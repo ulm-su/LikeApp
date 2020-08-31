@@ -42,6 +42,7 @@ import android.preference.PreferenceManager;
 import android.provider.ContactsContract.PhoneLookup;
 import android.util.TypedValue;
 
+import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.io.File;
@@ -107,6 +108,9 @@ public class GBApplication extends Application {
     private static final String PREFS_VERSION = "shared_preferences_version";
     //if preferences have to be migrated, increment the following and add the migration logic in migratePrefs below; see http://stackoverflow.com/questions/16397848/how-can-i-migrate-android-preferences-with-a-new-version
     private static final int CURRENT_PREFS_VERSION = 7;
+
+    private static final int ERROR_IN_GADGETBRIDGE_NOTIFICATION = 42;
+
     private static LimitedQueue mIDSenderLookup = new LimitedQueue(16);
     private static Prefs prefs;
     private static GBPrefs gbPrefs;
@@ -212,7 +216,7 @@ public class GBApplication extends Application {
                     notificationManager.createNotificationChannel(channel);
                 }
 
-                NotificationChannel channelHighPr = notificationManager.getNotificationChannel(NOTIFICATION_CHANNEL_HIGH_PRIORITY_ID );
+                NotificationChannel channelHighPr = notificationManager.getNotificationChannel(NOTIFICATION_CHANNEL_HIGH_PRIORITY_ID);
                 if (channelHighPr == null) {
                     channelHighPr = new NotificationChannel(NOTIFICATION_CHANNEL_HIGH_PRIORITY_ID,
                             getString(R.string.notification_channel_high_priority_name),
@@ -223,7 +227,23 @@ public class GBApplication extends Application {
                 bluetoothStateChangeReceiver = new BluetoothStateChangeReceiver();
                 registerReceiver(bluetoothStateChangeReceiver, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
             }
-            startService(new Intent(this, NotificationCollectorMonitorService.class));
+            try {
+                startService(new Intent(this, NotificationCollectorMonitorService.class));
+            } catch (IllegalStateException e) {
+                String message = e.toString();
+                if (message == null) {
+                    message = getString(R.string._unknown_);
+                }
+                notificationManager.notify(ERROR_IN_GADGETBRIDGE_NOTIFICATION,
+                        new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_HIGH_PRIORITY_ID)
+                                .setSmallIcon(R.drawable.gadgetbridge_img)
+                                .setContentTitle(getString(R.string.error_background_service))
+                                .setContentText(getString(R.string.error_background_service_reason_truncated))
+                                .setStyle(new NotificationCompat.BigTextStyle()
+                                        .bigText(getString(R.string.error_background_service_reason) + "\"" + message + "\""))
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                .build());
+            }
         }
 
         updateLoggingToUlm ();
@@ -891,6 +911,9 @@ public class GBApplication extends Application {
                             case MIBAND2:
                             case MIBAND3:
                             case MIBAND4:
+                                newWearside = prefs.getString("mi_wearside", "left");
+                                break;
+                            case MIBAND5:
                                 newWearside = prefs.getString("mi_wearside", "left");
                                 break;
                             case HPLUS:

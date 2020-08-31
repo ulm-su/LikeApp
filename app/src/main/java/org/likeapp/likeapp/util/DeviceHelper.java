@@ -26,17 +26,21 @@ import android.content.Context;
 import android.widget.Toast;
 
 import org.likeapp.likeapp.devices.banglejs.BangleJSCoordinator;
+import org.likeapp.likeapp.devices.hplus.SG2Coordinator;
 import org.likeapp.likeapp.devices.huami.amazfitbip.AmazfitBipLiteCoordinator;
 import org.likeapp.likeapp.devices.huami.amazfitbips.AmazfitBipSCoordinator;
 import org.likeapp.likeapp.devices.huami.amazfitgtr.AmazfitGTRCoordinator;
 import org.likeapp.likeapp.devices.huami.amazfitgtr.AmazfitGTRLiteCoordinator;
 import org.likeapp.likeapp.devices.huami.amazfitgts.AmazfitGTSCoordinator;
 import org.likeapp.likeapp.devices.huami.amazfittrex.AmazfitTRexCoordinator;
+import org.likeapp.likeapp.devices.huami.miband5.MiBand5Coordinator;
 import org.likeapp.likeapp.devices.itag.ITagCoordinator;
 import org.likeapp.likeapp.devices.jyou.TeclastH30.TeclastH30Coordinator;
 import org.likeapp.likeapp.devices.jyou.y5.Y5Coordinator;
 import org.likeapp.likeapp.devices.lenovo.watchxplus.WatchXPlusDeviceCoordinator;
+import org.likeapp.likeapp.devices.pinetime.PineTimeJFCoordinator;
 import org.likeapp.likeapp.devices.qhybrid.QHybridCoordinator;
+import org.likeapp.likeapp.devices.tlw64.TLW64Coordinator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -89,7 +93,6 @@ import org.likeapp.likeapp.impl.GBDeviceCandidate;
 import org.likeapp.likeapp.model.DeviceType;
 
 public class DeviceHelper {
-
     private static final Logger LOG = LoggerFactory.getLogger(DeviceHelper.class);
 
     private static final DeviceHelper instance = new DeviceHelper();
@@ -142,20 +145,17 @@ public class DeviceHelper {
     public Set<GBDevice> getAvailableDevices(Context context) {
         BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        Set<GBDevice> availableDevices = new LinkedHashSet<GBDevice>();
-
         if (btAdapter == null) {
             GB.toast(context, context.getString(R.string.bluetooth_is_not_supported_), Toast.LENGTH_SHORT, GB.WARN);
         } else if (!btAdapter.isEnabled()) {
             GB.toast(context, context.getString(R.string.bluetooth_is_disabled_), Toast.LENGTH_SHORT, GB.WARN);
         }
-        List<GBDevice> dbDevices = getDatabaseDevices();
-        availableDevices.addAll(dbDevices);
 
+        Set<GBDevice> availableDevices = new LinkedHashSet<>(getDatabaseDevices());
         Prefs prefs = GBApplication.getPrefs();
-        String miAddr = prefs.getString(MiBandConst.PREF_MIBAND_ADDRESS, "");
-        if (miAddr.length() > 0) {
-            GBDevice miDevice = new GBDevice(miAddr, "MI", null,  DeviceType.MIBAND);
+        String miAddress = prefs.getString(MiBandConst.PREF_MIBAND_ADDRESS, "");
+        if (miAddress.length() > 0) {
+            GBDevice miDevice = new GBDevice(miAddress, "MI", null, DeviceType.MIBAND);
             availableDevices.add(miDevice);
         }
 
@@ -213,6 +213,7 @@ public class DeviceHelper {
 
     private List<DeviceCoordinator> createCoordinators() {
         List<DeviceCoordinator> result = new ArrayList<>();
+        result.add(new MiBand5Coordinator());
         result.add(new MiScale2DeviceCoordinator());
         result.add(new AmazfitBipCoordinator());
         result.add(new AmazfitBipLiteCoordinator ());
@@ -252,6 +253,9 @@ public class DeviceHelper {
         result.add(new ITagCoordinator());
         result.add(new MakibesHR3Coordinator());
         result.add(new BangleJSCoordinator());
+        result.add(new TLW64Coordinator());
+        result.add(new PineTimeJFCoordinator());
+        result.add(new SG2Coordinator());
 
         return result;
     }
@@ -269,7 +273,7 @@ public class DeviceHelper {
             return result;
 
         } catch (Exception e) {
-            GB.toast("Error retrieving devices from database", Toast.LENGTH_SHORT, GB.ERROR);
+            GB.toast(GBApplication.getContext().getString(R.string.error_retrieving_devices_database), Toast.LENGTH_SHORT, GB.ERROR, e);
             return Collections.emptyList();
         }
     }

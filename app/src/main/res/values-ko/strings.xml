@@ -302,7 +302,7 @@
     <string name="pref_title_pebble_mtu_limit">Pebble 2/LE GATT MTU 제한</string>
     <string name="pref_summary_pebble_mtu_limit">만약 Pebble 2/Pebble LE가 기대한 대로 작동하지 않는다면, 이 설정을 사용하여 MTU를 제한하세요 (20–512까지 설정 가능)</string>
     <string name="pref_title_pebble_enable_applogs">시계 앱 로그 활성화</string>
-    <string name="pref_summary_pebble_enable_applogs">시계 앱들의 로그를 Gadgetbridge가 기록합니다 (재연결 필요)</string>
+    <string name="pref_summary_pebble_enable_applogs">시계 앱들의 로그를 LikeApp가 기록합니다 (재연결 필요)</string>
     <string name="pref_title_pebble_always_ack_pebblekit">끝나기 전 미리 PebbleKit 연결에 ACK 보내기</string>
     <string name="pref_summary_pebble_always_ack_pebblekit">제 3자 앱으로 보내는 메세지에 언제나 바로 ACK을 보냅니다</string>
     <string name="pref_title_unit_system">단위</string>
@@ -586,7 +586,7 @@
     <string name="menuitem_notifications">알람</string>
     <string name="language_and_region_prefs">언어 및 지역 설정</string>
     <string name="debugactivity_really_factoryreset_title">정말로 공장 초기화를 실행할까요\?</string>
-    <string name="debugactivity_really_factoryreset">공장 초기화를 하면 (지원되는) 연결된 장치에서 데이터를 모두 삭제합니다. Xiaomi/Huami 장치들은 블루투스 MAC 주소도 변경하므로, Gadgetbridge에서 새 장치로 나타나게 됩니다.</string>
+    <string name="debugactivity_really_factoryreset">공장 초기화를 하면 (지원되는) 연결된 장치에서 데이터를 모두 삭제합니다. Xiaomi/Huami 장치들은 블루투스 MAC 주소도 변경하므로, LikeApp에서 새 장치로 나타나게 됩니다.</string>
     <string name="devicetype_id115">ID115</string>
     <string name="menuitem_music">음악</string>
     <string name="menuitem_more">더 보기</string>
@@ -601,7 +601,7 @@
     <string name="pref_summary_contextual_arabic">문맥 아랍어 처리 지원을 활성화 합니다</string>
     <string name="preferences_rtl_settings">오른쪽에서 왼쪽으로 쓰는 문자 지원</string>
     <string name="share_log">기록 공유</string>
-    <string name="share_log_warning">Gadgetbridge 기록은 건강 데이터, 개인을 식별할 수 있는 정보 (예를 들어서 장치의 MAC 주소), 음악 설정 등을 포함하는 많은 개인정보를 포함하고 있을 수 있습니다. 공개 이슈 트레커에 파일을 보내기 전에 파일을 편집해 이러한 정보를 제거하는 것을 고려하세요.</string>
+    <string name="share_log_warning">LikeApp 기록은 건강 데이터, 개인을 식별할 수 있는 정보 (예를 들어서 장치의 MAC 주소), 음악 설정 등을 포함하는 많은 개인정보를 포함하고 있을 수 있습니다. 공개 이슈 트레커에 파일을 보내기 전에 파일을 편집해 이러한 정보를 제거하는 것을 고려하세요.</string>
     <string name="warning">경고!</string>
     <string name="no_data">데이터 없음</string>
     <string name="preferences_led_color">LED 색상</string>

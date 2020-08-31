@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import org.likeapp.likeapp.GBApplication;
@@ -74,10 +75,12 @@ public abstract class AbstractMiBandFWHelper {
     public abstract int getFirmware2Version();
 
     public static String formatFirmwareVersion(int version) {
-        if (version == -1)
+        if (version == -1) {
             return GBApplication.getContext().getString(R.string._unknown_);
+        }
 
-        return String.format("%d.%d.%d.%d",
+        return String.format(Locale.UK,
+                "%d.%d.%d.%d",
                 version >> 24 & 255,
                 version >> 16 & 255,
                 version >> 8 & 255,

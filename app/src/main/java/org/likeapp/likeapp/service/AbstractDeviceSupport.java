@@ -31,12 +31,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.telephony.SmsManager;
 
-import org.likeapp.likeapp.activities.DebugActivity;
-import org.likeapp.likeapp.deviceevents.LikeAppDeviceEventDebugLog;
-import org.likeapp.likeapp.deviceevents.LikeAppDeviceEventSleep;
-import org.likeapp.likeapp.devices.miband.MiBandCoordinator;
-import org.likeapp.likeapp.service.audio.MicReader;
-import org.likeapp.likeapp.service.receivers.BabyMonitorReceiver;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.FileProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,9 +46,12 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.FileProvider;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import org.likeapp.likeapp.activities.DebugActivity;
+import org.likeapp.likeapp.deviceevents.LikeAppDeviceEventDebugLog;
+import org.likeapp.likeapp.deviceevents.LikeAppDeviceEventSleep;
+import org.likeapp.likeapp.devices.miband.MiBandCoordinator;
+import org.likeapp.likeapp.service.audio.MicReader;
+import org.likeapp.likeapp.service.receivers.BabyMonitorReceiver;
 import org.likeapp.likeapp.GBApplication;
 import org.likeapp.likeapp.R;
 import org.likeapp.likeapp.activities.FindPhoneActivity;
@@ -196,12 +197,11 @@ public abstract class AbstractDeviceSupport implements DeviceSupport {
     }
 
     private void handleGBDeviceEventFindPhoneStart() {
-        if ( Build.VERSION.SDK_INT < 29 ) { // this could be used if app in foreground
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) { // this could be used if app in foreground // TODO: Below Q?
             Intent startIntent = new Intent(getContext(), FindPhoneActivity.class);
             startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(startIntent);
-        }
-        else {
+        } else {
             handleGBDeviceEventFindPhoneStartNotification();
         }
     }
@@ -241,7 +241,7 @@ public abstract class AbstractDeviceSupport implements DeviceSupport {
         LOG.info("Got event for CALL_CONTROL");
         if(callEvent.event == GBDeviceEventCallControl.Event.IGNORE) {
             LOG.info("Sending intent for mute");
-            Intent broadcastIntent = new Intent("org.likeapp.likeapp.MUTE_CALL");
+            Intent broadcastIntent = new Intent(context.getPackageName() + ".MUTE_CALL");
             broadcastIntent.setPackage(context.getPackageName());
             context.sendBroadcast(broadcastIntent);
             return;

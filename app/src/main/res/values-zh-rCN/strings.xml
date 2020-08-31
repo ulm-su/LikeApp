@@ -56,14 +56,14 @@
 \n 
 \n您需要自行承担风险！</string>
     <string name="fw_multi_upgrade_notice">您即将安装固件 %1$s 和 %2$s，代替当前在小米手环上的固件。</string>
-    <string name="miband_firmware_known">该固件已经过测试，并且已知与 Gadgetbridge 兼容。</string>
-    <string name="miband_firmware_unknown_warning">此固件未经测试，可能与 Gadgetbridge 不兼容。 
+    <string name="miband_firmware_known">该固件已经过测试，并且已知与 LikeApp 兼容。</string>
+    <string name="miband_firmware_unknown_warning">此固件未经测试，可能与 LikeApp 不兼容。
 \n 
 \n不建议刷入！</string>
-    <string name="miband_firmware_suggest_whitelist">如果您仍想继续并且此固件在安装之后能够正常工作，请告知 Gadgetbridge 开发者将固件 %s 列入白名单。</string>
+    <string name="miband_firmware_suggest_whitelist">如果您仍想继续并且此固件在安装之后能够正常工作，请告知 LikeApp 开发者将固件 %s 列入白名单。</string>
     <string name="title_activity_settings">设置</string>
     <string name="pref_header_general">常规设置</string>
-    <string name="pref_title_general_autoconnectonbluetooth">当蓝牙打开时连接到 Gadgetbridge 设备</string>
+    <string name="pref_title_general_autoconnectonbluetooth">当蓝牙打开时连接到 LikeApp 设备</string>
     <string name="pref_title_general_autostartonboot">自动启动</string>
     <string name="pref_title_general_autoreconnect">自动重新连接</string>
     <string name="pref_title_audio_player">首选音频播放器</string>
@@ -71,12 +71,12 @@
     <string name="pref_title_charts_swipe">启用左右滑动切换图表</string>
     <string name="pref_header_datetime">日期和时间</string>
     <string name="pref_title_datetime_syctimeonconnect">同步时间</string>
-    <string name="pref_summary_datetime_syctimeonconnect">当您 Android 设备的时区改变时，且连接到 Gadgetbridge 设备时同步时间</string>
+    <string name="pref_summary_datetime_syctimeonconnect">当您 Android 设备的时区改变时，且连接到 LikeApp 设备时同步时间</string>
     <string name="pref_title_theme">主题</string>
     <string name="pref_theme_light">亮色</string>
     <string name="pref_theme_dark">暗色</string>
     <string name="pref_title_language">语言</string>
-    <string name="pref_title_minimize_priority">隐藏 Gadgetbridge 通知</string>
+    <string name="pref_title_minimize_priority">隐藏 LikeApp 通知</string>
     <string name="pref_summary_minimize_priority_off">状态栏中的图标和锁定屏幕中的通知已被开启</string>
     <string name="pref_summary_minimize_priority_on">状态栏中的图标和锁定屏幕中的通知已被隐藏</string>
     <string name="pref_header_notifications">通知</string>
@@ -100,7 +100,7 @@
     <string name="pref_call_privacy_mode_name">隐藏姓名但显示号码</string>
     <string name="pref_call_privacy_mode_number">隐藏号码但显示姓名</string>
     <string name="pref_call_privacy_mode_complete">隐藏姓名和号码</string>
-    <string name="pref_title_weather_location">天气位置(CM/LOS)</string>
+    <string name="pref_title_weather_location">天气位置 (由LineageOS天气服务提供)</string>
     <string name="pref_blacklist">黑名单应用</string>
     <string name="pref_blacklist_calendars">黑名单列表</string>
     <string name="pref_header_cannned_messages">保存的消息</string>
@@ -142,7 +142,7 @@
     <string name="pref_title_pebble_forceuntested">启用未经测试的功能</string>
     <string name="pref_summary_pebble_forceuntested">启用未经测试的功能。仅当你知道你在做什么时启用!</string>
     <string name="pref_title_pebble_enable_applogs">启用手表应用调试日志</string>
-    <string name="pref_summary_pebble_enable_applogs">应用程序日志将保存在 Gadgetbridge 中（需要重新连接）</string>
+    <string name="pref_summary_pebble_enable_applogs">应用程序日志将保存在 LikeApp 中（需要重新连接）</string>
     <string name="pref_summary_pebble_always_ack_pebblekit">这将导致发送到外部第三方应用程序的消息始终立即得到确认</string>
     <string name="pref_title_pebble_enable_bgjs">启用后台JS</string>
     <string name="pref_summary_pebble_enable_bgjs">启用后，将允许表盘显示天气，电池等信息。</string>
@@ -159,14 +159,14 @@
     <string name="_unknown_">(未知)</string>
     <string name="test">测试</string>
     <string name="test_notification">测试通知</string>
-    <string name="this_is_a_test_notification_from_gadgetbridge">这是来自 Gadgetbridge 的测试通知</string>
+    <string name="this_is_a_test_notification_from_gadgetbridge">这是来自 LikeApp 的测试通知</string>
     <string name="bluetooth_is_not_supported_">不支持蓝牙。</string>
     <string name="bluetooth_is_disabled_">蓝牙已禁用。</string>
     <string name="tap_connected_device_for_activity">点按以激活已连接的设备</string>
     <string name="tap_connected_device_for_vibration">点按以震动已连接的设备</string>
     <string name="tap_a_device_to_connect">点按一个设备以连接</string>
     <string name="cannot_connect_bt_address_invalid_">无法连接。 蓝牙地址无效？</string>
-    <string name="gadgetbridge_running">Gadgetbridge 正在运行</string>
+    <string name="gadgetbridge_running">LikeApp 正在运行</string>
     <string name="installing_binary_d_d">正在安装二进制文件 %1$d/%2$d</string>
     <string name="installation_failed_">安装失败</string>
     <string name="installation_successful">安装成功</string>
@@ -206,7 +206,7 @@
     <string name="miband_pairing_using_dummy_userdata">没有提供有效的用户数据, 现在使用虚拟用户数据。</string>
     <string name="miband_pairing_tap_hint">当您的小米手环振动并闪烁时，请连续点击几下。</string>
     <string name="appinstaller_install">安装</string>
-    <string name="discovery_connected_devices_hint">请设置并使您的设备可被发现。 当前连接的设备可能不会被发现。 对于 Android 6 及更高版本，您需要启用位置信息（如 GPS ）。 若禁用权限， Gadgetbridge 可能会崩溃并重新启动。 如果几分钟后没有找到设备，请重新启动您的移动设备后再试。</string>
+    <string name="discovery_connected_devices_hint">请设置并使您的设备可被发现。 当前连接的设备可能不会被发现。 对于 Android 6 及更高版本，您需要启用位置信息（如 GPS ）。 若禁用权限， LikeApp 可能会崩溃并重新启动。 如果几分钟后没有找到设备，请重新启动您的移动设备后再试。</string>
     <string name="discovery_note">注意:</string>
     <string name="candidate_item_device_image">设备图像</string>
     <string name="miband_prefs_alias">名称/别名</string>
@@ -300,8 +300,8 @@
     <string name="liveactivity_live_activity">实时活动数据</string>
     <string name="weeksteps_today_steps_description">今天的步数, 目标：%1$s</string>
     <string name="pref_title_dont_ack_transfer">不发送活动数据</string>
-    <string name="pref_summary_dont_ack_transfers">如果活动数据未传输到设备，则不会被清除。 Gadgetbridge 与其他应用程序一起使用时很有用。</string>
-    <string name="pref_summary_keep_data_on_device">即使在同步之后，也会将活动数据保留在小米手环上。如果 Gadgetbridge 与其他应用程序一起使用，这将非常有用。</string>
+    <string name="pref_summary_dont_ack_transfers">如果活动数据未传输到设备，则不会被清除。 LikeApp 与其他应用程序一起使用时很有用。</string>
+    <string name="pref_summary_keep_data_on_device">即使在同步之后，也会将活动数据保留在小米手环上。如果 LikeApp 与其他应用程序一起使用，这将非常有用。</string>
     <string name="pref_title_low_latency_fw_update">使用低延迟模式进行固件更新</string>
     <string name="pref_summary_low_latency_fw_update">这可能对固件失败的设备有帮助。</string>
     <string name="live_activity_steps_history">步数历史</string>
@@ -476,7 +476,7 @@
     <string name="devicetype_vibratissimo">Vibratissimo</string>
     <string name="devicetype_hplus">HPlus</string>
     <string name="choose_auto_export_location">选择导出位置</string>
-    <string name="notification_channel_name">Gadgetbridge 通知</string>
+    <string name="notification_channel_name">LikeApp 通知</string>
     <string name="controlcenter_change_led_color">切换 LED 灯颜色</string>
     <string name="controlcenter_change_fm_frequency">更改 FM 频率</string>
     <string name="controlcenter_calibrate_device">校准设备</string>
@@ -555,7 +555,7 @@
     <string name="activity_type_walking">走路</string>
     <string name="activity_type_swimming">游泳</string>
     <string name="activity_type_unknown">未知活动</string>
-    <string name="activity_summaries">活动</string>
+    <string name="activity_summaries">运动活动</string>
     <string name="activity_type_biking">自行车</string>
     <string name="activity_type_treadmill">跑步机</string>
     <string name="select_all">选择全部</string>
@@ -599,7 +599,7 @@
     <string name="pref_summary_contextual_arabic">启用此项以支持阿拉伯语语境</string>
     <string name="preferences_rtl_settings">从右到左支持</string>
     <string name="share_log">分享日志</string>
-    <string name="share_log_warning">请记住，Gadgetbridge 的日志文件包含许多个人信息，包括但不限于健康信息、独有身份（包括设备的 MAC 地址），音乐首选项等等。请在将日志发送到公共列表前仔细修改和删除这些信息。</string>
+    <string name="share_log_warning">请记住，LikeApp 的日志文件包含许多个人信息，包括但不限于健康信息、独有身份（包括设备的 MAC 地址），音乐首选项等等。请在将日志发送到公共列表前仔细修改和删除这些信息。</string>
     <string name="warning">警告！</string>
     <string name="no_data">没有数据</string>
     <string name="preferences_led_color">LED 颜色</string>
@@ -608,7 +608,7 @@
     <string name="pref_invalid_frequency_message">请输入一个在 87.5 至 108.0 之间的频率</string>
     <string name="language_and_region_prefs">语言和区域设置</string>
     <string name="debugactivity_really_factoryreset_title">确定要恢复出厂设置？</string>
-    <string name="debugactivity_really_factoryreset">恢复出厂设置将会删除已连接设备上的所有数据（如果支持）。小米/华米设备将会同时改变蓝牙MAC地址。对Gadgetbridge而言，这将是一个新设备。</string>
+    <string name="debugactivity_really_factoryreset">恢复出厂设置将会删除已连接设备上的所有数据（如果支持）。小米/华米设备将会同时改变蓝牙MAC地址。对LikeApp而言，这将是一个新设备。</string>
     <string name="devicetype_casiogb6900">卡西欧 GB-6900</string>
     <string name="title_activity_notification_filter">通知过滤器</string>
     <string name="toast_app_must_not_be_blacklisted">只有不在黑名单中的应用才能够进行配置</string>
@@ -721,7 +721,7 @@
     <string name="weeksleepchart_sleep_a_month">每月睡眠</string>
     <string name="devicetype_mijia_lywsd02">米家智能闹钟</string>
     <string name="menuitem_nfc">NFC</string>
-    <string name="pref_summary_expose_hr">当 Gadgetbridge 已连接时，允许其他应用实时访问心率数据</string>
+    <string name="pref_summary_expose_hr">当 LikeApp 已连接时，允许其他应用实时访问心率数据</string>
     <string name="pref_title_expose_hr">第三方实时心率数据访问</string>
     <string name="pref_title_use_custom_font">使用自定义字体</string>
     <string name="pref_summary_use_custom_font">如果您的设备使用自定义的字体固件或表情符号支持，请启用此选项</string>
@@ -835,9 +835,9 @@
     <string name="pref_title_force_white_color_scheme">当处于白色方案时始终使用黑色</string>
     <string name="pref_summary_force_white_color_scheme">如果您双手颜色较深，将会有帮助</string>
     <string name="find_my_phone_notification">查找我的手机</string>
-    <string name="notification_channel_high_priority_name">Gadgetbridge 通知高优先级</string>
+    <string name="notification_channel_high_priority_name">LikeApp 通知高优先级</string>
     <string name="pref_title_custom_deviceicon">显示设备特定的通知图标</string>
-    <string name="pref_summary_custom_deviceicon">显示设备指定的 Android 通知图标以替代已连接时的 Gadgetbridge 图标</string>
+    <string name="pref_summary_custom_deviceicon">显示设备指定的 Android 通知图标以替代已连接时的 LikeApp 图标</string>
     <string name="hr_appname_wellness">健康</string>
     <string name="hr_appname_workout">健身</string>
     <string name="hr_appname_stopwatch">秒表</string>
@@ -905,11 +905,123 @@
 \n
 \n风险自担！</string>
     <string name="devicetype_amazfit_trex">华米 T-Rex</string>
-    <string name="about_additional_contributions">感谢所有未列出的贡献者，他们贡献了代码、支持、想法、动力、错误报告和金钱 ✊</string>
+    <string name="about_additional_contributions">感谢所有未列出的贡献者，他们贡献了代码、支持、想法、动力、错误报告和金钱… ✊</string>
     <string name="about_additional_device_support">额外设备支持</string>
     <string name="about_contributors">贡献者</string>
     <string name="about_core_team_title">核心成员 （以第一次提交代码排序）</string>
     <string name="about_description">一个免费的、无云的替代品，可以替代你您的手环厂商的闭源Android应用。</string>
-    <string name="about_activity_title">关于 Gadgetbridge</string>
+    <string name="about_activity_title">关于 LikeApp</string>
     <string name="about_title">关于</string>
+    <string name="pref_title_weather_summary">由LineageOS天气服务提供，其他版本的Android系统需要使用诸如“Weather notification”。更多信息请访问 LikeApp 的Wiki。</string>
+    <string name="menuitem_worldclock">世界时钟</string>
+    <string name="permission_granting_mandatory">所有权限都是必须的，若未授予这些权限，可能会导致不稳定</string>
+    <string name="error_background_service_reason">由于意外错误，启动后台服务失败：</string>
+    <string name="error_background_service_reason_truncated">无法启动后台服务是由于…</string>
+    <string name="error_background_service">启动后台服务失败</string>
+    <string name="error_version_check_extreme_caution">注意：检查版本信息时发生错误！您不应该继续下去，已知版本名“%s”</string>
+    <string name="menuitem_stress">压力</string>
+    <string name="menuitem_cycles">周期</string>
+    <string name="menuitem_breathing">呼吸</string>
+    <string name="devicetype_miband5">小米手环5</string>
+    <string name="fw_upgrade_notice_miband5">您即将在您的 小米手环5 上安装 %s 固件。
+\n
+\n请确保先安装 .fw 文件，再安装 .res 文件。您的手环将会再安装了 .fw 文件后自动重启。
+\n
+\n注意：若 .res 文件没有更新，则无需安装。
+\n
+\n风险自担！</string>
+    <string name="devicetype_tlw64">TLW64</string>
+    <string name="companiondevice_pairing_details">启用新的 CompanionDevice API 支持（仅限 Android 8 或以上！），这将会在理论上提升可靠性，若需要，后台服务器将会自动重启，且需要重新配对才能生效</string>
+    <string name="error_location_enabled_mandatory">必须打开定位才能扫描设备</string>
+    <string name="ignore_bonded_devices_description">启用此选项将会在扫描时忽略已绑定或已配对的设备</string>
+    <string name="ignore_bonded_devices">忽略已绑定的设备</string>
+    <string name="error_retrieving_devices_database">从数据库中获取设备出错</string>
+    <string name="error_setting_alias">错误设置别名：</string>
+    <string name="error_exporting_device_preferences">导出设备特定首选项时遇到错误</string>
+    <string name="pref_check_permission_status_summary">检查并要求尚未获得的权限即使并非立刻需要。若您的设备的确不支持此类功能，也可禁用。不进行授权可能会导致问题！</string>
+    <string name="pref_check_permission_status">检查权限状态</string>
+    <string name="device_requires_key">需要密钥</string>
+    <string name="device_is_currently_bonded">已经绑定过了</string>
+    <string name="companiondevice_pairing">CompanionDevice 配对</string>
+    <string name="require_location_provider">必须启动定位</string>
+    <string name="devicetype_pinetime_jf">PineTime （JF 固件）</string>
+    <string name="calories_unit">千卡</string>
+    <string name="ascentSeconds">上升</string>
+    <string name="descentSeconds">下降</string>
+    <string name="activity_detail_show_gps_label">显示 GPS 跟踪</string>
+    <string name="activity_detail_duration_label">时长</string>
+    <string name="activity_detail_end_label">结束</string>
+    <string name="activity_detail_start_label">开始</string>
+    <string name="Steps">步数</string>
+    <string name="Activity">活动</string>
+    <string name="Speed">速度</string>
+    <string name="Elevation">海拔</string>
+    <string name="Distance">距离</string>
+    <string name="Swimming">游泳</string>
+    <string name="Strokes">行程</string>
+    <string name="bpm">bpm</string>
+    <string name="minutes_km">分钟/千米</string>
+    <string name="seconds_km">秒/千米</string>
+    <string name="laps_unit">圈</string>
+    <string name="swim_style">泳式</string>
+    <string name="swolf_index">SWOLF 指数</string>
+    <string name="seconds">秒</string>
+    <string name="strokes_unit">STR</string>
+    <string name="strokes_second">STR/秒</string>
+    <string name="km_h">千米/小时</string>
+    <string name="meters_second">米/秒</string>
+    <string name="steps_unit">步</string>
+    <string name="cm">厘米</string>
+    <string name="meters">米</string>
+    <string name="flatSeconds">平</string>
+    <string name="laps">圈</string>
+    <string name="swimStyle">泳式</string>
+    <string name="swolfIndex">SWOLF 索引</string>
+    <string name="averageLapPace">平均每圈步伐</string>
+    <string name="averageStrokesPerSecond">平均步伐</string>
+    <string name="averageStrokeDistance">平均行程距离</string>
+    <string name="averageStride">平均步幅</string>
+    <string name="averageKMPaceSeconds">步伐</string>
+    <string name="averageHR">心率</string>
+    <string name="totalStride">总步伐</string>
+    <string name="maxPace">最快步伐</string>
+    <string name="minPace">最慢步伐</string>
+    <string name="maxSpeed">最大</string>
+    <string name="caloriesBurnt">热量</string>
+    <string name="activeSeconds">活动</string>
+    <string name="steps">步数</string>
+    <string name="minAltitude">最小</string>
+    <string name="maxAltitude">最大</string>
+    <string name="descentMeters">下坡</string>
+    <string name="ascentMeters">登高</string>
+    <string name="distanceMeters">距离</string>
+    <string name="activity_summary_detail">运动活动详情</string>
+    <string name="seconds_m">秒/米</string>
+    <string name="prefs_events_forwarding_action_title">运行动作</string>
+    <string name="prefs_events_forwarding_broadcast_title">广播信息</string>
+    <string name="prefs_events_forwarding_startnonwear">未穿戴时</string>
+    <string name="prefs_events_forwarding_wokeup">醒来时</string>
+    <string name="prefs_events_forwarding_fellsleep">睡觉时</string>
+    <string name="prefs_events_forwarding_title">设备操作</string>
+    <string name="prefs_events_forwarding_summary">使用设备事件来触发操作和Android广播</string>
+    <string name="activity_type_yoga">瑜伽</string>
+    <string name="activity_type_jump_roping">跳绳</string>
+    <string name="activity_type_elliptical_trainer">椭圆机</string>
+    <string name="activity_type_indoor_cycling">室内环游</string>
+    <string name="activity_type_swimming_openwater">游泳（开放水域）</string>
+    <string name="activity_filter_apply_filter">应用过滤器</string>
+    <string name="activity_filter_filter_title">过滤器</string>
+    <string name="activity_filter_reset_filter">重置过滤器</string>
+    <string name="activity_filter_date_to">止</string>
+    <string name="activity_filter_date_from">自</string>
+    <string name="pref_header_filter">运动活动过滤器</string>
+    <string name="activity_summaries_statistics">统计</string>
+    <string name="km">千米</string>
+    <string name="medley">混合泳</string>
+    <string name="backstroke">仰泳</string>
+    <string name="freestyle">自由泳</string>
+    <string name="breaststroke">蛙泳</string>
+    <string name="pref_header_statistics">体育活动统计</string>
+    <string name="activity_filter_name_contains">名称</string>
+    <string name="activity_summary_edit_name_title">编辑名称</string>
 </resources>

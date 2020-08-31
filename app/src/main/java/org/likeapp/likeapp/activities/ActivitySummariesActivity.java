@@ -23,17 +23,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
+import android.util.TypedValue;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
@@ -42,12 +48,24 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.likeapp.likeapp.model.ActivityKind;
+import org.likeapp.likeapp.model.ActivitySummaryJsonSummary;
+import org.likeapp.likeapp.util.DateTimeUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
-import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import org.likeapp.likeapp.GBApplication;
 import org.likeapp.likeapp.R;
@@ -56,13 +74,21 @@ import org.likeapp.likeapp.entities.BaseActivitySummary;
 import org.likeapp.likeapp.impl.GBDevice;
 import org.likeapp.likeapp.model.ActivitySummary;
 import org.likeapp.likeapp.model.RecordedDataTypes;
-import org.likeapp.likeapp.util.AndroidUtils;
 import org.likeapp.likeapp.util.GB;
 
 public class ActivitySummariesActivity extends AbstractListActivity<BaseActivitySummary> {
-
+    private static final Logger LOG = LoggerFactory.getLogger(ActivitySummariesActivity.class);
     private GBDevice mGBDevice;
     private SwipeRefreshLayout swipeLayout;
+    HashMap<String , Integer> activityKindMap = new HashMap<>(1);
+    int activityFilter=0;
+    long dateFromFilter=0;
+    long dateToFilter=0;
+    String nameContainsFilter;
+    boolean offscreen = true;
+    static final int ACTIVITY_FILTER=1;
+    static final int ACTIVITY_DETAIL=11;
+
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -99,14 +125,126 @@ public class ActivitySummariesActivity extends AbstractListActivity<BaseActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         boolean processed = false;
         switch (item.getItemId()) {
+            case android.R.id.home:
+                // back button, close drawer if open, otherwise exit
+                if (!offscreen){
+                    processSummaryStatistics();
+                }else{
+                    finish();
+                }
+                return true;
             case R.id.activity_action_manage_timestamp:
                 resetFetchTimestampToChosenDate();
                 processed = true;
                 break;
+            case R.id.activity_action_filter:
+                if (!offscreen) processSummaryStatistics(); //hide drawer with stats if shown
+                Intent filterIntent = new Intent(this, ActivitySummariesFilter.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("activityKindMap",activityKindMap);
+                bundle.putInt("activityFilter",activityFilter);
+                bundle.putLong("dateFromFilter",dateFromFilter);
+                bundle.putLong("dateToFilter",dateToFilter);
+                bundle.putString("nameContainsFilter",nameContainsFilter);
+                filterIntent.putExtras(bundle);
+                startActivityForResult(filterIntent,ACTIVITY_FILTER);
+                return true;
+            case R.id.activity_action_calculate_summary_stats:
+                processSummaryStatistics();
+                return true;
         }
         return processed;
     }
 
+    private void processSummaryStatistics() {
+        View hiddenLayout = findViewById(R.id.activity_summary_statistics_relative_layout);
+        hiddenLayout.setVisibility(View.VISIBLE);
+        //hide or show drawer
+        int yOffset = (offscreen) ? 0 : -1 * hiddenLayout.getHeight();
+        LinearLayout.LayoutParams rlParams =
+                (LinearLayout.LayoutParams) hiddenLayout.getLayoutParams();
+        rlParams.setMargins(0, yOffset, 0, 0);
+        hiddenLayout.setLayoutParams(rlParams);
+
+        Animation animFadeDown;
+        animFadeDown = AnimationUtils.loadAnimation(
+                this,
+                R.anim.slidefromtop);
+        setTitle(R.string.activity_summaries);
+        if (offscreen) {
+            setTitle(R.string.activity_summaries_statistics);
+            hiddenLayout.startAnimation(animFadeDown);
+            double durationSum = 0;
+            double caloriesBurntSum = 0;
+            double distanceSum = 0;
+            double activeSecondsSum = 0;
+            double firstItemDate = 0;
+            double lastItemDate = 0;
+
+            TextView durationSumView = findViewById(R.id.activity_stats_duration_sum_value);
+            TextView caloriesBurntSumView = findViewById(R.id.activity_stats_calories_burnt_sum_value);
+            TextView distanceSumView = findViewById(R.id.activity_stats_distance_sum_value);
+            TextView activeSecondsSumView = findViewById(R.id.activity_stats_activeSeconds_sum_value);
+            TextView timeStartView = findViewById(R.id.activity_stats_timeFrom_value);
+            TextView timeEndView = findViewById(R.id.activity_stats_timeTo_value);
+
+            for (BaseActivitySummary sportitem : getItemAdapter().getItems()) {
+
+                if (firstItemDate == 0) firstItemDate = sportitem.getStartTime().getTime();
+                lastItemDate = sportitem.getEndTime().getTime();
+                durationSum += sportitem.getEndTime().getTime() - sportitem.getStartTime().getTime();
+
+                ActivitySummaryJsonSummary activitySummaryJsonSummary = new ActivitySummaryJsonSummary(sportitem);
+                JSONObject summarySubdata = activitySummaryJsonSummary.getSummaryData();
+
+                if (summarySubdata != null) {
+                    try {
+                        if (summarySubdata.has("caloriesBurnt")) {
+                            caloriesBurntSum += summarySubdata.getJSONObject("caloriesBurnt").getDouble("value");
+                        }
+                        if (summarySubdata.has("distanceMeters")) {
+                            distanceSum += summarySubdata.getJSONObject("distanceMeters").getDouble("value");
+                        }
+                        if (summarySubdata.has("activeSeconds")) {
+                            activeSecondsSum += summarySubdata.getJSONObject("activeSeconds").getDouble("value");
+                        }
+                    } catch (JSONException e) {
+                        LOG.error("SportsActivity", e);
+                    }
+                }
+            }
+            DecimalFormat df = new DecimalFormat("#.##");
+            durationSumView.setText(String.format("%s", DateTimeUtils.formatDurationHoursMinutes((long) durationSum, TimeUnit.MILLISECONDS)));
+            caloriesBurntSumView.setText(String.format("%s %s", (long) caloriesBurntSum, getString(R.string.calories_unit)));
+            distanceSumView.setText(String.format("%s %s", df.format(distanceSum / 1000), getString(R.string.km)));
+            activeSecondsSumView.setText(String.format("%s", DateTimeUtils.formatDurationHoursMinutes((long) activeSecondsSum, TimeUnit.SECONDS)));
+
+            //start and end are inverted when filer not applied, because items are sorted the other way
+            timeStartView.setText((dateFromFilter != 0) ? DateTimeUtils.formatDate(new Date(dateFromFilter)) : DateTimeUtils.formatDate(new Date((long) lastItemDate)));
+            timeEndView.setText((dateToFilter != 0) ? DateTimeUtils.formatDate(new Date(dateToFilter)) : DateTimeUtils.formatDate(new Date((long) firstItemDate)));
+        }
+        offscreen = !offscreen;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        super.onActivityResult(requestCode, resultCode, resultData);
+        if (requestCode == ACTIVITY_FILTER && resultData != null) {
+            activityFilter = resultData.getIntExtra("activityFilter", 0);
+            dateFromFilter = resultData.getLongExtra("dateFromFilter", 0);
+            dateToFilter = resultData.getLongExtra("dateToFilter", 0);
+            nameContainsFilter = resultData.getStringExtra("nameContainsFilter");
+            setActivityKindFilter(activityFilter);
+            setDateFromFilter(dateFromFilter);
+            setDateToFilter(dateToFilter);
+            setNameContainsFilter(nameContainsFilter);
+            refresh();
+        }
+        if (requestCode == ACTIVITY_DETAIL) {
+            refresh();
+        }
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Bundle extras = getIntent().getExtras();
@@ -121,7 +259,10 @@ public class ActivitySummariesActivity extends AbstractListActivity<BaseActivity
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, filterLocal);
 
         super.onCreate(savedInstanceState);
-        setItemAdapter(new ActivitySummariesAdapter(this, mGBDevice));
+        ActivitySummariesAdapter activitySummariesAdapter = new ActivitySummariesAdapter(this, mGBDevice,activityFilter,dateFromFilter,dateToFilter,nameContainsFilter);
+        int backgroundColor = getBackgroundColor(ActivitySummariesActivity.this);
+        activitySummariesAdapter.setBackgroundColor(backgroundColor);
+        setItemAdapter(activitySummariesAdapter);
 
         getItemListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -129,18 +270,20 @@ public class ActivitySummariesActivity extends AbstractListActivity<BaseActivity
                 Object item = parent.getItemAtPosition(position);
                 if (item != null) {
                     ActivitySummary summary = (ActivitySummary) item;
-
-                    String gpxTrack = summary.getGpxTrack();
-                    if (gpxTrack != null) {
-                        showTrack(gpxTrack);
-                    } else {
-                        GB.toast("This activity does not contain GPX tracks.", Toast.LENGTH_LONG, GB.INFO);
+                    try {
+                        showActivityDetail(position);
+                    } catch (Exception e) {
+                        GB.toast(getApplicationContext(), "Unable to display Activity Detail, maybe the activity is not available yet: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
                     }
+
                 }
             }
         });
 
         getItemListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        //hide top drawer on init
+        View hiddenLayout = findViewById(R.id.activity_summary_statistics_relative_layout);
+        hiddenLayout.setVisibility(View.GONE);
 
         getItemListView().setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
             @Override
@@ -230,6 +373,23 @@ public class ActivitySummariesActivity extends AbstractListActivity<BaseActivity
                 fetchTrackData();
             }
         });
+
+        activityKindMap = fillKindMap();
+
+
+
+    }
+
+    private LinkedHashMap fillKindMap(){
+        LinkedHashMap<String , Integer> newMap = new LinkedHashMap<>(1); //reset
+        newMap.put(getString(R.string.activity_summaries_all_activities), 0);
+        for (BaseActivitySummary item : getItemAdapter().getItems()) {
+            String activityName = ActivityKind.asString(item.getActivityKind(), this);
+            if (!newMap.containsKey(activityName)) {
+                newMap.put(activityName, item.getActivityKind());
+            }
+        }
+        return newMap;
     }
 
     public void resetFetchTimestampToChosenDate() {
@@ -263,13 +423,19 @@ public class ActivitySummariesActivity extends AbstractListActivity<BaseActivity
         refresh();
     }
 
-    private void showTrack(String gpxTrack) {
-        try {
-            AndroidUtils.viewFile(gpxTrack, Intent.ACTION_VIEW, this);
-        } catch (IOException e) {
-            GB.toast(this, "Unable to display GPX track: " + e.getMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
-        }
+    private void showActivityDetail(int position){
+        Intent ActivitySummaryDetailIntent = new Intent(this, ActivitySummaryDetail.class);
+        ActivitySummaryDetailIntent.putExtra("position", position);
+        ActivitySummaryDetailIntent.putExtra("filter", activityFilter);
+        ActivitySummaryDetailIntent.putExtra("dateFromFilter",dateFromFilter);
+        ActivitySummaryDetailIntent.putExtra("dateToFilter",dateToFilter);
+        ActivitySummaryDetailIntent.putExtra("nameContainsFilter",nameContainsFilter);
+
+        ActivitySummaryDetailIntent.putExtra(GBDevice.EXTRA_DEVICE, mGBDevice);
+        startActivityForResult(ActivitySummaryDetailIntent,ACTIVITY_DETAIL);
     }
+
+
 
     private void fetchTrackData() {
         if (mGBDevice.isInitialized() && !mGBDevice.isBusy()) {
@@ -300,4 +466,12 @@ public class ActivitySummariesActivity extends AbstractListActivity<BaseActivity
         }
 
     }
+
+    public static int getBackgroundColor(Context context) {
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.sports_activity_summary_background, typedValue, true);
+        return typedValue.data;
+    }
+
 }

@@ -27,11 +27,12 @@ public class Alarm {
     public final int WEEKDAY_FRIDAY = 5;
     public final int WEEKDAY_SATURDAY = 6;
     private byte days = 0;
-    private byte minute, hour;
-    private boolean repeat;
+    private final byte minute;
+    private final byte hour;
+    private final boolean repeat;
     private String title, message;
 
-    public Alarm(byte minute, byte hour, String title, String message){
+    public Alarm(byte minute, byte hour, String title, String message) {
         this.minute = minute;
         this.hour = hour;
         this.repeat = false;
@@ -103,18 +104,18 @@ public class Alarm {
     @NonNull
     @Override
     public String toString() {
-        String description = this.hour + ":" + this.minute + "  ";
+        StringBuilder description = new StringBuilder(this.hour + ":" + this.minute + "  ");
         if(repeat){
             String[] dayNames = new String[]{"sunday", "monday", "tuesday", "thursday", "wednesday", "friday", "saturday"};
             for(int i = WEEKDAY_SUNDAY; i <= WEEKDAY_SATURDAY; i++){
                 if((days & 1 << i) != 0){
-                    description += dayNames[i] + " ";
+                    description.append(dayNames[i]).append(" ");
                 }
             }
         }else{
-            description += "not repeating";
+            description.append("not repeating");
         }
 
-        return description;
+        return description.toString();
     }
 }

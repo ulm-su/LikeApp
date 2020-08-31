@@ -23,6 +23,7 @@ import org.likeapp.likeapp.devices.huami.HuamiFWHelper;
 import org.likeapp.likeapp.devices.huami.amazfitgtr.AmazfitGTRLiteFWHelper;
 import org.likeapp.likeapp.service.btle.TransactionBuilder;
 import org.likeapp.likeapp.service.devices.huami.amazfitgts.AmazfitGTSSupport;
+import org.likeapp.likeapp.util.Version;
 
 import java.io.IOException;
 
@@ -38,5 +39,16 @@ public class AmazfitGTRLiteSupport extends AmazfitGTSSupport {
     public void phase2Initialize(TransactionBuilder builder) {
         super.phase2Initialize(builder);
         setLanguage(builder);
+    }
+
+    @Override
+    protected void handleDeviceInfo(org.likeapp.likeapp.service.btle.profiles.deviceinfo.DeviceInfo info) {
+        super.handleDeviceInfo(info);
+        if (gbDevice.getFirmwareVersion() != null) {
+            Version version = new Version(gbDevice.getFirmwareVersion());
+            if (version.compareTo(new Version("1.0.0.33")) >= 0) {
+                mActivitySampleSize = 8;
+            }
+        }
     }
 }

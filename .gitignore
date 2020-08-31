@@ -40,3 +40,4 @@ fw.dirs
 /app/gradlew*
 /app/release/output.json
 /*.jks
+app/release/output-metadata.json

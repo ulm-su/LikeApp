@@ -24,7 +24,7 @@ import org.likeapp.likeapp.entities.DaoMaster;
 import org.likeapp.likeapp.entities.DaoSession;
 
 /**
- * Provides lowlevel access to the database.
+ * Provides low-level access to the database.
  */
 public interface DBHandler extends AutoCloseable {
     /**

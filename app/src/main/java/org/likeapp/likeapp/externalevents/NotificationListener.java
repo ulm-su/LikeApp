@@ -103,12 +103,12 @@ public class NotificationListener extends NotificationListenerService {
     public static final String ACTION_REPLY
             = "org.likeapp.likeapp.notificationlistener.action.reply";
 
-    private LimitedQueue mActionLookup = new LimitedQueue(32);
-    private LimitedQueue mPackageLookup = new LimitedQueue(64);
-    private LimitedQueue mNotificationHandleLookup = new LimitedQueue(128);
+    private final LimitedQueue mActionLookup = new LimitedQueue(32);
+    private final LimitedQueue mPackageLookup = new LimitedQueue(64);
+    private final LimitedQueue mNotificationHandleLookup = new LimitedQueue(128);
 
-    private HashMap<String, Long> notificationBurstPrevention = new HashMap<>();
-    private HashMap<String, Long> notificationOldRepeatPrevention = new HashMap<>();
+    private final HashMap<String, Long> notificationBurstPrevention = new HashMap<>();
+    private final HashMap<String, Long> notificationOldRepeatPrevention = new HashMap<>();
 
     private static final Set<String> GROUP_SUMMARY_WHITELIST = Collections.singleton(
             "mikado.bizcalpro"
@@ -119,7 +119,7 @@ public class NotificationListener extends NotificationListenerService {
     private long activeCallPostTime;
     private int mLastCallCommand = CallSpec.CALL_UNDEFINED;
 
-    private Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler();
     private Runnable mSetMusicInfoRunnable = null;
     private Runnable mSetMusicStateRunnable = null;
 
@@ -533,8 +533,7 @@ public class NotificationListener extends NotificationListenerService {
         GBApplication.deviceService().onSetCallState(callSpec);
     }
 
-    boolean shouldContinueAfterFilter(@NonNull String body, @NonNull List<String> wordsList, @NonNull NotificationFilter notificationFilter) {
-
+    boolean shouldContinueAfterFilter(String body, @NonNull List<String> wordsList, @NonNull NotificationFilter notificationFilter) {
         LOG.debug("Mode: '{}' Submode: '{}' WordsList: '{}'", notificationFilter.getNotificationFilterMode(), notificationFilter.getNotificationFilterSubMode(), wordsList);
 
         boolean allMode = notificationFilter.getNotificationFilterSubMode() == NOTIFICATION_FILTER_SUBMODE_ALL;
@@ -747,7 +746,7 @@ public class NotificationListener extends NotificationListenerService {
             mHandler.postDelayed(mSetMusicStateRunnable, 100);
 
             return true;
-        } catch (NullPointerException | RemoteException e) {
+        } catch (NullPointerException | RemoteException | SecurityException e) {
             return false;
         }
     }

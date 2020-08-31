@@ -29,6 +29,9 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.NavUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,8 +39,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.NavUtils;
 import org.likeapp.likeapp.GBApplication;
 import org.likeapp.likeapp.R;
 import org.likeapp.likeapp.devices.DeviceManager;
@@ -188,6 +189,7 @@ public class ExternalPebbleJSActivity extends AbstractGBActivity {
         myWebView.setWebViewClient(new GBWebClient());
         myWebView.setWebChromeClient(new GBChromeClient());
         WebSettings webSettings = myWebView.getSettings();
+        //noinspection SetJavaScriptEnabled
         webSettings.setJavaScriptEnabled(true);
         //needed to access the DOM
         webSettings.setDomStorageEnabled(true);

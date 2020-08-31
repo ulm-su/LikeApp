@@ -16,6 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package org.likeapp.likeapp.adapter;
 
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +27,12 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import org.likeapp.likeapp.GBApplication;
 import org.likeapp.likeapp.R;
+import org.likeapp.likeapp.devices.DeviceCoordinator;
 import org.likeapp.likeapp.impl.GBDevice;
 import org.likeapp.likeapp.impl.GBDeviceCandidate;
+import org.likeapp.likeapp.util.DeviceHelper;
 import org.likeapp.likeapp.util.GB;
 
 /**
@@ -47,22 +51,37 @@ public class DeviceCandidateAdapter extends ArrayAdapter<GBDeviceCandidate> {
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         GBDeviceCandidate device = getItem(position);
-
         if (view == null) {
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.item_with_details, parent, false);
         }
-        ImageView deviceImageView = (ImageView) view.findViewById(R.id.item_image);
-        TextView deviceNameLabel = (TextView) view.findViewById(R.id.item_name);
-        TextView deviceAddressLabel = (TextView) view.findViewById(R.id.item_details);
+        ImageView deviceImageView = view.findViewById(R.id.item_image);
+        TextView deviceNameLabel = view.findViewById(R.id.item_name);
+        TextView deviceAddressLabel = view.findViewById(R.id.item_details);
+        TextView deviceStatus = view.findViewById(R.id.item_status);
 
         String name = formatDeviceCandidate(device);
         deviceNameLabel.setText(name);
         deviceAddressLabel.setText(device.getMacAddress());
         deviceImageView.setImageResource(device.getDeviceType().getIcon());
 
+        String status = "";
+        if (device.getDevice().getBondState() == BluetoothDevice.BOND_BONDED) {
+            status += getContext().getString(R.string.device_is_currently_bonded);
+            if (!GBApplication.getPrefs().getBoolean("ignore_bonded_devices", false)) { // This could be passed to the constructor instead
+                deviceImageView.setImageResource(device.getDeviceType().getDisabledIcon());
+            }
+        }
+
+        DeviceCoordinator coordinator = DeviceHelper.getInstance().getCoordinator(device);
+        if (coordinator.getBondingStyle() == DeviceCoordinator.BONDING_STYLE_REQUIRE_KEY) {
+            if (device.getDevice().getBondState() == BluetoothDevice.BOND_BONDED) {
+                status += "\n";
+            }
+            status += getContext().getString(R.string.device_requires_key);
+        }
+
+        deviceStatus.setText(status);
         return view;
     }
 

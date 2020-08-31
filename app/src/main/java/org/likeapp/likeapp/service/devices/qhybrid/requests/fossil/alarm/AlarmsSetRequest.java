@@ -39,12 +39,13 @@ public class AlarmsSetRequest extends FilePutRequest
         Version newFormatVersion = new Version("1.0.2.17");
         Pattern versionPattern = Pattern.compile("([0-9]+)\\.([0-9]+)\\.([0-9]+)\\.([0-9]+)");
         Matcher matcher = versionPattern.matcher(firmware);
-        matcher.find();
-        String thisVersion = matcher.group(0);
 
-        int result = newFormatVersion.compareTo(new Version(thisVersion));
-
-        return result != 1;
+        if (matcher.find()) {
+            String thisVersion = matcher.group(0);
+            return newFormatVersion.compareTo(new Version(thisVersion)) != 1;
+        } else {
+            return false;
+        }
     }
 
     static public byte[] createFileFromAlarms(Alarm[] alarms, boolean newFormat) {
@@ -73,21 +74,21 @@ public class AlarmsSetRequest extends FilePutRequest
                 String message = alarm.getMessage();
                 int alarmSize = 17 + label.length() + message.length();
 
-                buffer.put((byte) 0x00); // dunno why
-                buffer.putShort((short) (alarmSize - 3)); // alarm size, 0 above and this does not count
-                buffer.put((byte) 0x00); // prolly entry id time data
-                buffer.putShort((short) 3); // prolly entry length
+                buffer.put((byte) 0x00); // No information why
+                buffer.putShort((short) (alarmSize - 3)); // Alarm size, 0 above and this does not count
+                buffer.put((byte) 0x00); // Probably entry id time data
+                buffer.putShort((short) 3); // Probably entry length
                 buffer.put(alarm.getData());
 
-                buffer.put((byte) 0x01); // another entry id label
-                buffer.putShort((short) (label.length() + 1));  // entry length
+                buffer.put((byte) 0x01); // Another entry id label
+                buffer.putShort((short) (label.length() + 1));  // Entry length
                 buffer.put(label.getBytes());
-                buffer.put((byte) 0x00); // null terminator
+                buffer.put((byte) 0x00); // Null terminator
 
-                buffer.put((byte) 0x02); // entry id subtext
-                buffer.putShort((short) (message.length() + 1)); // entry length
+                buffer.put((byte) 0x02); // Entry ID subtext
+                buffer.putShort((short) (message.length() + 1)); // Entry length
                 buffer.put(message.getBytes());
-                buffer.put((byte) 0x00); // null terminator
+                buffer.put((byte) 0x00); // Null terminator
             }
         }
 

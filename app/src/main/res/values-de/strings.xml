@@ -35,7 +35,7 @@
     <string name="appmanager_hrm_deactivate">HRM deaktivieren</string>
     <string name="appmanager_weather_activate">Aktiviere die Wetter App des Systems</string>
     <string name="appmanager_weather_deactivate">Deaktiviere die Wetter App des Systems</string>
-    <string name="appmanager_weather_install_provider">Wetterbenachrichtigungs App installieren</string>
+    <string name="appmanager_weather_install_provider">App \"Weather Notification\" installieren</string>
     <string name="app_configure">Konfigurieren</string>
     <string name="app_move_to_top">Nach oben</string>
     <!--Strings related to AppBlacklist-->
@@ -45,12 +45,12 @@
     <!--Strings related to FwAppInstaller-->
     <string name="title_activity_fw_app_insaller">FW/App-Installer</string>
     <string name="fw_upgrade_notice">Du bist dabei, die %s zu installieren.</string>
-    <string name="fw_multi_upgrade_notice">Du bist dabei, die %1$s und %2$s Firmware zu installieren, anstatt die, die sich derzeit auf deinem Mi Band befinden.</string>
-    <string name="miband_firmware_known">Diese Firmware wurde getestet und ist bekanntlich mit Gadgetbridge kompatibel.</string>
-    <string name="miband_firmware_unknown_warning">Diese Firmware ist nicht getestet und ist möglicherweise nicht mit Gadgetbridge kompatibel.
+    <string name="fw_multi_upgrade_notice">Du bist dabei anstelle der aktuell auf dem Mi Band vorhandenen Firmware, die Firmware %1$s und %2$s zu installieren.</string>
+    <string name="miband_firmware_known">Diese Firmware wurde getestet und ist bekanntlich mit LikeApp kompatibel.</string>
+    <string name="miband_firmware_unknown_warning">Diese Firmware ist nicht getestet und ist möglicherweise nicht mit LikeApp kompatibel.
 \n
 \nDu wirst GEBETEN, diese nicht zu flashen!</string>
-    <string name="miband_firmware_suggest_whitelist">Wenn du dennoch fortfahren möchtest und das Gerät anschließend korrekt funktioniert, melde bitte den Gadgetbridge-Entwicklern, das sie die Firmwareversion %s auf die Whitelist setzen sollen.</string>
+    <string name="miband_firmware_suggest_whitelist">Wenn du dennoch fortfahren möchtest und das Gerät anschließend korrekt funktioniert, melde bitte den LikeApp-Entwicklern, das sie die Firmwareversion %s auf die Whitelist setzen sollen.</string>
     <!--Strings related to Settings-->
     <string name="title_activity_settings">Einstellungen</string>
     <string name="pref_header_general">Allgemeine Einstellungen</string>
@@ -61,12 +61,12 @@
     <string name="pref_default">Standard</string>
     <string name="pref_header_datetime">Datum und Uhrzeit</string>
     <string name="pref_title_datetime_syctimeonconnect">Uhrzeit synchronisieren</string>
-    <string name="pref_summary_datetime_syctimeonconnect">Beim Verbinden und bei Änderung der Zeitzone auf dem Android Gerät, die Zeit auf das Gadgetbridge Gerät synchronisieren</string>
+    <string name="pref_summary_datetime_syctimeonconnect">Beim Verbinden und bei Änderung der Zeitzone auf dem Android Gerät, die Zeit auf das LikeApp Gerät synchronisieren</string>
     <string name="pref_title_theme">Farbschema</string>
     <string name="pref_theme_light">Hell</string>
     <string name="pref_theme_dark">Dunkel</string>
     <string name="pref_title_language">Sprache</string>
-    <string name="pref_title_minimize_priority">Gadgetbridge-Benachrichtigung ausblenden</string>
+    <string name="pref_title_minimize_priority">LikeApp-Benachrichtigung ausblenden</string>
     <string name="pref_summary_minimize_priority_off">Das Symbol in der Statusleiste und die Benachrichtigung auf dem Sperrbildschirm werden angezeigt</string>
     <string name="pref_summary_minimize_priority_on">Das Symbol in der Statusleiste und die Benachrichtigung auf dem Sperrbildschirm werden nicht angezeigt</string>
     <string name="pref_header_notifications">Benachrichtigungen</string>
@@ -80,7 +80,7 @@
     <string name="pref_title_notification_filter">Bitte nicht stören</string>
     <string name="pref_summary_notification_filter">Unerwünschte Benachrichtigungen werden in diesem Modus unterdrückt</string>
     <string name="pref_title_transliteration">Sonderzeichen umschreiben</string>
-    <string name="pref_summary_transliteration">Aktiviere dies, falls dein Gerät keine Unterstützung für die Schriftart deiner Sprache hat</string>
+    <string name="pref_summary_transliteration">Zum Umschreiben von Sonderzeichen aktivieren, falls dein Gerät keine Unterstützung für bestimmte Zeichen hat (z.B. ü-&gt;ue)</string>
     <string name="always">Immer</string>
     <string name="when_screen_off">Wenn der Bildschirm aus ist</string>
     <string name="never">Niemals</string>
@@ -137,9 +137,9 @@
     <string name="pref_title_pebble_mtu_limit">Pebble 2/LE GATT MTU Limit</string>
     <string name="pref_summary_pebble_mtu_limit">Wenn deine Pebble 2/Pebble LE nicht so wie erwartet funktioniert, versuche die MTU zu begrenzen (erlaubte Werte 20 bis 512)</string>
     <string name="pref_title_pebble_enable_applogs">Watch-App-Protokollierung aktivieren</string>
-    <string name="pref_summary_pebble_enable_applogs">Schreibt Logs von Watch Apps in Gadgetbridge-Logs (erfordert erneute Verbindung)</string>
+    <string name="pref_summary_pebble_enable_applogs">Schreibt Logs von Watch Apps in LikeApp-Logs (erfordert erneute Verbindung)</string>
     <string name="pref_title_pebble_always_ack_pebblekit">PebbleKit Nachrichten direkt bestätigen</string>
-    <string name="pref_summary_pebble_always_ack_pebblekit">Nachrichten, die an externe Drittanbieter-Apps geschickt werden, werden immer und sofort bestätigt</string>
+    <string name="pref_summary_pebble_always_ack_pebblekit">Nachrichten, die an externe Drittanbieter-Apps geschickt werden, immer und sofort bestätigen</string>
     <string name="pref_title_pebble_reconnect_attempts">Erneute Verbindungsversuche</string>
     <string name="pref_title_unit_system">Einheiten</string>
     <string name="pref_title_timeformat">Zeitformat</string>
@@ -153,7 +153,7 @@
     <string name="_unknown_">(unbekannt)</string>
     <string name="test">Test</string>
     <string name="test_notification">Testbenachrichtigung</string>
-    <string name="this_is_a_test_notification_from_gadgetbridge">Dies ist eine Testbenachrichtigung von Gadgetbridge</string>
+    <string name="this_is_a_test_notification_from_gadgetbridge">Dies ist eine Testbenachrichtigung von LikeApp</string>
     <string name="bluetooth_is_not_supported_">Bluetooth wird nicht unterstützt.</string>
     <string name="bluetooth_is_disabled_">Bluetooth ist deaktiviert.</string>
     <string name="tap_connected_device_for_app_mananger">Tippe auf das verbundene Gerät, um den App-Manager zu starten</string>
@@ -161,7 +161,7 @@
     <string name="tap_connected_device_for_vibration">Tippe auf das verbundene Gerät, um es vibrieren zu lassen</string>
     <string name="tap_a_device_to_connect">Tippe auf ein Gerät, um eine Verbindung herzustellen</string>
     <string name="cannot_connect_bt_address_invalid_">Keine Verbindung möglich. Bluetooth-Adresse ungültig\?</string>
-    <string name="gadgetbridge_running">Gadgetbridge läuft</string>
+    <string name="gadgetbridge_running">LikeApp läuft</string>
     <string name="installing_binary_d_d">Binärdatei %1$d/%2$d wird installiert</string>
     <string name="installation_failed_">Installation fehlgeschlagen</string>
     <string name="installation_successful">Installiert</string>
@@ -201,7 +201,7 @@
     <string name="miband_pairing_using_dummy_userdata">Keine gültigen Benutzerdaten angegeben, es werden jetzt Dummy-Benutzerdaten verwendet.</string>
     <string name="miband_pairing_tap_hint">Wenn dein Mi Band vibriert und blinkt, tippe es ein paar Mal hintereinander an.</string>
     <string name="appinstaller_install">Installieren</string>
-    <string name="discovery_connected_devices_hint">Mache dein Gerät auffindbar. Derzeit verbundene Geräte werden wahrscheinlich nicht erkannt. Aktiviere die Standortsbestimmung (zum Beispiel GPS) in Android 6+. Deaktiviere Privacy Guard für Gadgetbridge, da er zu Abstürzen und Neustarts deines Telefons führen kann. Wenn nach einigen Minuten kein Gerät erkannt wird, versuche es nach dem Neustart deines mobilen Gerätes erneut.</string>
+    <string name="discovery_connected_devices_hint">Mache dein Gerät auffindbar. Derzeit verbundene Geräte werden wahrscheinlich nicht erkannt. Aktiviere die Standortbestimmung (zum Beispiel GPS) in Android 6+. Deaktiviere Privacy Guard für LikeApp, da er zu Abstürzen und Neustarts deines Telefons führen kann. Wenn nach einigen Minuten kein Gerät erkannt wird, versuche es nach dem Neustart deines mobilen Gerätes erneut.</string>
     <string name="discovery_note">Hinweis:</string>
     <string name="candidate_item_device_image">Gerätesymbol</string>
     <string name="miband_prefs_alias">Name/Alias</string>
@@ -291,9 +291,9 @@
     <string name="battery">Akku</string>
     <string name="liveactivity_live_activity">Jetzige Aktivität (live)</string>
     <string name="weeksteps_today_steps_description">Schritte heute, Ziel: %1$s</string>
-    <string name="pref_title_dont_ack_transfer">Keine ACK-Aktivitätsdatenübertragung durchführen</string>
-    <string name="pref_summary_dont_ack_transfers">Wenn die Aktivitätsdaten nicht an das Band gesendet werden, werden sie nicht gelöscht. Nützlich, wenn Gadgetbridge zusammen mit anderen Apps verwendet wird.</string>
-    <string name="pref_summary_keep_data_on_device">Aktivitätsdaten verbleiben auf dem Mi Band, auch nach der Synchronisierung. Nützlich, wenn Gadgetbridge zusammen mit anderen Apps verwendet wird.</string>
+    <string name="pref_title_dont_ack_transfer">Übertragung der Aktivitätsdaten nicht bestätigen (ACK)</string>
+    <string name="pref_summary_dont_ack_transfers">Ohne ACK (Bestätigung), löscht das Band die Aktivitätsdaten nicht. Nützlich, wenn GB zusammen mit anderen Apps verwendet wird.</string>
+    <string name="pref_summary_keep_data_on_device">Aktivitätsdaten verbleiben auf dem Mi Band, auch nach der Synchronisierung. Nützlich, wenn LikeApp zusammen mit anderen Apps verwendet wird.</string>
     <string name="pref_title_low_latency_fw_update">Verwende den Low-Latency-Modus für Firmwareaktualisierung</string>
     <string name="pref_summary_low_latency_fw_update">Dies kann bei Geräten helfen, bei denen Firmwareupdates fehlschlagen.</string>
     <string name="live_activity_steps_history">Schrittverlauf</string>
@@ -384,7 +384,7 @@
     <!--Strings related to Pebble Pairing Activity-->
     <string name="title_activity_pebble_pairing">Pebble koppeln</string>
     <string name="pebble_pairing_hint">Auf deinem Android-Gerät erscheint ein Koppeln-Dialog. Wenn nicht, schaue in die Benachrichtigungsübersicht und akzeptiere die Kopplungsanforderung. Akzeptiere es auch danach auf deiner Pebble.</string>
-    <string name="weather_notification_label">Stelle sicher, dass dieser Skin in der Wetterbenachrichtigungs-App aktiviert ist, damit du Wetterdaten auf deiner Pebble erhältst. 
+    <string name="weather_notification_label">Stelle sicher, dass dieser Skin in der App \"Weather Notification\" aktiviert ist, damit du Wetterdaten auf deiner Pebble erhältst. 
 \n 
 \nHier ist keine Konfiguration nötig. 
 \n 
@@ -479,7 +479,7 @@
     <string name="devicetype_exrizu_k8">Exrizu K8</string>
     <string name="devicetype_no1_f1">No.1 F1</string>
     <string name="devicetype_teclast_h30">Teclast H30</string>
-    <string name="pref_title_weather_location">Wetterstandort (CM/LOS)</string>
+    <string name="pref_title_weather_location">Wetterstandort (für den LineageOS Wetter Dienst)</string>
     <string name="pref_header_auto_export">Automatisch exportieren</string>
     <string name="pref_title_auto_export_enabled">Automatisch exportieren aktiviert</string>
     <string name="pref_title_auto_export_location">Speicherort für den Export</string>
@@ -499,7 +499,7 @@
     <string name="activity_type_walking">Gehen</string>
     <string name="activity_type_swimming">Schwimmen</string>
     <string name="activity_type_unknown">Unbekannte Aktivität</string>
-    <string name="activity_summaries">Aktivitäten</string>
+    <string name="activity_summaries">Sportliche Aktivitäten</string>
     <string name="activity_type_biking">Radfahren</string>
     <string name="activity_type_treadmill">Laufband</string>
     <string name="activity_error_no_app_for_gpx">Um Aktivitäten zu betrachten, App installieren, die GPX-Dateien verarbeiten kann.</string>
@@ -513,7 +513,7 @@
     <string name="kind_watchface">Zifferblatt</string>
     <string name="devicetype_xwatch">XWatch</string>
     <string name="choose_auto_export_location">Speicherort für Export auswählen</string>
-    <string name="notification_channel_name">Benachrichtigungen von Gadgetbridge</string>
+    <string name="notification_channel_name">Benachrichtigungen von LikeApp</string>
     <string name="menuitem_status">Status</string>
     <string name="menuitem_activity">Aktivität</string>
     <string name="menuitem_weather">Wetter</string>
@@ -604,7 +604,7 @@
     <string name="pref_invalid_frequency_message">Bitte eine Frequenz zwischen 87,5 und 108,0 eingeben</string>
     <string name="language_and_region_prefs">Sprach- und Regionseinstellungen</string>
     <string name="debugactivity_really_factoryreset_title">Wirklich auf Werkseinstellungen zurücksetzen\?</string>
-    <string name="debugactivity_really_factoryreset">Beim Zurücksetzen auf die Werkseinstellungen werden alle Daten vom angeschlossenen Gerät gelöscht (falls unterstützt). Xiaomi/Huami-Geräte wechseln dabei auch die Bluetooth-MAC-Adresse, so dass sie als neue Geräte bei Gadgetbridge erscheinen.</string>
+    <string name="debugactivity_really_factoryreset">Beim Zurücksetzen auf die Werkseinstellungen werden alle Daten vom angeschlossenen Gerät gelöscht (falls unterstützt). Xiaomi/Huami-Geräte wechseln dabei auch die Bluetooth-MAC-Adresse, so dass sie als neue Geräte bei LikeApp erscheinen.</string>
     <string name="pref_rtl_max_line_length_summary">Verlängert oder verkürzt die Zeilen, in die linksläufiger Text geteilt wird</string>
     <string name="notif_battery_low_extended">%1$s Akku fast leer: %2$s</string>
     <string name="lack_of_sleep">Zu wenig geschlafen: %1$s</string>
@@ -619,7 +619,7 @@
     <string name="pref_summary_contextual_arabic">Aktivieren, um kontextabhängiges Arabisch zu unterstützen</string>
     <string name="preferences_rtl_settings">Unterstützung für linksläufigen Text (RTL)</string>
     <string name="share_log">Protokoll teilen</string>
-    <string name="share_log_warning">Bitte beachte, in den Protokoll Dateien von Gadgetbridge können personenbezogene Informationen enthalten sein. Dies können Gesundheitsdaten, eindeutige Identifikatoren (wie die MAC-Adresse eines Geräts), Musikpräferenzen und mehr sein. Erwäge die Datei zu bearbeiten und diese Informationen zu entfernen, bevor du die Datei in einem Fehlerbericht öffentlich zur Verfügung stellst.</string>
+    <string name="share_log_warning">Bitte beachte, in den Protokoll Dateien von LikeApp können personenbezogene Informationen enthalten sein. Dies können Gesundheitsdaten, eindeutige Identifikatoren (wie die MAC-Adresse eines Geräts), Musikpräferenzen und mehr sein. Erwäge die Datei zu bearbeiten und diese Informationen zu entfernen, bevor du die Datei in einem Fehlerbericht öffentlich zur Verfügung stellst.</string>
     <string name="title_activity_notification_filter">Benachrichtigungsfilter</string>
     <string name="toast_app_must_not_be_blacklisted">App muss nicht auf der Blacklist stehen, um konfiguriert zu werden</string>
     <string name="edittext_notification_filter_words_hint">Gewünschte Wörter eingeben, neue Zeile für jedes Wort</string>
@@ -721,7 +721,7 @@
     <string name="prefs_hr_alarm_activity">Herzfrequenzalarm bei sportlicher Aktivität</string>
     <string name="prefs_hr_alarm_low">Untere Grenze</string>
     <string name="prefs_hr_alarm_high">Obere Grenze</string>
-    <string name="average">Durchschnitt: %1$s</string>
+    <string name="average">Mittelwert: %1$s</string>
     <string name="pref_header_charts">Diagrammeinstellungen</string>
     <string name="pref_title_charts_average">Durchschnittswerte im Diagramm anzeigen</string>
     <string name="pref_title_charts_range">Diagrammbereich</string>
@@ -731,7 +731,7 @@
     <string name="weeksleepchart_sleep_a_month">Schlaf pro Monat</string>
     <string name="devicetype_mijia_lywsd02">Mijia Smart Uhr</string>
     <string name="menuitem_nfc">NFC</string>
-    <string name="pref_summary_expose_hr">Ermöglicht anderen Anwendungen den Zugriff auf HR-Daten in Echtzeit, während Gadgetbridge verbunden ist</string>
+    <string name="pref_summary_expose_hr">Ermöglicht anderen Anwendungen den Zugriff auf HR-Daten in Echtzeit, während LikeApp verbunden ist</string>
     <string name="pref_title_expose_hr">Echtzeit-HR-Zugang von Drittanbietern</string>
     <string name="pref_title_use_custom_font">Benutzerdefinierte Schriftart verwenden</string>
     <string name="pref_summary_use_custom_font">Aktiviere das, wenn dein Gerät über eine benutzerdefinierte Schriftarten-Firmware für die Emoji-Unterstützung verfügt</string>
@@ -843,9 +843,9 @@
     <string name="pref_title_force_white_color_scheme">Schwarz-Weiß-Farbschema erzwingen</string>
     <string name="pref_summary_force_white_color_scheme">Nützlich, wenn deine Uhr dunkle Zeiger hat</string>
     <string name="find_my_phone_notification">Mein Telefon finden</string>
-    <string name="notification_channel_high_priority_name">Gadgetbridge-Benachrichtigungen mit hoher Priorität</string>
+    <string name="notification_channel_high_priority_name">LikeApp-Benachrichtigungen mit hoher Priorität</string>
     <string name="pref_title_custom_deviceicon">Gerätespezifisches Benachrichtigungssymbol anzeigen</string>
-    <string name="pref_summary_custom_deviceicon">Zeige ein gerätespezifisches Android-Benachrichtigungssymbol anstelle des Gadgetbridge-Symbols, wenn eine Verbindung besteht</string>
+    <string name="pref_summary_custom_deviceicon">Zeige ein gerätespezifisches Android-Benachrichtigungssymbol anstelle des LikeApp-Symbols, wenn eine Verbindung besteht</string>
     <string name="hr_appname_wellness">Wellness</string>
     <string name="hr_appname_workout">Training</string>
     <string name="hr_appname_stopwatch">Stoppuhr</string>
@@ -856,7 +856,7 @@
     <string name="hr_appname_commute">Pendeln</string>
     <string name="devicetype_amazfit_bips">Amazfit Bip S</string>
     <string name="pref_summary_relax_firmware_checks">Firmwareüberprüfung deaktivieren</string>
-    <string name="pref_title_relax_firmware_checks">Aktiviere das flashen von Firmware, die nicht für dieses Gerät bestimmt ist (auf eigenes Risiko)</string>
+    <string name="pref_title_relax_firmware_checks">Zum flashen von Firmware, die nicht für dieses Gerät bestimmt ist aktivieren (auf eigenes Risiko)</string>
     <string name="pref_qhybrid_title_widget_draw_circles">Widget-Kreise zeichnen</string>
     <string name="pref_header_auto_fetch">Automatischer Abruf</string>
     <string name="pref_qhybrid_save_raw_activity_files">Raw Activity Dateien speichern</string>
@@ -913,11 +913,93 @@
 \n
 \nINSTALLATION AUF EIGENE GEFAHR!</string>
     <string name="devicetype_amazfit_trex">Amazfit T-Rex</string>
-    <string name="about_additional_contributions">Wir danken allen nicht gelisteten Mitwirkenden dafür uns zu unterstützen mit Code, Unterstützung, Ideen, Motivation, Fehlermeldungen, Geld... ✊</string>
+    <string name="about_additional_contributions">Wir danken allen nicht gelisteten Mitwirkenden dafür uns zu unterstützen mit Code, Unterstützung, Ideen, Motivation, Fehlermeldungen, Geld… ✊</string>
     <string name="about_additional_device_support">Unterstützung zusätzlicher Geräte</string>
-    <string name="about_contributors">Mitwirkende</string>
+    <string name="about_contributors">Beitragende</string>
     <string name="about_core_team_title">Kernteam (Reihenfolge der ersten Mitwirkung am Code)</string>
     <string name="about_description">Ein freier und nicht cloud basierter Ersatz für proprietäre Android Anwendungen der Hersteller von Gadgets.</string>
-    <string name="about_activity_title">Über Gadgetbridge</string>
+    <string name="about_activity_title">Über LikeApp</string>
     <string name="about_title">Über</string>
+    <string name="pref_title_weather_summary">Wird für den LineageOS Wetterdienst genutzt, andere Android Versionen müssen eine App wie \"Weather notification\" nutzen. Mehr Informationen gibt es im Gadgetbride wiki.</string>
+    <string name="menuitem_worldclock">Weltzeit</string>
+    <string name="error_version_check_extreme_caution">ACHTUNG: Fehler beim Prüfen der Information zur Version! Du solltest nicht fortfahren! Versionsname \"%s\" gefunden</string>
+    <string name="permission_granting_mandatory">Alle Berechtigungen sind notwendig und es kann zu Problemen führen, wenn sie nicht genehmigt werden</string>
+    <string name="menuitem_stress">Stress</string>
+    <string name="menuitem_cycles">Zyklus</string>
+    <string name="error_background_service_reason">Start des Hintergrunddienstes fehlgeschlagen wegen einem Fehler. Fehlermeldung:</string>
+    <string name="error_background_service_reason_truncated">Hintergrunddienst konnte nicht gestartet werden, wegen…</string>
+    <string name="error_background_service">Start des Hintergrunddienstes fehlgeschlagen</string>
+    <string name="menuitem_breathing">Atmung</string>
+    <string name="devicetype_miband5">Mi Band 5</string>
+    <string name="fw_upgrade_notice_miband5">Du bist dabei, die Firmware %s auf dein Mi Band 5 zu installieren.
+\n
+\nBitte stelle sicher, dass du zuerst die .fw Datei und dann die .res Datei installierst. Dein Band wird nach der Installation der .fw Datei neu starten.
+\n
+\nHinweis: Die .res Datei muss nicht installiert werden, wenn es die gleiche Datei ist, die schon zuvor installiert wurde.
+\n
+\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="companiondevice_pairing_details">Aktiviert die CompanionDevice API Unterstützung (funktioniert nur bei Android 8 und neuer). Erhöht die Zuverlässigkeit der Verbindung, wenn der Dienst im Hintergrund neu gestartet werden muss. Benötigt ein neues Paaren der Geräte mit LikeApp um zu funktionieren</string>
+    <string name="error_location_enabled_mandatory">Standort muss für den Gerätescan aktiviert sein</string>
+    <string name="ignore_bonded_devices_description">Bei aktiver Option werden Geräte ignoriert, die beim Scan schon verbunden/gepaart sind</string>
+    <string name="ignore_bonded_devices">Ignoriere verbundene Geräte</string>
+    <string name="error_retrieving_devices_database">Fehler beim laden der Geräte aus der Datenbank</string>
+    <string name="error_setting_alias">Fehler beim setzen des Alias:</string>
+    <string name="error_exporting_device_preferences">Fehler beim Export der gerätespezifischen Einstellungen</string>
+    <string name="pref_check_permission_status_summary">Prüfen und nachfragen von fehlenden Berechtigungen, auch wenn sie nicht direkt benötigt werden. Nur deaktivieren, wenn dieses Gerät eine der Features nicht unterstützen soll. Eine Berechtigung nicht zu erteilen kann zu Problemen führen!</string>
+    <string name="pref_check_permission_status">Berechtigungsstatus prüfen</string>
+    <string name="device_requires_key">SCHLÜSSEL NOTWENDIG</string>
+    <string name="device_is_currently_bonded">BEREITS VERBUNDEN</string>
+    <string name="companiondevice_pairing">CompanionDevice Gerätepaarung</string>
+    <string name="require_location_provider">Standort muss aktiviert sein</string>
+    <string name="devicetype_tlw64">TLW64</string>
+    <string name="devicetype_pinetime_jf">PimeTime (JF Firmware)</string>
+    <string name="activity_detail_show_gps_label">GPS-Track anzeigen</string>
+    <string name="activity_detail_duration_label">Dauer:</string>
+    <string name="activity_detail_end_label">Ende:</string>
+    <string name="activity_detail_start_label">Start:</string>
+    <string name="Steps">Schritte</string>
+    <string name="Activity">Aktivität</string>
+    <string name="Speed">Geschwindigkeit</string>
+    <string name="Distance">Strecke</string>
+    <string name="Swimming">Schwimmen</string>
+    <string name="laps_unit">Runden</string>
+    <string name="swim_style">Schwimmstil</string>
+    <string name="km_h">km/h</string>
+    <string name="meters_second">m/s</string>
+    <string name="steps_unit">Schritte</string>
+    <string name="cm">cm</string>
+    <string name="meters">m</string>
+    <string name="laps">Runden</string>
+    <string name="averageLapPace">Durchschnittliches Rundentempo</string>
+    <string name="averageKMPaceSeconds">Tempo</string>
+    <string name="averageHR">Herzfrequenz</string>
+    <string name="maxPace">Schnellstes Tempo</string>
+    <string name="minPace">Langsamstes Tempo</string>
+    <string name="caloriesBurnt">Kalorien</string>
+    <string name="activeSeconds">Aktiv</string>
+    <string name="steps">Schritte</string>
+    <string name="minAltitude">Minimum</string>
+    <string name="maxAltitude">Maximum</string>
+    <string name="descentMeters">Bergab</string>
+    <string name="ascentMeters">Bergauf</string>
+    <string name="distanceMeters">Strecke</string>
+    <string name="activity_summary_detail">Detail der Sportaktivität</string>
+    <string name="maxSpeed">Maximum</string>
+    <string name="prefs_events_forwarding_action_title">Aktion ausführen</string>
+    <string name="prefs_events_forwarding_startnonwear">Beim nicht tragend</string>
+    <string name="prefs_events_forwarding_wokeup">Beim Aufwachen</string>
+    <string name="prefs_events_forwarding_fellsleep">Beim Einschlafen</string>
+    <string name="activity_type_yoga">Yoga</string>
+    <string name="activity_type_swimming_openwater">Schwimmen (Freiwasser)</string>
+    <string name="Strokes">Schläge</string>
+    <string name="calories_unit">kcal</string>
+    <string name="activity_type_jump_roping">Seilspringen</string>
+    <string name="activity_type_elliptical_trainer">Crosstrainer</string>
+    <string name="activity_type_indoor_cycling">Indoor Cycling</string>
+    <string name="strokes_second">str/s</string>
+    <string name="swimStyle">Schwimmstil</string>
+    <string name="seconds">sek</string>
+    <string name="minutes_km">min/km</string>
+    <string name="seconds_m">sek/m</string>
+    <string name="ascentSeconds">Aufsteigend</string>
 </resources>

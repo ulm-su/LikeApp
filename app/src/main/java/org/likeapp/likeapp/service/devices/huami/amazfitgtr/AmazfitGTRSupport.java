@@ -21,33 +21,26 @@ import android.net.Uri;
 
 import org.likeapp.likeapp.devices.huami.HuamiFWHelper;
 import org.likeapp.likeapp.devices.huami.amazfitgtr.AmazfitGTRFWHelper;
-import org.likeapp.likeapp.model.NotificationSpec;
-import org.likeapp.likeapp.service.btle.TransactionBuilder;
-import org.likeapp.likeapp.service.devices.huami.amazfitbip.AmazfitBipSupport;
-import org.likeapp.likeapp.service.devices.huami.operations.UpdateFirmwareOperationNew;
+import org.likeapp.likeapp.service.devices.huami.amazfitgts.AmazfitGTSSupport;
+import org.likeapp.likeapp.util.Version;
 
 import java.io.IOException;
 
-public class AmazfitGTRSupport extends AmazfitBipSupport {
-
-    @Override
-    public byte getCryptFlags() {
-        return (byte) 0x80;
-    }
-    
-    @Override
-    protected byte getAuthFlags() {
-        return 0x00;
-    }
-
-    @Override
-    public void onNotification(NotificationSpec notificationSpec) {
-        super.sendNotificationNew(notificationSpec, true);
-    }
-
+public class AmazfitGTRSupport extends AmazfitGTSSupport {
     @Override
     public HuamiFWHelper createFWHelper(Uri uri, Context context) throws IOException {
         return new AmazfitGTRFWHelper (uri, context);
     }
 
+    @Override
+    protected void handleDeviceInfo(org.likeapp.likeapp.service.btle.profiles.deviceinfo.DeviceInfo info) {
+        super.handleDeviceInfo(info);
+        if (gbDevice.getFirmwareVersion() != null) {
+            Version version = new Version(gbDevice.getFirmwareVersion());
+            if (version.compareTo(new Version("1.3.5.79")) >= 0 || // For GTR 47mm
+                    (version.compareTo(new Version("1.0.0.00")) < 0 && version.compareTo(new Version("0.1.1.15")) >= 0)) { // for GTR 32mm with a different version scheme
+                mActivitySampleSize = 8;
+            }
+        }
+    }
 }

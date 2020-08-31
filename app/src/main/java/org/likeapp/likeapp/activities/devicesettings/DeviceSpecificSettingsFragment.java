@@ -27,6 +27,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import org.likeapp.likeapp.GBApplication;
+import org.likeapp.likeapp.R;
 import org.likeapp.likeapp.devices.huami.HuamiConst;
 import org.likeapp.likeapp.devices.makibeshr3.MakibesHR3Constants;
 import org.likeapp.likeapp.devices.miband.MiBandConst;
@@ -59,6 +60,14 @@ import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPrefer
 import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_VIBRATION_STRENGH_PERCENTAGE;
 import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_WEARLOCATION;
 import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_ACTIVATE_DISPLAY_ON_LIFT;
+import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_DEVICE_ACTION_FELL_SLEEP_BROADCAST;
+import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_DEVICE_ACTION_FELL_SLEEP_SELECTION;
+import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_DEVICE_ACTION_SELECTION_BROADCAST;
+import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_DEVICE_ACTION_SELECTION_OFF;
+import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_DEVICE_ACTION_START_NON_WEAR_BROADCAST;
+import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_DEVICE_ACTION_START_NON_WEAR_SELECTION;
+import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_DEVICE_ACTION_WOKE_UP_BROADCAST;
+import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_DEVICE_ACTION_WOKE_UP_SELECTION;
 import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_DISCONNECT_NOTIFICATION;
 import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_DISCONNECT_NOTIFICATION_END;
 import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_DISCONNECT_NOTIFICATION_START;
@@ -429,6 +438,94 @@ public class DeviceSpecificSettingsFragment extends PreferenceFragmentCompat {
         setInputTypeFor(MiBandConst.PREF_MIBAND_DEVICE_TIME_OFFSET_HOURS, InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
         setInputTypeFor(MakibesHR3Constants.PREF_FIND_PHONE_DURATION, InputType.TYPE_CLASS_NUMBER);
         setInputTypeFor(DeviceSettingsPreferenceConst.PREF_RESERVER_ALARMS_CALENDAR, InputType.TYPE_CLASS_NUMBER);
+
+        String deviceActionsFellSleepSelection = prefs.getString(PREF_DEVICE_ACTION_FELL_SLEEP_SELECTION, PREF_DEVICE_ACTION_SELECTION_OFF);
+        final String deviceActionsFellSleepBroadcastValue = prefs.getString(PREF_DEVICE_ACTION_FELL_SLEEP_BROADCAST,
+                this.getContext().getString(R.string.prefs_events_forwarding_fellsleep_broadcast_default_value));
+
+        final Preference deviceActionsFellSleep = findPreference(PREF_DEVICE_ACTION_FELL_SLEEP_SELECTION);
+        final Preference deviceActionsFellSleepBroadcast = findPreference(PREF_DEVICE_ACTION_FELL_SLEEP_BROADCAST);
+        boolean deviceActionsFellSleepSelectionBroadcast = deviceActionsFellSleepSelection.equals(PREF_DEVICE_ACTION_SELECTION_BROADCAST);
+        if (deviceActionsFellSleep != null) {
+            deviceActionsFellSleep.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newVal) {
+                    final boolean broadcast = PREF_DEVICE_ACTION_SELECTION_BROADCAST.equals(newVal.toString());
+                    Objects.requireNonNull(deviceActionsFellSleepBroadcast).setEnabled(broadcast);
+                    return true;
+                }
+            });
+        }
+        if (deviceActionsFellSleepBroadcast != null) {
+            deviceActionsFellSleepBroadcast.setSummary(deviceActionsFellSleepBroadcastValue);
+            deviceActionsFellSleepBroadcast.setEnabled(deviceActionsFellSleepSelectionBroadcast);
+            deviceActionsFellSleepBroadcast.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newVal) {
+                    deviceActionsFellSleepBroadcast.setSummary(newVal.toString());
+                    return true;
+                }
+            });
+        }
+        
+        String deviceActionsWokeUpSelection = prefs.getString(PREF_DEVICE_ACTION_WOKE_UP_SELECTION, PREF_DEVICE_ACTION_SELECTION_OFF);
+        final String deviceActionsWokeUpBroadcastValue = prefs.getString(PREF_DEVICE_ACTION_WOKE_UP_BROADCAST,
+                this.getContext().getString(R.string.prefs_events_forwarding_wokeup_broadcast_default_value));
+
+        final Preference deviceActionsWokeUp = findPreference(PREF_DEVICE_ACTION_WOKE_UP_SELECTION);
+        final Preference deviceActionsWokeUpBroadcast = findPreference(PREF_DEVICE_ACTION_WOKE_UP_BROADCAST);
+        boolean deviceActionsWokeUpSelectionBroadcast = deviceActionsWokeUpSelection.equals(PREF_DEVICE_ACTION_SELECTION_BROADCAST);
+        if (deviceActionsWokeUp != null) {
+            deviceActionsWokeUp.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newVal) {
+                    final boolean broadcast = PREF_DEVICE_ACTION_SELECTION_BROADCAST.equals(newVal.toString());
+                    Objects.requireNonNull(deviceActionsWokeUpBroadcast).setEnabled(broadcast);
+                    return true;
+                }
+            });
+        }
+        if (deviceActionsWokeUpBroadcast != null) {
+            deviceActionsWokeUpBroadcast.setSummary(deviceActionsWokeUpBroadcastValue);
+            deviceActionsWokeUpBroadcast.setEnabled(deviceActionsWokeUpSelectionBroadcast);
+            deviceActionsWokeUpBroadcast.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newVal) {
+                    deviceActionsWokeUpBroadcast.setSummary(newVal.toString());
+                    return true;
+                }
+            });
+        }
+        
+        String deviceActionsStartNonWearSelection = prefs.getString(PREF_DEVICE_ACTION_START_NON_WEAR_SELECTION, PREF_DEVICE_ACTION_SELECTION_OFF);
+        final String deviceActionsStartNonWearBroadcastValue = prefs.getString(PREF_DEVICE_ACTION_START_NON_WEAR_BROADCAST,
+                this.getContext().getString(R.string.prefs_events_forwarding_startnonwear_broadcast_default_value));
+
+        final Preference deviceActionsStartNonWear = findPreference(PREF_DEVICE_ACTION_START_NON_WEAR_SELECTION);
+        final Preference deviceActionsStartNonWearBroadcast = findPreference(PREF_DEVICE_ACTION_START_NON_WEAR_BROADCAST);
+        boolean deviceActionsStartNonWearSelectionBroadcast = deviceActionsStartNonWearSelection.equals(PREF_DEVICE_ACTION_SELECTION_BROADCAST);
+        if (deviceActionsStartNonWear != null) {
+            deviceActionsStartNonWear.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newVal) {
+                    final boolean broadcast = PREF_DEVICE_ACTION_SELECTION_BROADCAST.equals(newVal.toString());
+                    Objects.requireNonNull(deviceActionsStartNonWearBroadcast).setEnabled(broadcast);
+                    return true;
+                }
+            });
+        }
+        if (deviceActionsStartNonWearBroadcast != null) {
+            deviceActionsStartNonWearBroadcast.setSummary(deviceActionsStartNonWearBroadcastValue);
+            deviceActionsStartNonWearBroadcast.setEnabled(deviceActionsStartNonWearSelectionBroadcast);
+            deviceActionsStartNonWearBroadcast.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newVal) {
+                    deviceActionsStartNonWearBroadcast.setSummary(newVal.toString());
+                    return true;
+                }
+            });
+        }
+        
     }
 
     static DeviceSpecificSettingsFragment newInstance(String settingsFileSuffix, @NonNull int[] supportedSettings) {

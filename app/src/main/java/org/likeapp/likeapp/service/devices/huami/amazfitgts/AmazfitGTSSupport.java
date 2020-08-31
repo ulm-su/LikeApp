@@ -23,13 +23,13 @@ import android.net.Uri;
 import org.likeapp.likeapp.GBApplication;
 import org.likeapp.likeapp.R;
 import org.likeapp.likeapp.devices.huami.HuamiConst;
-import org.likeapp.likeapp.devices.huami.HuamiCoordinator;
 import org.likeapp.likeapp.devices.huami.HuamiFWHelper;
 import org.likeapp.likeapp.devices.huami.amazfitgts.AmazfitGTSFWHelper;
 import org.likeapp.likeapp.model.NotificationSpec;
 import org.likeapp.likeapp.service.btle.TransactionBuilder;
 import org.likeapp.likeapp.service.devices.huami.amazfitbip.AmazfitBipSupport;
 import org.likeapp.likeapp.service.devices.huami.operations.UpdateFirmwareOperationNew;
+import org.likeapp.likeapp.util.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -123,5 +123,16 @@ public class AmazfitGTSSupport extends AmazfitBipSupport {
         }
 
         return this;
+    }
+
+    @Override
+    protected void handleDeviceInfo(org.likeapp.likeapp.service.btle.profiles.deviceinfo.DeviceInfo info) {
+        super.handleDeviceInfo(info);
+        if (gbDevice.getFirmwareVersion() != null) {
+            Version version = new Version(gbDevice.getFirmwareVersion());
+            if (version.compareTo(new Version("0.0.9.00")) > 0) {
+                mActivitySampleSize = 8;
+            }
+        }
     }
 }

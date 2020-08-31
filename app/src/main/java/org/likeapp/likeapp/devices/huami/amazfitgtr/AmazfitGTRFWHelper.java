@@ -20,8 +20,6 @@ package org.likeapp.likeapp.devices.huami.amazfitgtr;
 import android.content.Context;
 import android.net.Uri;
 
-import androidx.annotation.NonNull;
-
 import org.likeapp.likeapp.devices.huami.HuamiFWHelper;
 import org.likeapp.likeapp.service.devices.huami.amazfitgtr.AmazfitGTRFirmwareInfo;
 
@@ -38,7 +36,7 @@ public class AmazfitGTRFWHelper extends HuamiFWHelper
     protected void determineFirmwareInfo(byte[] wholeFirmwareBytes) {
         firmwareInfo = new AmazfitGTRFirmwareInfo (wholeFirmwareBytes);
         if (!firmwareInfo.isHeaderValid()) {
-            throw new IllegalArgumentException("Not a an Amazifit GTR firmware");
+            throw new IllegalArgumentException("Not a an Amazfit GTR firmware");
         }
     }
 }

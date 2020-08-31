@@ -72,6 +72,7 @@
     <string name="fw_upgrade_notice_amazfit_trex">You are about to install the %s firmware on your Amazfit T-Rex.\n\nPlease make sure to install the .fw file, then the .res file, and finally the .gps file. Your watch will reboot after installing the .fw file.\n\nNote: You do not have to install .res and .gps if these files are exactly the same as the ones previously installed.\n\nPROCEED AT YOUR OWN RISK!</string>
     <string name="fw_upgrade_notice_miband3">You are about to install the %s firmware on your Mi Band 3.\n\nPlease make sure to install the .fw file, and after that the .res file. Your band will reboot after installing the .fw file.\n\nNote: You do not have to install .res if it is exactly the same as the one previously installed.\n\nPROCEED AT YOUR OWN RISK!</string>
     <string name="fw_upgrade_notice_miband4">You are about to install the %s firmware on your Mi Band 4.\n\nPlease make sure to install the .fw file, and after that the .res file. Your band will reboot after installing the .fw file.\n\nNote: You do not have to install .res if it is exactly the same as the one previously installed.\n\nPROCEED AT YOUR OWN RISK!</string>
+    <string name="fw_upgrade_notice_miband5">You are about to install the %s firmware on your Mi Band 5.\n\nPlease make sure to install the .fw file, and after that the .res file. Your band will reboot after installing the .fw file.\n\nNote: You do not have to install .res if it is exactly the same as the one previously installed.\n\nPROCEED AT YOUR OWN RISK!</string>
     <string name="fw_multi_upgrade_notice">You are about to install the %1$s and %2$s firmware, instead of the ones currently on your Mi Band.</string>
     <string name="miband_firmware_known">This firmware has been tested and is known to be compatible with LikeApp.</string>
     <string name="miband_firmware_unknown_warning">"This firmware is untested and may not be compatible with LikeApp.\n\nYou are DISCOURAGED from flashing it!"</string>
@@ -227,7 +228,7 @@
     <string name="pref_summary_sync_calendar">Enables calendar alerts, even when disconnected</string>
     <string name="pref_title_sync_caldendar">Sync calendar events</string>
     <string name="pref_summary_relax_firmware_checks">Relax firmware checks</string>
-    <string name="pref_title_relax_firmware_checks">Enable this if you want to flash a firmware not intended for you device (at your own risk)</string>
+    <string name="pref_title_relax_firmware_checks">Enable this if you want to flash a firmware not intended for your device (at your own risk)</string>
     <string name="pref_title_vibration_strength">Vibration strength</string>
     <string name="pref_display_add_device_fab">Connect new device button</string>
     <string name="pref_display_add_device_fab_on">Always visible</string>
@@ -519,7 +520,7 @@
     <string name="overstep">Overstep: %1$d</string>
     <string name="average">Average: %1$s</string>
     <string name="pref_title_dont_ack_transfer">Do not ACK activity data transfer</string>
-    <string name="pref_summary_dont_ack_transfers">If the activity data are not acked to the band, they will not be cleared. Useful if GB is used together with other apps.</string>
+    <string name="pref_summary_dont_ack_transfers">If not ACKed to the band, activity data is not cleared. Useful if GB is used together with other apps.</string>
     <string name="pref_summary_keep_data_on_device">Will keep activity data on the Mi Band even after synchronization. Useful if GB is used together with other apps.</string>
     <string name="pref_title_low_latency_fw_update">Use low-latency mode for firmware flashing</string>
     <string name="pref_summary_low_latency_fw_update">This might help on devices where firmware flashing fails.</string>
@@ -613,7 +614,6 @@
     <string name="hebrew">Hebrew</string>
     <string name="swedish">Swedish</string>
     <string name="czesh">Czech</string>
-
     <string name="FetchActivityOperation_about_to_transfer_since">About to transfer data since %1$s</string>
     <string name="waiting_for_reconnect">Waiting for reconnect</string>
     <string name="activity_prefs_about_you">About you</string>
@@ -741,8 +741,17 @@
     <string name="activity_type_running">Running</string>
     <string name="activity_type_walking">Walking</string>
     <string name="activity_type_swimming">Swimming</string>
+    <string name="activity_type_swimming_openwater">Swimming (Open water)</string>
+    <string name="activity_type_indoor_cycling">Indoor Cycling</string>
+    <string name="activity_type_elliptical_trainer">Elliptical Trainer</string>
+    <string name="activity_type_jump_roping">Jump Roping </string>
+    <string name="activity_type_yoga">Yoga</string>
     <string name="activity_type_unknown">Unknown activity</string>
-    <string name="activity_summaries">Activities</string>
+    <string name="activity_summaries">Sport Activities</string>
+    <string name="activity_summary_detail">Sport Activity Detail</string>
+    <string name="activity_summary_edit_name_title">Edit label</string>
+    <string name="activity_summary_today">Today</string>
+    <string name="activity_summary_yesterday">Yesterday</string>
     <string name="activity_type_biking">Biking</string>
     <string name="activity_type_treadmill">Treadmill</string>
     <string name="activity_type_exercise">Exercise</string>
@@ -765,6 +774,7 @@
     <string name="devicetype_miband2">Mi Band 2</string>
     <string name="devicetype_miband3">Mi Band 3</string>
     <string name="devicetype_miband4">Mi Band 4</string>
+    <string name="devicetype_miband5">Mi Band 5</string>
     <string name="devicetype_amazfit_bip">Amazfit Bip</string>
     <string name="devicetype_amazfit_bip_lite">Amazfit Bip Lite</string>
     <string name="devicetype_amazfit_cor">Amazfit Cor</string>
@@ -797,10 +807,13 @@
     <string name="devicetype_mijia_lywsd02">Mijia Smart Clock</string>
     <string name="devicetype_makibes_hr3">Makibes HR3</string>
     <string name="devicetype_banglejs">Bangle.js</string>
+    <string name="devicetype_tlw64">TLW64</string>
+    <string name="devicetype_pinetime_jf">PineTime (JF Firmware)</string>
     <string name="choose_auto_export_location">Choose export location</string>
     <string name="notification_channel_name">LikeApp notifications</string>
     <string name="notification_channel_high_priority_name">LikeApp notifications high priority</string>
     <string name="devicetype_amazfit_gts">Amazfit GTS</string>
+    <string name="devicetype_sg2">Lemfo SG2</string>
     <!-- Menus on the smart device -->
     <string name="menuitem_shortcut_alipay">Alipay (Shortcut)</string>
     <string name="menuitem_shortcut_weather">Weather (Shortcut)</string>
@@ -808,6 +821,8 @@
     <string name="menuitem_notifications">Notifications</string>
     <string name="menuitem_activity">Activity</string>
     <string name="menuitem_weather">Weather</string>
+    <string name="menuitem_breathing">Breathing</string>
+    <string name="menuitem_cycles">Cycles</string>
     <string name="menuitem_alarm">Alarm</string>
     <string name="menuitem_timer">Timer</string>
     <string name="menuitem_compass">Compass</string>
@@ -817,11 +832,13 @@
     <string name="menuitem_music">Music</string>
     <string name="menuitem_more">More</string>
     <string name="menuitem_nfc">NFC</string>
+    <string name="menuitem_stress">Stress</string>
     <string name="menuitem_pai">PAI</string>
     <string name="menuitem_hr">Heart Rate</string>
     <string name="menuitem_eventreminder">Event Reminder</string>
     <string name="menuitem_workout">Workout</string>
     <string name="menuitem_unknown">Unknown</string>
+    <string name="menuitem_worldclock">World Clock</string>
     <string name="watch9_time_minutes">Minutes:</string>
     <string name="watch9_time_hours">Hours:</string>
     <string name="watch9_time_seconds">Seconds:</string>
@@ -912,16 +929,117 @@
     <string name="homepage_url" translatable="false">Homepage: <a href="https://gadgetbridge.org/">https://gadgetbridge.org/</a></string>
     <string name="codeberg_url" translatable="false">Code: <a href="https://codeberg.org/Freeyourgadget/Gadgetbridge">https://codeberg.org/Freeyourgadget/Gadgetbridge</a></string>
     <string name="fdroid_url" translatable="false">F-Droid: <a href="https://f-droid.org/packages/nodomain.freeyourgadget.gadgetbridge/">https://f-droid.org/packages/nodomain.freeyourgadget.gadgetbridge/</a></string>
-
     <string name="about_title">About</string>
-    <string name="about_activity_title">About Gadgetbridge</string>
+    <string name="about_activity_title">About LikeApp</string>
     <string name="about_description">A free and cloudless replacement for your gadget vendors\' closed source Android applications.</string>
     <string name="about_core_team_title">Core Team (in order of first code contribution)</string>
     <string name="about_contributors">Contributors</string>
     <string name="about_core_team_members" translatable="false">Andreas Shimokawa\nCarsten Pfeiffer\nDaniele Gobbetti</string>
     <string name="about_additional_device_support">Additional device support</string>
     <string name="about_additional_contributors" translatable="false">João Paulo Barraca (HPlus)\nVitaly Svyastyn (NO.1 F1)\nSami Alaoui (Teclast H30)\n“ladbsoft” (XWatch)\nSebastian Kranz (ZeTime)\nVadim Kaushan (ID115)\n“maxirnilian” (Lenovo Watch 9)\n“ksiwczynski”, “mkusnierz”, “mamutcho” (Lenovo Watch X Plus)\nAndreas Böhler (Casio GB-6900B)\nJean-François Greffier (Mi Scale 2)\nJohannes Schmitt (BFH-16)\nLukas Schwichtenberg (Makibes HR3)\nDaniel Dakhno (Fossil Q Hybrid, Fossil Hybrid HR)\nGordon Williams (Bangle.js)\nPavel Elagin (JYou Y5)\nTaavi Eomäe (iTag)</string>
-    <string name="about_additional_contributions">Many thanks to all unlisted contributors for contributing code, support, ideas, motivation, bug reports, money... ✊</string>
+    <string name="about_additional_contributions">Many thanks to all unlisted contributors for contributing code, support, ideas, motivation, bug reports, money… ✊</string>
+    <string name="permission_granting_mandatory">All these permissions are required and instability might occur if not granted</string>
+    <string name="error_version_check_extreme_caution">CAUTION: Error when checking version information! You should not continue! Saw version name \"%s\"</string>
+    <string name="require_location_provider">Location must be enabled</string>
+    <string name="companiondevice_pairing">CompanionDevice Pairing</string>
+    <string name="companiondevice_pairing_details">Enables the new CompanionDevice API support (only has an effect on Android 8 or above) which will increase reliability if the service needs to be restarted in the background, requires re-pairing using LikeApp to have an effect</string>
+    <string name="error_background_service">Failed to start background service</string>
+    <string name="error_background_service_reason_truncated">Starting the background service failed because…</string>
+    <string name="device_is_currently_bonded">ALREADY BONDED</string>
+    <string name="device_requires_key">KEY REQUIRED</string>
+    <string name="error_background_service_reason">Starting the background service failed because of an exception. Error: </string>
+    <string name="pref_check_permission_status">Check permission status</string>
+    <string name="pref_check_permission_status_summary">Check and ask for missing permissions even when they might not be instantly needed. Disable this only if your devices actually doesn\'t support any of these features. Not granting a permission might cause issues!</string>
+    <string name="error_exporting_device_preferences">Error exporting device specific preferences</string>
+    <string name="error_setting_alias">Error setting alias: </string>
+    <string name="error_retrieving_devices_database">Error retrieving devices from database</string>
+    <string name="ignore_bonded_devices">Ignore bonded devices</string>
+    <string name="ignore_bonded_devices_description">Enabling this option will ignore devices that have been bonded/paired already when scanning</string>
+    <string name="error_location_enabled_mandatory">Location must be turned on to scan for devices</string>
+    <!-- activity summary labels-->
+    <string name="distanceMeters">Distance</string>
+    <string name="ascentMeters">Uphill</string>
+    <string name="descentMeters">Downhill</string>
+    <string name="maxAltitude">Maximum</string>
+    <string name="minAltitude">Minimum</string>
+    <string name="steps">Steps</string>
+    <string name="activeSeconds">Active</string>
+    <string name="caloriesBurnt">Calories</string>
+    <string name="maxSpeed">Maximum</string>
+    <string name="minPace">Slowest Pace</string>
+    <string name="maxPace">Fastest Pace</string>
+    <string name="totalStride">Total stride</string>
+    <string name="averageHR">Heartrate</string>
+    <string name="averageKMPaceSeconds">Pace</string>
+    <string name="averageStride">Average Stride</string>
+    <string name="averageStrokeDistance">Average Stroke Distance</string>
+    <string name="averageStrokesPerSecond">Average Strokes</string>
+    <string name="averageLapPace">Average Lap Pace</string>
+    <string name="swolfIndex">swolfIndex</string>
+    <string name="swimStyle">swimStyle</string>
+    <string name="laps">Laps</string>
+    <string name="ascentSeconds">Ascending</string>
+    <string name="descentSeconds">Descending</string>
+    <string name="flatSeconds">Flat</string>
+    <!-- activity summary units-->
+    <string name="meters">m</string>
+    <string name="cm">cm</string>
+    <string name="steps_unit">steps</string>
+    <string name="meters_second">m/s</string>
+    <string name="km_h">km/h</string>
+    <string name="strokes_second">str/s</string>
+    <string name="strokes_unit">str</string>
+    <string name="seconds">sec</string>
+    <string name="swolf_index">swolf index</string>
+    <string name="swim_style">swim style</string>
+    <string name="laps_unit">laps</string>
+    <string name="calories_unit">kcal</string>
+    <string name="seconds_km">sec/km</string>
+    <string name="seconds_m">sec/m</string>
+    <string name="minutes_km">min/km</string>
+    <string name="bpm">bpm</string>
+    <string name="km">km</string>
+    <!-- activity summary groups-->
+    <string name="Strokes">Strokes</string>
+    <string name="Swimming">Swimming</string>
+    <string name="Distance">Distance</string>
+    <string name="Elevation">Elevation</string>
+    <string name="Speed">Speed</string>
+    <string name="Activity">Activity</string>
+    <string name="Steps">Steps</string>
+    <!-- Sports Activity Detail -->
+    <string name="activity_detail_start_label">Start</string>
+    <string name="activity_detail_end_label">End</string>
+    <string name="activity_detail_duration_label">Duration</string>
+    <string name="activity_detail_show_gps_label">Show GPS Track</string>
+    <!-- Device Actions Preferences -->
+    <string name="prefs_events_forwarding_summary">Use device events to trigger actions and Android broadcasts</string>
+    <string name="prefs_events_forwarding_title">Device actions</string>
+    <string name="prefs_events_forwarding_fellsleep">On Fall Asleep</string>
+    <string name="prefs_events_forwarding_fellsleep_broadcast_default_value" translatable="false">org.likeapp.likeapp.FellAsleep</string>
+    <string name="prefs_events_forwarding_wokeup">On Wake Up</string>
+    <string name="prefs_events_forwarding_wokeup_broadcast_default_value" translatable="false">org.likeapp.likeapp.WokeUp</string>
+    <string name="prefs_events_forwarding_startnonwear">On Not Wearing</string>
+    <string name="prefs_events_forwarding_startnonwear_broadcast_default_value" translatable="false">org.likeapp.likeapp.StartNonWear</string>
+    <string name="prefs_events_forwarding_broadcast_title">Broadcast message</string>
+    <string name="prefs_events_forwarding_action_title">Run action</string>
+    <string name="pref_header_filter">Sports Activities Filter</string>
+    <string name="pref_header_statistics">Sports Activities Statistics</string>
+    <string name="activity_filter_date_from">From</string>
+    <string name="activity_filter_date_to">To</string>
+    <string name="activity_filter_reset_filter">Reset Filter</string>
+    <string name="activity_filter_filter_title">Filter</string>
+    <string name="activity_filter_name_contains">Label</string>
+    <string name="activity_filter_apply_filter">Apply Filter</string>
+    <string name="activity_summaries_statistics">Statistics</string>
+    <string name="activity_summaries_all_activities">All Activities</string>
+
+    <!-- swim styles -->
+    <string name="breaststroke">Breaststroke</string>
+    <string name="freestyle">Freestyle</string>
+    <string name="backstroke">Backstroke</string>
+    <string name="medley">Medley</string>
+
 
     <plurals name="widget_alarm_target_hours">
         <item quantity="one">%d hour</item>

@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -46,6 +47,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 import com.jaredrummler.android.colorpicker.ColorPickerDialog;
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Locale;
@@ -74,6 +78,7 @@ import org.likeapp.likeapp.util.GB;
  * Adapter for displaying GBDevice instances.
  */
 public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.ViewHolder> {
+    private static final Logger LOG = LoggerFactory.getLogger(GBDeviceAdapterv2.class);
 
     private final Context context;
     private List<GBDevice> deviceList;
@@ -511,10 +516,16 @@ public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.Vi
                 final EditText input = new EditText(context);
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
                 input.setText(device.getAlias());
+                FrameLayout container = new FrameLayout(context);
+                FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.leftMargin = context.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+                params.rightMargin = context.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+                input.setLayoutParams(params);
+                container.addView(input);
                 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
 
                 new AlertDialog.Builder(context)
-                        .setView(input)
+                        .setView(container)
                         .setCancelable(true)
                         .setTitle(context.getString(R.string.controlcenter_set_alias))
                         .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -528,7 +539,7 @@ public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.Vi
                                     dbDevice.update();
                                     device.setAlias(alias);
                                 } catch (Exception ex) {
-                                    GB.toast(context, "Error setting alias: " + ex.getMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
+                                    GB.toast(context, context.getString(R.string.error_setting_alias) + ex.getMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
                                 } finally {
                                     Intent refreshIntent = new Intent(DeviceManager.ACTION_REFRESH_DEVICELIST);
                                     LocalBroadcastManager.getInstance(context).sendBroadcast(refreshIntent);

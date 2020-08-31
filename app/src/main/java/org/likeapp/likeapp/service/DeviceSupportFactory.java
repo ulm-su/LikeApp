@@ -42,6 +42,7 @@ import org.likeapp.likeapp.service.devices.huami.amazfitgts.AmazfitGTSSupport;
 import org.likeapp.likeapp.service.devices.huami.amazfittrex.AmazfitTRexSupport;
 import org.likeapp.likeapp.service.devices.huami.miband3.MiBand3Support;
 import org.likeapp.likeapp.service.devices.huami.miband4.MiBand4Support;
+import org.likeapp.likeapp.service.devices.huami.miband5.MiBand5Support;
 import org.likeapp.likeapp.service.devices.id115.ID115Support;
 import org.likeapp.likeapp.service.devices.itag.ITagSupport;
 import org.likeapp.likeapp.service.devices.jyou.BFH16DeviceSupport;
@@ -55,7 +56,9 @@ import org.likeapp.likeapp.service.devices.mijia_lywsd02.MijiaLywsd02Support;
 import org.likeapp.likeapp.service.devices.miscale2.MiScale2DeviceSupport;
 import org.likeapp.likeapp.service.devices.no1f1.No1F1Support;
 import org.likeapp.likeapp.service.devices.pebble.PebbleSupport;
+import org.likeapp.likeapp.service.devices.pinetime.PineTimeJFSupport;
 import org.likeapp.likeapp.service.devices.roidmi.RoidmiSupport;
+import org.likeapp.likeapp.service.devices.tlw64.TLW64Support;
 import org.likeapp.likeapp.service.devices.vibratissimo.VibratissimoSupport;
 import org.likeapp.likeapp.service.devices.watch9.Watch9DeviceSupport;
 import org.likeapp.likeapp.service.devices.xwatch.XWatchSupport;
@@ -146,6 +149,9 @@ public class DeviceSupportFactory {
                         break;
                     case MIBAND4:
                         deviceSupport = new ServiceDeviceSupport(new MiBand4Support(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
+                        break;
+                    case MIBAND5:
+                        deviceSupport = new ServiceDeviceSupport(new MiBand5Support(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
                         break;
                     case AMAZFITBIP:
                         deviceSupport = new ServiceDeviceSupport(new AmazfitBipSupport(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
@@ -245,6 +251,15 @@ public class DeviceSupportFactory {
                         break;
                     case BANGLEJS:
                         deviceSupport = new ServiceDeviceSupport(new BangleJSDeviceSupport(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
+                        break;
+                    case TLW64:
+                        deviceSupport = new ServiceDeviceSupport(new TLW64Support(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
+                        break;
+                    case PINETIME_JF:
+                        deviceSupport = new ServiceDeviceSupport(new PineTimeJFSupport(), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
+                        break;
+                    case SG2:
+                        deviceSupport = new ServiceDeviceSupport(new HPlusSupport(DeviceType.SG2), EnumSet.of(ServiceDeviceSupport.Flags.BUSY_CHECKING));
                         break;
                 }
                 if (deviceSupport != null) {

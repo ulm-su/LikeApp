@@ -159,9 +159,8 @@ public class DbManagementActivity extends AbstractGBActivity {
                 if (cursor != null && cursor.moveToFirst()) {
                     return cursor.getString(cursor.getColumnIndex(DocumentsContract.Document.COLUMN_DISPLAY_NAME));
                 }
-            }
-            catch (Exception fdfsdfds) {
-                LOG.warn("fuck");
+            } catch (Exception fdfsdfds) {
+                LOG.error("Error", fdfsdfds);
             }
         }
         return "";
@@ -204,7 +203,7 @@ public class DbManagementActivity extends AbstractGBActivity {
                 }
             }
         } catch (Exception e) {
-            GB.toast("Error exporting device specific preferences", Toast.LENGTH_SHORT, GB.ERROR);
+            GB.toast("Error exporting device specific preferences", Toast.LENGTH_SHORT, GB.ERROR, e);
         }
     }
 
@@ -216,6 +215,7 @@ public class DbManagementActivity extends AbstractGBActivity {
         } catch (Exception ex) {
             GB.toast(DbManagementActivity.this, getString(R.string.dbmanagementactivity_error_importing_db, ex.getMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
         }
+
         try (DBHandler lockHandler = GBApplication.acquireDB()) {
             List<Device> activeDevices = DBHelper.getActiveDevices(lockHandler.getDaoSession());
             for (Device dbDevice : activeDevices) {

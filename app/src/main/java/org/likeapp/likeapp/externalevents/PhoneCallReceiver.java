@@ -31,9 +31,11 @@ import org.likeapp.likeapp.GBApplication;
 import org.likeapp.likeapp.model.CallSpec;
 import org.likeapp.likeapp.util.GB;
 import org.likeapp.likeapp.util.Prefs;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PhoneCallReceiver extends BroadcastReceiver {
+    private static final Logger LOG = LoggerFactory.getLogger(PhoneCallReceiver.class);
 
     private static int mLastState = TelephonyManager.CALL_STATE_IDLE;
     private static String mSavedNumber;
@@ -47,7 +49,7 @@ public class PhoneCallReceiver extends BroadcastReceiver {
             mSavedNumber = intent.getExtras().getString("android.intent.extra.PHONE_NUMBER");
         } else if(intent.getAction().equals("org.likeapp.likeapp.MUTE_CALL")) {
             // Handle the mute request only if the phone is currently ringing
-            if(mLastState != TelephonyManager.CALL_STATE_RINGING)
+            if (mLastState != TelephonyManager.CALL_STATE_RINGING)
                 return;
 
             AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);

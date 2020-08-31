@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="org.likeapp.likeapp">
 
     <!--
@@ -7,30 +8,52 @@
         <uses-permission android:name="android.permission.INTERNET" />
     -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Used for Bluetooth access -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Since Android 10 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.Manifest.permission.MODIFY_PHONE_STATE"/>
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ANSWER_PHONE_CALLS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
-    <uses-permission android:name="android.Manifest.permission.MEDIA_CONTENT_CONTROL" />
+<!--    <uses-permission android:name="android.Manifest.permission.MEDIA_CONTENT_CONTROL" />-->
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.Manifest.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="android.Manifest.permission.WRITE_SECURE_SETTINGS"/>
+<!--    <uses-permission android:name="android.Manifest.permission.WRITE_SETTINGS"/>-->
+<!--    <uses-permission android:name="android.Manifest.permission.WRITE_SECURE_SETTINGS"/>-->
+<!--    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />-->
+<!--    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />-->
+<!--    <uses-permission android:name="android.permission.VIBRATE" /> &lt;!&ndash; Used for reverse find device &ndash;&gt;-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+<!--    <uses-permission android:name="android.permission.WAKE_LOCK"/>-->
+
+    <uses-permission
+        android:name="android.permission.MEDIA_CONTENT_CONTROL"
+        tools:ignore="ProtectedPermissions" />
+
+    <!-- Used for background service -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.VIBRATE" /> <!-- Used for reverse find device -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.REQUEST_COMPANION_RUN_IN_BACKGROUND" />
 
+    <!-- Used for reverse find device -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Used for weather provider access -->
     <uses-permission android:name="cyanogenmod.permission.ACCESS_WEATHER_MANAGER" />
     <uses-permission android:name="cyanogenmod.permission.READ_WEATHER" />
     <uses-permission android:name="lineageos.permission.ACCESS_WEATHER_MANAGER" />
@@ -39,6 +62,7 @@
     <uses-permission android:name="org.likeapp.action.permission.ACTION" />
     <uses-permission android:name="org.likeapp.action.permission.WEATHER" />
     <uses-permission android:name="org.likeapp.action.permission.INSTALL" />
+
 
     <uses-feature
         android:name="android.hardware.bluetooth"
@@ -49,6 +73,9 @@
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
+    <uses-feature
+        android:name="android.software.companion_device_setup"
+        android:required="false" />
 
     <application
         android:name=".GBApplication"
@@ -58,7 +85,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/GadgetbridgeTheme">
-        <activity android:name=".devices.qhybrid.WidgetSettingsActivity"></activity>
+        <activity android:name=".devices.qhybrid.WidgetSettingsActivity" />
         <activity
             android:name=".activities.ControlCenterv2"
             android:label="@string/title_activity_controlcenter"
@@ -304,6 +331,7 @@
 
                 <data android:mimeType="application/octet-stream" />
             </intent-filter>
+
             <!-- to receive firmwares from the download content provider if recognized as zip -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -313,6 +341,7 @@
                 <data android:mimeType="application/zip" />
                 <data android:mimeType="application/x-zip-compressed" />
             </intent-filter>
+
             <!-- to receive files from the "share" intent -->
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
@@ -357,11 +386,18 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
+
         <receiver
             android:name=".externalevents.BluetoothStateChangeReceiver"
-            android:exported="false">
+            android:exported="true"
+            android:permission="android.permission.BLUETOOTH,android.permission.BLUETOOTH_ADMIN">
             <intent-filter>
                 <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
+                <action android:name="android.bluetooth.adapter.action.CONNECTION_STATE_CHANGED" />
+
+                <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
+                <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
+                <action android:name="android.bluetooth.device.action.ACL_DISCONNECT_REQUESTED" />
             </intent-filter>
         </receiver>
 
@@ -404,7 +440,7 @@
         <receiver
             android:name=".database.PeriodicExporter"
             android:enabled="true"
-            android:exported="false"></receiver>
+            android:exported="false" />
 
         <receiver
             android:name=".service.receivers.LikeAppActionInstallReceiver"
@@ -454,6 +490,17 @@
             android:parentActivityName=".activities.ControlCenterv2"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.ActivitySummaryDetail"
+            android:label="@string/activity_summary_detail"
+            android:parentActivityName=".activities.ActivitySummariesActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.ActivitySummariesFilter"
+            android:label="@string/activity_filter_filter_title"
+            android:parentActivityName=".activities.ActivitySummariesActivity"
+            android:excludeFromRecents="true"/>
 
         <activity
             android:name=".activities.DbManagementActivity"
@@ -482,10 +529,10 @@
             android:label="@string/title_activity_watch9_calibration" />
         <activity
             android:name=".devices.lenovo.LenovoWatchPairingActivity"
-            android:label="@string/title_activity_watch9_pairing"  />
+            android:label="@string/title_activity_watch9_pairing" />
         <activity
             android:name=".devices.lenovo.LenovoWatchCalibrationActivity"
-            android:label="@string/title_activity_LenovoWatch_calibration"  />
+            android:label="@string/title_activity_LenovoWatch_calibration" />
         <activity
             android:name=".activities.charts.ChartsActivity"
             android:label="@string/title_activity_charts"
@@ -579,6 +626,7 @@
                 <data android:scheme="gadgetbridge" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".devices.qhybrid.ConfigActivity"
             android:exported="true" />
@@ -592,5 +640,4 @@
             android:name=".devices.qhybrid.ImageEditActivity"
             android:exported="true" />
     </application>
-
 </manifest>

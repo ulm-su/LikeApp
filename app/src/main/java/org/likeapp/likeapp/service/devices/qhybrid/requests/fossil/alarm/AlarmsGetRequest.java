@@ -60,6 +60,7 @@ public class AlarmsGetRequest extends FileLookupAndGetRequest {
         for(int i = 0; i < alarms.length; i++){
             alarms2[i] = Alarm.fromBytes(alarms[i].getData());
         }
+        // TODO: This does nothing currently!
     }
 
     @Override

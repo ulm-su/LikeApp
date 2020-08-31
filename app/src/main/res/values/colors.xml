@@ -35,4 +35,7 @@
     <color name="selected_background">#2b363f</color>
     <color name="main_background_dark">#000000</color>
 
+    <color name="alternate_row_background_light">#FFEDEDED</color>
+    <color name="alternate_row_background_dark">#545254</color>
+
 </resources>

@@ -57,14 +57,14 @@
 \n
 \nPROCEDIU SOTA LA VOSTRA PRÒPIA RESPONSABILITAT!</string>
     <string name="fw_multi_upgrade_notice">"Sou a punt d\'instal·lar els microprogramaris  %1$s i %2$s en lloc dels que hi ha actualment a la vostra Mi Band."</string>
-    <string name="miband_firmware_known">Aquest microprogramari ha estat provat i se sap que és compatible amb el Gadgetbridge.</string>
-    <string name="miband_firmware_unknown_warning">Aquest microprogramari no ha estat provat i pot ser que no sigui compatible amb el Gadgetbridge. 
+    <string name="miband_firmware_known">Aquest microprogramari ha estat provat i se sap que és compatible amb el LikeApp.</string>
+    <string name="miband_firmware_unknown_warning">Aquest microprogramari no ha estat provat i pot ser que no sigui compatible amb el LikeApp.
 \n 
 \nNO es recomana instal·lar-lo!</string>
-    <string name="miband_firmware_suggest_whitelist">Si tot i així voleu continuar i les coses continuen funcionant correctament, si us plau informeu els desenvolupadors del Gadgetbridge que la versió %s del microprogramari funciona bé.</string>
+    <string name="miband_firmware_suggest_whitelist">Si tot i així voleu continuar i les coses continuen funcionant correctament, si us plau informeu els desenvolupadors del LikeApp que la versió %s del microprogramari funciona bé.</string>
     <string name="title_activity_settings">Configuració</string>
     <string name="pref_header_general">Configuració general</string>
-    <string name="pref_title_general_autoconnectonbluetooth">Connecta\'t a l\'aparell Gadgetbridge quan el Bluetooth estigui activat</string>
+    <string name="pref_title_general_autoconnectonbluetooth">Connecta\'t a l\'aparell LikeApp quan el Bluetooth estigui activat</string>
     <string name="pref_title_general_autostartonboot">Inicia automàticament</string>
     <string name="pref_title_general_autoreconnect">Reconnecta automàticament</string>
     <string name="pref_title_audio_player">Reproductor d\'àudio preferit</string>
@@ -72,12 +72,12 @@
     <string name="pref_title_charts_swipe">Permet lliscar cap a l\'esquerra i la dreta en els gràfics d\'activitat</string>
     <string name="pref_header_datetime">Data i Hora</string>
     <string name="pref_title_datetime_syctimeonconnect">Sincronitza l\'hora</string>
-    <string name="pref_summary_datetime_syctimeonconnect">Sincronitza l\'hora en l\'aparell Gadgetbridge quan es connecti o quan es canviï l\'hora o zona horària en l\'aparell Android</string>
+    <string name="pref_summary_datetime_syctimeonconnect">Sincronitza l\'hora en l\'aparell LikeApp quan es connecti o quan es canviï l\'hora o zona horària en l\'aparell Android</string>
     <string name="pref_title_theme">Aparença</string>
     <string name="pref_theme_light">Clar</string>
     <string name="pref_theme_dark">Fosc</string>
     <string name="pref_title_language">Llengua</string>
-    <string name="pref_title_minimize_priority">Oculta la notificació del Gadgetbridge</string>
+    <string name="pref_title_minimize_priority">Oculta la notificació del LikeApp</string>
     <string name="pref_summary_minimize_priority_off">La icona a la barra d\'estat i la notificació a la pantalla de bloqueig es mostren</string>
     <string name="pref_summary_minimize_priority_on">La icona a la barra d\'estat i la notificació a la pantalla de bloqueig no es mostren</string>
     <string name="pref_header_notifications">Notificacions</string>
@@ -148,7 +148,7 @@
     <string name="pref_title_pebble_mtu_limit">Límit de l\'MTU del GATT del Pebble 2/LE</string>
     <string name="pref_summary_pebble_mtu_limit">Si el teu Pebble 2/Pebble LE no funciona correctament, prova aquesta opció per limitar l\'MTU (rang vàlid: 20–512)</string>
     <string name="pref_title_pebble_enable_applogs">Activa els registres de les aplicacions del rellotge</string>
-    <string name="pref_summary_pebble_enable_applogs">Produirà registres de les apps del rellotge que el Gadgetbridge guardarà (necessita reconnexió)</string>
+    <string name="pref_summary_pebble_enable_applogs">Produirà registres de les apps del rellotge que el LikeApp guardarà (necessita reconnexió)</string>
     <string name="pref_title_pebble_always_ack_pebblekit">Envia l\'ACK al PebbleKit abans d\'hora</string>
     <string name="pref_summary_pebble_always_ack_pebblekit">Permetrà que missatges enviats a aplicacions de tercers siguin reconeguts sempre i immediatament</string>
     <string name="pref_title_pebble_enable_bgjs">Activa JS en segon pla</string>
@@ -166,7 +166,7 @@
     <string name="_unknown_">(desconegut)</string>
     <string name="test">Prova</string>
     <string name="test_notification">Notificació de prova</string>
-    <string name="this_is_a_test_notification_from_gadgetbridge">Això és una notificació de prova des del Gadgetbridge</string>
+    <string name="this_is_a_test_notification_from_gadgetbridge">Això és una notificació de prova des del LikeApp</string>
     <string name="bluetooth_is_not_supported_">El Bluetooth no és compatible o no està implementat.</string>
     <string name="bluetooth_is_disabled_">El Bluetooth està desactivat.</string>
     <string name="tap_connected_device_for_app_mananger">Toca l\'aparell connectat per obrir el gestor d\'aplicacions</string>
@@ -174,7 +174,7 @@
     <string name="tap_connected_device_for_vibration">Toca l\'aparell per fer-lo vibrar</string>
     <string name="tap_a_device_to_connect">Toca un aparell per connectar-hi</string>
     <string name="cannot_connect_bt_address_invalid_">No es pot connectar. Potser la direcció Bluetooth és incorrecta\?</string>
-    <string name="gadgetbridge_running">El Gadgetbridge està funcionant</string>
+    <string name="gadgetbridge_running">El LikeApp està funcionant</string>
     <string name="installing_binary_d_d">S\'està instal·lant el binari %1$d/%2$d</string>
     <string name="installation_failed_">La instal·lació ha fallat</string>
     <string name="installation_successful">Instal·lat</string>
@@ -404,7 +404,7 @@
     <string name="pref_rtl_max_line_length">Llargada màxima de línia de dreta a esquerra</string>
     <string name="pref_rtl_max_line_length_summary">Allarga o escurça les línies en què se separa el text escrit de dreta a esquerra</string>
     <string name="debugactivity_really_factoryreset_title">De debò voleu restablir als paràmetres de fàbrica\?</string>
-    <string name="debugactivity_really_factoryreset">Restablir als paràmetres de fàbrica esborrarà totes les dades de l\'aparell connectat (si és compatible). En el cas dels aparells Xiaomi o Huami, també canvia la seva adreça MAC, de manera que per al Gadgetbridge apareixeran com a un aparell nou.</string>
+    <string name="debugactivity_really_factoryreset">Restablir als paràmetres de fàbrica esborrarà totes les dades de l\'aparell connectat (si és compatible). En el cas dels aparells Xiaomi o Huami, també canvia la seva adreça MAC, de manera que per al LikeApp apareixeran com a un aparell nou.</string>
     <string name="zetime_title_settings">Configuració de ZeTime</string>
     <string name="zetime_title_heartrate">Configuració del rítme cardíac</string>
     <string name="zetime_title_screentime">Durada de la pantalla encesa en segons</string>
@@ -432,7 +432,7 @@
 \nAquest microprogramari és per a la revisió del maquinari: %s</string>
     <string name="miband_pairing_using_dummy_userdata">No s\'han introduït dades vàlides. De moment es fan servir dades fictícies.</string>
     <string name="miband_pairing_tap_hint">Quan la vostra Mi Band vibri i parpallegi, toqueu-la vàries vegades seguides.</string>
-    <string name="discovery_connected_devices_hint">Feu que el vostre aparell es pugui detectar. Els aparells que ara estan connectats probablement no seran detectats. Activeu la localització (per exemple, el GPS) a Android 6+. Desactiveu el Privacy Guard per al Gadgetbridge, perquè podria penjar-se i fer que el telèfon es reniciés. Si després d\'uns quants minuts no s\'ha trobat cap aparell, torneu-ho a provar després de reiniciar el telèfon.</string>
+    <string name="discovery_connected_devices_hint">Feu que el vostre aparell es pugui detectar. Els aparells que ara estan connectats probablement no seran detectats. Activeu la localització (per exemple, el GPS) a Android 6+. Desactiveu el Privacy Guard per al LikeApp, perquè podria penjar-se i fer que el telèfon es reniciés. Si després d\'uns quants minuts no s\'ha trobat cap aparell, torneu-ho a provar després de reiniciar el telèfon.</string>
     <string name="pref_title_dont_ack_transfer">No enviïs l\'ACK de les dades d\'activitats</string>
     <string name="pref_summary_dont_ack_transfers">Si l\'arribada de les dades d\'activitats no és notificada a la polsera, aquestes dades no s\'eliminaran. Aquesta opció pot ser útil si feu servir el Gadgebridge també amb altres aplicacions.</string>
     <string name="pref_summary_keep_data_on_device">Les dades d\'activitats de la Mi Band es guardaran fins i tot després de sincronitzar. Aquesta opció pot ser útil si feu servir el Gadgebridge també amb altres aplicacions.</string>
@@ -528,7 +528,7 @@
     <string name="devicetype_no1_f1">No.1 F1</string>
     <string name="devicetype_teclast_h30">Teclast H30</string>
     <string name="choose_auto_export_location">Tria la ubicació de l\'exportació</string>
-    <string name="notification_channel_name">Notificacions del Gadgetbridge</string>
+    <string name="notification_channel_name">Notificacions del LikeApp</string>
     <string name="devicetype_xwatch">XWatch</string>
     <string name="on">Activat</string>
     <string name="controlcenter_start_activity_tracks">Les vostres pistes d\'activitat</string>
@@ -605,7 +605,7 @@
     <string name="mi3_night_mode_sunset">Al capvespre</string>
     <string name="ok">D\'acord</string>
     <string name="share_log">Comparteix el registre</string>
-    <string name="share_log_warning">Si us plau, tingueu en compte que els fitxers de registre del Gadgetbridge poden contenir molta informació personal, incloent-hi, entre d\'altres, dades relacionades amb la salut, identificadors únics (com ara adreces MAC), preferències musicals, etc. Considereu editar el fitxer i suprimir aquesta informació abans d\'enviar-lo a un informe públic d\'error.</string>
+    <string name="share_log_warning">Si us plau, tingueu en compte que els fitxers de registre del LikeApp poden contenir molta informació personal, incloent-hi, entre d\'altres, dades relacionades amb la salut, identificadors únics (com ara adreces MAC), preferències musicals, etc. Considereu editar el fitxer i suprimir aquesta informació abans d\'enviar-lo a un informe públic d\'error.</string>
     <string name="warning">Atenció!</string>
     <string name="devicetype_roidmi">Roidmi</string>
     <string name="devicetype_roidmi3">Roidmi 3</string>
@@ -717,7 +717,7 @@
     <string name="weeksleepchart_sleep_a_month">Son per mes</string>
     <string name="devicetype_mijia_lywsd02">Mijia Smart Clock</string>
     <string name="menuitem_nfc">NFC</string>
-    <string name="pref_summary_expose_hr">Permet altres aplicacions accedir a les dades de freqüència cardíaca en temps real mentre Gadgetbridge estigui connectat</string>
+    <string name="pref_summary_expose_hr">Permet altres aplicacions accedir a les dades de freqüència cardíaca en temps real mentre LikeApp estigui connectat</string>
     <string name="pref_title_expose_hr">Accés a tercers a freqüència cardíaca en temps real</string>
     <string name="pref_title_use_custom_font">Utilitza un tipus de lletra personalitzat</string>
     <string name="pref_summary_use_custom_font">Activa-ho si el vostre dispositiu inclou microprogramari de tipus de lletra personalitzat amb suport per a emojis</string>
@@ -833,9 +833,9 @@
     <string name="pref_title_force_white_color_scheme">Força l\'esquema de color blanc sobre negre</string>
     <string name="pref_summary_force_white_color_scheme">Útil si si el teu rellotge té les manetes negres</string>
     <string name="find_my_phone_notification">Troba el meu telèfon</string>
-    <string name="notification_channel_high_priority_name">Notificacions de Gadgetbridge d\'alta prioritat</string>
+    <string name="notification_channel_high_priority_name">Notificacions de LikeApp d\'alta prioritat</string>
     <string name="pref_title_custom_deviceicon">Mostra l\'icona de notificació específica de l\'aparell</string>
-    <string name="pref_summary_custom_deviceicon">Mostra l\'icona de notificació d\'Android específica de l\'aparell enlloc de l\'icona de Gadgetbridge quan estigui connectat</string>
+    <string name="pref_summary_custom_deviceicon">Mostra l\'icona de notificació d\'Android específica de l\'aparell enlloc de l\'icona de LikeApp quan estigui connectat</string>
     <string name="hr_appname_wellness">Benestar</string>
     <string name="hr_appname_workout">Entrenament</string>
     <string name="hr_appname_stopwatch">Cronòmetre</string>

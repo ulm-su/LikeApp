@@ -35,7 +35,7 @@ public class AmazfitTRexFWHelper extends HuamiFWHelper {
     protected void determineFirmwareInfo(byte[] wholeFirmwareBytes) {
         firmwareInfo = new AmazfitTRexFirmwareInfo(wholeFirmwareBytes);
         if (!firmwareInfo.isHeaderValid()) {
-            throw new IllegalArgumentException("Not a an Amazifit T-Rex firmware");
+            throw new IllegalArgumentException("Not a an Amazfit T-Rex firmware");
         }
     }
 }

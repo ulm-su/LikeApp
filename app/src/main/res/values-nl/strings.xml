@@ -44,26 +44,26 @@
 \n
 \nGA VERDER OP EIGEN RISICO!</string>
     <string name="fw_multi_upgrade_notice">U staat op het punt om de %1$s en %2$s firmware te installeren in plaats van degene die momenteel op uw Mi Band staat.</string>
-    <string name="miband_firmware_known">Deze firmware is getest en is compatibel met Gadgetbridge.</string>
-    <string name="miband_firmware_unknown_warning">Deze firmware is niet getest en is mogelijk niet compatibel met Gadgetbridge. 
+    <string name="miband_firmware_known">Deze firmware is getest en is compatibel met LikeApp.</string>
+    <string name="miband_firmware_unknown_warning">Deze firmware is niet getest en is mogelijk niet compatibel met LikeApp.
 \n 
 \nU wordt AFGERADEN om deze te installeren!</string>
-    <string name="miband_firmware_suggest_whitelist">Als u nog steeds wilt doorgaan en uw apparaat blijft goed functioneren, vertel dan alstublieft de ontwikkelaars van Gadgetbridge om de %s firmware-versie op de goedgekeurde lijst te zetten.</string>
+    <string name="miband_firmware_suggest_whitelist">Als u nog steeds wilt doorgaan en uw apparaat blijft goed functioneren, vertel dan alstublieft de ontwikkelaars van LikeApp om de %s firmware-versie op de goedgekeurde lijst te zetten.</string>
     <string name="title_activity_settings">Instellingen</string>
     <string name="pref_header_general">Algemene instellingen</string>
-    <string name="pref_title_general_autoconnectonbluetooth">Verbind met Gadgetbridge apparaat wanneer Bluetooth is ingeschakeld</string>
+    <string name="pref_title_general_autoconnectonbluetooth">Verbind met LikeApp apparaat wanneer Bluetooth is ingeschakeld</string>
     <string name="pref_title_general_autostartonboot">Start automatisch</string>
     <string name="pref_title_general_autoreconnect">Verbind automatisch opnieuw</string>
     <string name="pref_title_audio_player">Gewenste audiospeler</string>
     <string name="pref_default">Standaard</string>
     <string name="pref_header_datetime">Datum en tijd</string>
     <string name="pref_title_datetime_syctimeonconnect">Sync tijd</string>
-    <string name="pref_summary_datetime_syctimeonconnect">Synchroniseer de tijd naar het Gadgetbridge apparaat wanneer u verbinding maakt en wanneer de tijd of tijdzone op uw Android toestel verandert</string>
+    <string name="pref_summary_datetime_syctimeonconnect">Synchroniseer de tijd naar het LikeApp apparaat wanneer u verbinding maakt en wanneer de tijd of tijdzone op uw Android toestel verandert</string>
     <string name="pref_title_theme">Thema</string>
     <string name="pref_theme_light">Licht</string>
     <string name="pref_theme_dark">Donker</string>
     <string name="pref_title_language">Taal</string>
-    <string name="pref_title_minimize_priority">Verberg de Gadgetbridge-melding</string>
+    <string name="pref_title_minimize_priority">Verberg de LikeApp-melding</string>
     <string name="pref_summary_minimize_priority_off">Het pictogram in de statusbalk en de melding op het vergrendelingsscherm worden weergegeven</string>
     <string name="pref_summary_minimize_priority_on">Het pictogram in de statusbalk en de melding op het vergrendelingsscherm zijn verborgen</string>
     <string name="pref_header_notifications">Meldingen</string>
@@ -145,7 +145,7 @@
 \nGA VERDER OP EIGEN RISICO!</string>
     <string name="pref_title_charts_swipe">Activeer links/rechts vegen in grafiek schermen</string>
     <string name="pref_title_weather">Weer</string>
-    <string name="pref_title_weather_location">Weer locatie (CM/LOS)</string>
+    <string name="pref_title_weather_location">Weer locatie (voor LinageOS weer aanbieder)</string>
     <string name="pref_title_autoremove_notifications">Verwijder automatisch verworpen meldingen</string>
     <string name="pref_summary_autoremove_notifications">Meldingen worden automatisch verwijderd op de Pebble als ze verwijderd worden op het Android toestel</string>
     <string name="pref_pebble_privacy_mode_content">Schuif de meldingstekst van het scherm</string>
@@ -159,7 +159,7 @@
     <string name="pref_title_pebble_mtu_limit">Pebble 2/LE GATT MTU limiet</string>
     <string name="pref_summary_pebble_mtu_limit">Als uw Pebble 2/Pebble LE niet werkt zoals verwacht, probeer deze instelling om de MTU te limiteren (geldig bereik: 20–512)</string>
     <string name="pref_title_pebble_enable_applogs">Logging van de horloge app inschakelen</string>
-    <string name="pref_summary_pebble_enable_applogs">Zorgt ervoor dat logs van horloge-apps gelogd zullen worden door Gadgetbridge (opnieuw verbinden vereist)</string>
+    <string name="pref_summary_pebble_enable_applogs">Zorgt ervoor dat logs van horloge-apps gelogd zullen worden door LikeApp (opnieuw verbinden vereist)</string>
     <string name="pref_title_pebble_always_ack_pebblekit">Vroegtijdige ACK PebbleKit</string>
     <string name="pref_summary_pebble_always_ack_pebblekit">Zorgt ervoor dat berichten die door apps van derden worden verzonden, altijd en onmiddellijk herkend zullen worden</string>
     <string name="pref_title_pebble_enable_bgjs">Schakel achtergrond JS in</string>
@@ -177,7 +177,7 @@
     <string name="_unknown_">(onbekend)</string>
     <string name="test">Test</string>
     <string name="test_notification">Test melding</string>
-    <string name="this_is_a_test_notification_from_gadgetbridge">Dit is een test melding van Gadgetbridge</string>
+    <string name="this_is_a_test_notification_from_gadgetbridge">Dit is een test melding van LikeApp</string>
     <string name="bluetooth_is_not_supported_">Bluetooth is niet ondersteund.</string>
     <string name="bluetooth_is_disabled_">Bluetooth is uitgeschakeld.</string>
     <string name="tap_connected_device_for_app_mananger">Tap op het verbonden toestel voor de App beheerder</string>
@@ -185,7 +185,7 @@
     <string name="tap_connected_device_for_vibration">Tap op het verbonden toestel voor vibratie</string>
     <string name="tap_a_device_to_connect">Tap op een toestel om te verbinden</string>
     <string name="cannot_connect_bt_address_invalid_">Kan niet verbinden. Is het Bluetooth adres ongeldig?</string>
-    <string name="gadgetbridge_running">Gadgetbridge loopt</string>
+    <string name="gadgetbridge_running">LikeApp loopt</string>
     <string name="installing_binary_d_d">Binary installeren %1$d/%2$d</string>
     <string name="installation_failed_">Installatie gefaald</string>
     <string name="installation_successful">Geïnstalleerd</string>
@@ -225,7 +225,7 @@
     <string name="miband_pairing_using_dummy_userdata">Geen geldige gebruikers data ingegeven, voorlopig dummy gebruikersdata gebruiken.</string>
     <string name="miband_pairing_tap_hint">Als uw Mi Band trilt en oplicht, tik een aantal keer na elkaar.</string>
     <string name="appinstaller_install">Installeren</string>
-    <string name="discovery_connected_devices_hint">Maak uw toestel zichtbaar. Toestellen die op dit moment verbonden zijn zullen waarschijnlijk niet zichtbaar zijn. Activeer locatie (b.v. GPS) op Android 6+. Schakel Privacy Guard voor Gadgetbridge uit, anders kan uw telefoon crashen en herstarten. Als er geen toestel gevonden is na een paar minuten, probeer dan opnieuw na het heropstarten van uw mobiel toestel.</string>
+    <string name="discovery_connected_devices_hint">Maak uw toestel zichtbaar. Toestellen die op dit moment verbonden zijn zullen waarschijnlijk niet zichtbaar zijn. Activeer locatie (b.v. GPS) op Android 6+. Schakel Privacy Guard voor LikeApp uit, anders kan uw telefoon crashen en herstarten. Als er geen toestel gevonden is na een paar minuten, probeer dan opnieuw na het heropstarten van uw mobiel toestel.</string>
     <string name="discovery_note">Opmerking:</string>
     <string name="candidate_item_device_image">Toestel afbeelding</string>
     <string name="miband_prefs_alias">Naam / Alias</string>
@@ -446,7 +446,7 @@
     <string name="StringUtils_sender">(%1$s)</string>
     <string name="find_device_you_found_it">U hebt het gevonden!</string>
     <string name="miband2_prefs_timeformat">Mi2: Tijdsformaat</string>
-    <string name="mi2_fw_installhandler_fw53_hint">U moet versie% 1 $ s installeren voordat u deze firmware installeert!</string>
+    <string name="mi2_fw_installhandler_fw53_hint">U moet versie %1$s installeren voordat u deze firmware installeert!</string>
     <string name="mi2_enable_text_notifications">Tekst meldingen</string>
     <string name="mi2_enable_text_notifications_summary">Vereist dat firmware &gt;= 1.0.1.28 en Mili_pro.ft* geïnstalleerd is.</string>
     <string name="off">Uit</string>
@@ -487,7 +487,7 @@
     <string name="notif_export_failed_title">Database exporteren mislukt! Controleer uw instellingen.</string>
     <string name="spanish">Spaans</string>
     <string name="choose_auto_export_location">Kies export locatie</string>
-    <string name="notification_channel_name">Gadgetbridge meldingen</string>
+    <string name="notification_channel_name">LikeApp meldingen</string>
     <string name="blacklist_all_for_notifications">Zwarte lijst voor alle meldingen</string>
     <string name="whitelist_all_for_notifications">Witte lijst voor alle meldingen</string>
     <string name="fw_upgrade_notice_miband3">U staat op het punt om de %s-firmware op je Mi Band 3 te installeren.
@@ -555,7 +555,7 @@
     <string name="controlcenter_change_led_color">Wijzig ledkleur</string>
     <string name="controlcenter_change_fm_frequency">Wijzig FM frequentie</string>
     <string name="debugactivity_really_factoryreset_title">Weet U zeker dat u de fabrieksinstellingen wilt terugzetten\?</string>
-    <string name="debugactivity_really_factoryreset">Het terugzetten van de fabrieksinstellingen zal alle data van het verbonden toestel verwijderen (indien ondersteund). Xiaomi/Huami toestellen veranderen ook van Bluetooth MAC-adres, zodat deze zullen verschijnen als nieuwe toestellen in Gadgetbridge.</string>
+    <string name="debugactivity_really_factoryreset">Het terugzetten van de fabrieksinstellingen zal alle data van het verbonden toestel verwijderen (indien ondersteund). Xiaomi/Huami toestellen veranderen ook van Bluetooth MAC-adres, zodat deze zullen verschijnen als nieuwe toestellen in LikeApp.</string>
     <string name="pref_title_notifications_timeout">Minimum tijd tussen meldingen</string>
     <string name="pref_title_rtl">Van rechts naar links</string>
     <string name="pref_summary_rtl">Schakel dit in als uw toestel geen talen van rechts naar links kan weergeven</string>
@@ -601,7 +601,7 @@
     <string name="pref_summary_contextual_arabic">Schakel dit in om contextueel Arabisch te ondersteunen</string>
     <string name="preferences_rtl_settings">Rechts naar links ondersteuning</string>
     <string name="share_log">Deel log</string>
-    <string name="share_log_warning">Hou er alsjeblieft rekening mee dat Gadgetbridge bestanden logt die veel persoonlijke informatie kunnen bevatten, inclusief maar niet gelimiteerd tot gezondheidsgegevens, unieke identificatiegegevens (zoals het MAC adres van een toestel), muziek voorkeuren, enz. Overweeg deze handmatig verwijderen van deze gegevens uit dit bestand alvorens deze te verzenden naar een publiek foutrapport.</string>
+    <string name="share_log_warning">Hou er alsjeblieft rekening mee dat LikeApp bestanden logt die veel persoonlijke informatie kunnen bevatten, inclusief maar niet gelimiteerd tot gezondheidsgegevens, unieke identificatiegegevens (zoals het MAC adres van een toestel), muziek voorkeuren, enz. Overweeg deze handmatig verwijderen van deze gegevens uit dit bestand alvorens deze te verzenden naar een publiek foutrapport.</string>
     <string name="warning">Waarschuwing!</string>
     <string name="no_data">Geen data</string>
     <string name="preferences_led_color">Ledkleur</string>
@@ -721,7 +721,7 @@
     <string name="weeksleepchart_sleep_a_month">Slaap per maand</string>
     <string name="devicetype_mijia_lywsd02">Mijia Smart Clock</string>
     <string name="menuitem_nfc">NFC</string>
-    <string name="pref_summary_expose_hr">Sta andere apps toe HR-data te benaderen in realtime terwijl Gadgetbridge verbonden is</string>
+    <string name="pref_summary_expose_hr">Sta andere apps toe HR-data te benaderen in realtime terwijl LikeApp verbonden is</string>
     <string name="pref_title_expose_hr">realtime HR-toegang door derden</string>
     <string name="pref_title_use_custom_font">Gebruik aangepast lettertype</string>
     <string name="pref_summary_use_custom_font">Selecteer dit als je device aangepaste font software bevat met emoji ondersteuning</string>
@@ -835,9 +835,9 @@
     <string name="pref_title_force_white_color_scheme">Zwart op wit kleurenschema forceren</string>
     <string name="pref_summary_force_white_color_scheme">Nuttig als je horloge donkere wijzers heeft</string>
     <string name="find_my_phone_notification">Vind mijn telefoon</string>
-    <string name="notification_channel_high_priority_name">Gadgetbridge hoge prioriteit meldingen</string>
+    <string name="notification_channel_high_priority_name">LikeApp hoge prioriteit meldingen</string>
     <string name="pref_title_custom_deviceicon">Toon apparaat specifieke meldingspictogram</string>
-    <string name="pref_summary_custom_deviceicon">Toon een apparaatspecifiek Android-meldpictogram in plaats van het Gadgetbridge-pictogram indien verbonden</string>
+    <string name="pref_summary_custom_deviceicon">Toon een apparaatspecifiek Android-meldpictogram in plaats van het LikeApp-pictogram indien verbonden</string>
     <string name="hr_appname_wellness">Welzijn</string>
     <string name="hr_appname_workout">Training</string>
     <string name="hr_appname_stopwatch">Stopwatch</string>
@@ -910,6 +910,38 @@
     <string name="about_contributors">Bijdragers</string>
     <string name="about_core_team_title">Kernteam (in volgorde van eerste codebijdrage)</string>
     <string name="about_description">Een gratis en cloudloze vervanging voor de closed source Android-applicaties van uw gadgetverkoper.</string>
-    <string name="about_activity_title">Over Gadgetbridge</string>
+    <string name="about_activity_title">Over LikeApp</string>
     <string name="about_title">Over</string>
+    <string name="pref_title_weather_summary">Gebruikt voor de LineageOS weer provider, andere Android versies moeten een app zoals \"Weather notification\" gebruiiken. Meer informatie is te vinden in de LikeApp wiki.</string>
+    <string name="menuitem_worldclock">Wereld Klok</string>
+    <string name="error_background_service_reason_truncated">Het starten van de achtergrondservice is mislukt omdat…</string>
+    <string name="error_background_service_reason">Het starten van de achtergronddienst is mislukt vanwege een uitzondering. Fout:</string>
+    <string name="error_background_service">Kan de achtergrondservice niet starten</string>
+    <string name="error_version_check_extreme_caution">LET OP: Fout bij het controleren van versie-informatie! Je moet niet doorgaan! Zag versie naam \"% s\"</string>
+    <string name="permission_granting_mandatory">Al deze toestemmingen zijn vereist en er kan instabiliteit ontstaan als ze niet worden verleend</string>
+    <string name="menuitem_stress">Spanning</string>
+    <string name="menuitem_cycles">Cycli</string>
+    <string name="menuitem_breathing">Ademhaling</string>
+    <string name="devicetype_miband5">Mi Band 5</string>
+    <string name="fw_upgrade_notice_miband5">U staat op het punt om de %s-firmware op je Mi Band 5 te installeren.
+\n
+\nZorg ervoor dat u het .fw bestand installeert, en daarna het .res bestand. Uw band wordt opnieuw opgestart na het installeren van het .fw-bestand.
+\n
+\nOpmerking: U hoeft .res niet te installeren als het precies hetzelfde is als het eerder geïnstalleerde .res.
+\n
+\nGA VERDER OP EIGEN RISICO!</string>
+    <string name="devicetype_tlw64">TLW64</string>
+    <string name="error_location_enabled_mandatory">Locatie moet zijn ingeschakeld om naar apparaten te scannen</string>
+    <string name="ignore_bonded_devices_description">Als u deze optie inschakelt, worden apparaten genegeerd die bij het scannen al zijn gekoppeld</string>
+    <string name="ignore_bonded_devices">Negeer gekoppelde apparaten</string>
+    <string name="error_retrieving_devices_database">Fout bij het ophalen van apparaten uit de database</string>
+    <string name="error_setting_alias">Fout bij instellen van alias:</string>
+    <string name="error_exporting_device_preferences">Fout bij het exporteren van apparaatspecifieke voorkeuren</string>
+    <string name="pref_check_permission_status_summary">Controleer en vraag om ontbrekende machtigingen, zelfs als ze mogelijk niet direct nodig zijn. Schakel dit alleen uit als uw apparaten geen van deze functies ondersteunen. Het niet verlenen van een toestemming kan problemen veroorzaken!</string>
+    <string name="pref_check_permission_status">Machtigingsstatus controleren</string>
+    <string name="device_requires_key">SLEUTEL VEREIST</string>
+    <string name="device_is_currently_bonded">REEDS GEKOPPELD</string>
+    <string name="companiondevice_pairing_details">Schakelt de nieuwe CompanionDevice API-ondersteuning in (heeft alleen een effect op Android 8 of hoger), wat de betrouwbaarheid verhoogt als de service op de achtergrond opnieuw moet worden opgestart, vereist opnieuw koppelen met LikeApp om effect te hebben</string>
+    <string name="companiondevice_pairing">CompanionApparaat koppelen</string>
+    <string name="require_location_provider">Locatie moet ingeschakeld zijn</string>
 </resources>

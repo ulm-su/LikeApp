@@ -17,6 +17,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package org.likeapp.likeapp.util;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -25,7 +27,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import androidx.annotation.NonNull;
 import org.likeapp.likeapp.GBApplication;
 import org.likeapp.likeapp.database.DBHandler;
 import org.likeapp.likeapp.database.DBHelper;
@@ -81,7 +82,7 @@ public class AlarmUtils {
      * @param sun whether the alarm shall repeat every Sunday
      * @return the created repetition mask
      */
-    public static int createRepetitionMassk(boolean mon, boolean tue, boolean wed, boolean thu, boolean fri, boolean sat, boolean sun) {
+    public static int createRepetitionMask(boolean mon, boolean tue, boolean wed, boolean thu, boolean fri, boolean sat, boolean sun) {
         int repetitionMask = (mon ? Alarm.ALARM_MON : 0) |
                 (tue ? Alarm.ALARM_TUE : 0) |
                 (wed ? Alarm.ALARM_WED : 0) |

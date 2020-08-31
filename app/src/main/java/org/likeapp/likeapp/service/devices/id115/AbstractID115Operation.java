@@ -30,8 +30,8 @@ import org.likeapp.likeapp.service.devices.miband.operations.OperationStatus;
 import org.likeapp.likeapp.util.GB;
 
 public abstract class AbstractID115Operation extends AbstractBTLEOperation<ID115Support> {
-    protected BluetoothGattCharacteristic controlCharacteristic = null;
-    protected BluetoothGattCharacteristic notifyCharacteristic = null;
+    protected BluetoothGattCharacteristic controlCharacteristic;
+    protected BluetoothGattCharacteristic notifyCharacteristic;
 
     protected AbstractID115Operation(ID115Support support) {
         super(support);

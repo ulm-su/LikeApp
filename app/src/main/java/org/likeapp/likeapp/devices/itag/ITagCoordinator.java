@@ -17,9 +17,12 @@
 */
 package org.likeapp.likeapp.devices.itag;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.bluetooth.le.ScanFilter;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
 
@@ -33,8 +36,10 @@ import org.likeapp.likeapp.impl.GBDeviceCandidate;
 import org.likeapp.likeapp.model.ActivitySample;
 import org.likeapp.likeapp.model.DeviceType;
 
-public class ITagCoordinator extends AbstractDeviceCoordinator
-{
+import java.util.Collection;
+import java.util.Collections;
+
+public class ITagCoordinator extends AbstractDeviceCoordinator {
     @Override
     @NonNull
     public DeviceType getSupportedType(GBDeviceCandidate candidate) {
@@ -43,6 +48,27 @@ public class ITagCoordinator extends AbstractDeviceCoordinator
             return DeviceType.ITAG;
         }
         return DeviceType.UNKNOWN;
+    }
+
+    @Override
+    public int getBondingStyle() {
+        // Some iTag devices do not support bonding but some do
+        return BONDING_STYLE_ASK;
+    }
+
+    @NonNull
+    @Override
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public Collection<? extends ScanFilter> createBLEScanFilters() {
+        ScanFilter filter = new ScanFilter.Builder()
+                .setDeviceName("iTag")
+                .setDeviceName("iTAG")
+                .setDeviceName("ITAG")
+                .setDeviceName("ITag")
+                .setDeviceName("Itag")
+                .setDeviceName("itag")
+                .build();
+        return Collections.singletonList(filter);
     }
 
     @Override

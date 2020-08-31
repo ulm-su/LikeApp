@@ -124,7 +124,7 @@ public class QHybridSupport extends QHybridBaseSupport {
     private final BroadcastReceiver commandReceiver;
     private final BroadcastReceiver globalCommandReceiver;
 
-    private PackageConfigHelper helper;
+    private final PackageConfigHelper helper;
 
     public volatile boolean searchDevice = false;
 
@@ -259,8 +259,10 @@ public class QHybridSupport extends QHybridBaseSupport {
         globalCommandReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if(watchAdapter == null) return;
-                //noinspection SwitchStatementWithTooFewBranches
+                if (watchAdapter == null) {
+                    return;
+                }
+
                 switch (intent.getAction()) {
                     case QHYBRID_ACTION_SET_ACTIVITY_HAND: {
                         try {

@@ -22,6 +22,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,15 +39,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import de.greenrobot.dao.Property;
 import de.greenrobot.dao.query.Query;
 import de.greenrobot.dao.query.QueryBuilder;
 import de.greenrobot.dao.query.WhereCondition;
 import org.likeapp.likeapp.GBApplication;
 import org.likeapp.likeapp.devices.DeviceCoordinator;
-import org.likeapp.likeapp.devices.miband.MiBandConst;
 import org.likeapp.likeapp.entities.ActivityDescription;
 import org.likeapp.likeapp.entities.ActivityDescriptionDao;
 import org.likeapp.likeapp.entities.Alarm;
@@ -68,9 +68,8 @@ import org.likeapp.likeapp.util.FileUtils;
 import org.likeapp.likeapp.util.Prefs;
 import org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst;
 
-
 /**
- * Provides utiliy access to some common entities, so you won't need to use
+ * Provides utility access to some common entities, so you won't need to use
  * their DAO classes.
  * <p/>
  * Maybe this code should actually be in the DAO classes themselves, but then

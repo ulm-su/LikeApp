@@ -70,7 +70,6 @@ import org.likeapp.likeapp.service.devices.lenovo.operations.InitOperation;
 import org.likeapp.likeapp.util.AlarmUtils;
 import org.likeapp.likeapp.util.ArrayUtils;
 import org.likeapp.likeapp.util.GB;
-import org.likeapp.likeapp.util.Prefs;
 import org.likeapp.likeapp.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,8 +89,6 @@ import java.util.TimeZone;
 import java.util.UUID;
 
 public class WatchXPlusDeviceSupport extends AbstractBTLEDeviceSupport {
-    private static final Prefs prefs  = GBApplication.getPrefs();
-
     private boolean needsAuth;
     private int sequenceNumber = 0;
     private boolean isCalibrationActive = false;
@@ -190,12 +187,15 @@ public class WatchXPlusDeviceSupport extends AbstractBTLEDeviceSupport {
     */
     private void cancelNotification() {
         try {
+            if (getQueue() == null) {
+                LOG.warn("Unable to cancel notification, queue is null");
+                return;
+            }
             getQueue().clear();
             TransactionBuilder builder = performInitialized("cancelNotification");
-            byte[] bArr;
             int mPosition = 1024;   // all positions
             int mMessageId = 0xFF;  // all messages
-            bArr = new byte[6];
+            byte[] bArr = new byte[6];
             bArr[0] = (byte) ((int) (mPosition >> 24));
             bArr[1] = (byte) ((int) (mPosition >> 16));
             bArr[2] = (byte) ((int) (mPosition >> 8));
@@ -487,7 +487,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLEDeviceSupport {
         }
     }
 
-    // set only digytal time
+    // set only digital time
     private void setTime(Calendar calendar) {
         try {
             TransactionBuilder builder = performInitialized("setTime");
@@ -636,7 +636,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLEDeviceSupport {
             case CallSpec.CALL_INCOMING:
                 isRinging = true;
                 remainingRepeats = repeatCount;
-                LOG.info(" Incomming call ");
+                LOG.info(" Incoming call ");
                 if (("Phone".equals(callSpec.name)) || (callSpec.name.contains("ropusn")) || (callSpec.name.contains("issed"))) {
                     // do nothing for notifications without caller name, e.g. system call event
                 } else {
@@ -1170,25 +1170,29 @@ public class WatchXPlusDeviceSupport extends AbstractBTLEDeviceSupport {
                     buildCommand(WatchXPlusConstants.CMD_SET_UNITS,
                             WatchXPlusConstants.READ_VALUE));
             builder.queue(getQueue());
-        }   catch (IOException e) {
+        } catch (IOException e) {
             LOG.warn(" Unable to get units ", e);
         }
-     return this;
+        return this;
     }
 
-    /** set watch units
-     *
+    /**
+     * Set watch units
      */
     private void setUnitsSettings() {
         int units = 0;
-        if (getContext().getString(R.string.p_unit_metric).equals(units)) {
-            LOG.info(" Changed units: metric ");
-        } else {
+        String unitsPref = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
+
+        if (unitsPref.equals(GBApplication.getContext().getString(R.string.p_unit_imperial))) {
+            units = 1;
             LOG.info(" Changed units: imperial ");
+        } else {
+            LOG.info(" Changed units: metric ");
         }
+
         byte[] bArr = new byte[3];
         bArr[0] = (byte) units; // metric - 0/imperial - 1
-        bArr[1] = (byte) 0x00;  //time unit 12/24h (there are separate command for this)
+        bArr[1] = (byte) 0x00;  // time unit 12/24h (there is a separate command for this)
         bArr[2] = (byte) 0x00;  // temperature unit (do nothing)
         try {
             TransactionBuilder builder = performInitialized("setUnits");

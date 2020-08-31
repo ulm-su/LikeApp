@@ -25,24 +25,19 @@ import org.likeapp.likeapp.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class AboutActivity extends AbstractGBActivity {
     private static final Logger LOG = LoggerFactory.getLogger(AboutActivity.class);
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        TextView link1 = (TextView) findViewById(R.id.links1);
+        TextView link1 = findViewById(R.id.links1);
         link1.setMovementMethod(LinkMovementMethod.getInstance());
-        TextView link2 = (TextView) findViewById(R.id.links2);
+        TextView link2 = findViewById(R.id.links2);
         link2.setMovementMethod(LinkMovementMethod.getInstance());
-        TextView link3 = (TextView) findViewById(R.id.links3);
+        TextView link3 = findViewById(R.id.links3);
         link3.setMovementMethod(LinkMovementMethod.getInstance());
 
     }
-
-
 }

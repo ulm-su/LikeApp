@@ -157,6 +157,14 @@ import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPrefer
 import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_SYNC_CALENDAR;
 import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_TIMEFORMAT;
 import static org.likeapp.likeapp.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_WEARLOCATION;
+import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_DEVICE_ACTION_FELL_SLEEP_BROADCAST;
+import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_DEVICE_ACTION_FELL_SLEEP_SELECTION;
+import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_DEVICE_ACTION_SELECTION_BROADCAST;
+import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_DEVICE_ACTION_SELECTION_OFF;
+import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_DEVICE_ACTION_START_NON_WEAR_BROADCAST;
+import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_DEVICE_ACTION_START_NON_WEAR_SELECTION;
+import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_DEVICE_ACTION_WOKE_UP_BROADCAST;
+import static org.likeapp.likeapp.devices.huami.HuamiConst.PREF_DEVICE_ACTION_WOKE_UP_SELECTION;
 import static org.likeapp.likeapp.devices.huami.HuamiService.AUTH_RESPONSE;
 import static org.likeapp.likeapp.devices.huami.HuamiService.AUTH_SEND_ENCRYPTED_AUTH_NUMBER;
 import static org.likeapp.likeapp.devices.miband.MiBandConst.DEFAULT_VALUE_VIBRATION_COUNT;
@@ -217,6 +225,7 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
     private int mMTU = 23;
     private final StringBuilder appName = new StringBuilder ();
     private final ByteArrayOutputStream appData = new ByteArrayOutputStream ();
+    protected int mActivitySampleSize = 4;
 
     public HuamiSupport() {
         this(LOG);
@@ -350,7 +359,7 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
     @Override
     public boolean connectFirstTime() {
         needsAuth = true;
-        return super.connect();
+        return connect();
     }
 
     private HuamiSupport sendDefaultNotification(TransactionBuilder builder, SimpleNotification simpleNotification, short repeat, BtLEAction extraAction) {
@@ -1206,8 +1215,28 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
         }
     }
 
+    private void handleDeviceAction(String deviceAction, String message) {
+        if (deviceAction.equals(PREF_DEVICE_ACTION_SELECTION_OFF)) {
+            return;
+        }
+        if (deviceAction.equals(PREF_DEVICE_ACTION_SELECTION_BROADCAST)) {
+            sendSystemBroadcast(message);
+        }else {
+            handleMediaButton(deviceAction);
+        }
+    }
+
+    private void sendSystemBroadcast(String message){
+        if (message !=null) {
+            Intent in = new Intent();
+            in.setAction(message);
+            LOG.info("Sending broadcast " + message);
+            this.getContext().getApplicationContext().sendBroadcast(in);
+        }
+    }
+
     private void handleMediaButton(String MediaAction) {
-        if (MediaAction.equals("UNKNOWN")) {
+        if (MediaAction.equals(PREF_DEVICE_ACTION_SELECTION_OFF)) {
             return;
         }
         GBDeviceEventMusicControl deviceEventMusicControl = new GBDeviceEventMusicControl();
@@ -1268,6 +1297,7 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
                 break;
             case HuamiDeviceEvent.START_NONWEAR:
                 LOG.info("non-wear start detected");
+                processDeviceEvent(HuamiDeviceEvent.START_NONWEAR);
                 break;
             case HuamiDeviceEvent.ALARM_TOGGLED:
                 LOG.info("An alarm was toggled");
@@ -1278,10 +1308,12 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
             case HuamiDeviceEvent.FELL_ASLEEP:
                 LOG.info("Fell asleep");
                 handleFellAsleep ();
+                processDeviceEvent(HuamiDeviceEvent.FELL_ASLEEP);
                 break;
             case HuamiDeviceEvent.WOKE_UP:
                 LOG.info("Woke up");
                 handleWokeUp ();
+                processDeviceEvent(HuamiDeviceEvent.WOKE_UP);
                 break;
             case HuamiDeviceEvent.STEPSGOAL_REACHED:
                 LOG.info("Steps goal reached");
@@ -1475,6 +1507,10 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
                 if (!prefs.getBoolean(PREF_ALLOW_HIGH_MTU, false)) {
                     break;
                 }
+                if (mtu < 23) {
+                    LOG.error("Device announced unreasonable low MTU of " + mtu + ", ignoring");
+                    break;
+                }
                 mMTU = mtu;
                 /*
                  * not really sure if this would make sense, is this event already a proof of a successful MTU
@@ -1549,6 +1585,37 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
         } catch (Exception ex) {
             LOG.error("Error sending current weather", ex);
         }
+    }
+
+    private void processDeviceEvent(int event){
+        LOG.debug("Handling device event: " + event);
+        Prefs prefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()));
+        String deviceActionBroadcastMessage=null;
+
+        switch (event) {
+            case HuamiDeviceEvent.WOKE_UP:
+                String wakeupAction = prefs.getString(PREF_DEVICE_ACTION_WOKE_UP_SELECTION,PREF_DEVICE_ACTION_SELECTION_OFF);
+                if (wakeupAction.equals(PREF_DEVICE_ACTION_SELECTION_OFF)) return;
+                deviceActionBroadcastMessage= prefs.getString(PREF_DEVICE_ACTION_WOKE_UP_BROADCAST,
+                        this.getContext().getString(R.string.prefs_events_forwarding_wokeup_broadcast_default_value));
+                handleDeviceAction(wakeupAction, deviceActionBroadcastMessage);
+                break;
+            case HuamiDeviceEvent.FELL_ASLEEP:
+                String fellsleepAction = prefs.getString(PREF_DEVICE_ACTION_FELL_SLEEP_SELECTION,PREF_DEVICE_ACTION_SELECTION_OFF);
+                if (fellsleepAction.equals(PREF_DEVICE_ACTION_SELECTION_OFF)) return;
+                deviceActionBroadcastMessage= prefs.getString(PREF_DEVICE_ACTION_FELL_SLEEP_BROADCAST,
+                        this.getContext().getString(R.string.prefs_events_forwarding_fellsleep_broadcast_default_value));
+                handleDeviceAction(fellsleepAction, deviceActionBroadcastMessage);
+                break;
+            case HuamiDeviceEvent.START_NONWEAR:
+                String nonwearAction = prefs.getString(PREF_DEVICE_ACTION_START_NON_WEAR_SELECTION,PREF_DEVICE_ACTION_SELECTION_OFF);
+                if (nonwearAction.equals(PREF_DEVICE_ACTION_SELECTION_OFF)) return;
+                deviceActionBroadcastMessage= prefs.getString(PREF_DEVICE_ACTION_START_NON_WEAR_BROADCAST,
+                        this.getContext().getString(R.string.prefs_events_forwarding_startnonwear_broadcast_default_value));
+                handleDeviceAction(nonwearAction, deviceActionBroadcastMessage);
+                break;
+        }
+
     }
 
     private void handleLongButtonEvent(){
@@ -1968,7 +2035,7 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
         // TODO: react on 0x10, 0x02, 0x01 on notification (success)
     }
 
-    private void handleDeviceInfo(org.likeapp.likeapp.service.btle.profiles.deviceinfo.DeviceInfo info) {
+    protected void handleDeviceInfo(org.likeapp.likeapp.service.btle.profiles.deviceinfo.DeviceInfo info) {
 //        if (getDeviceInfo().supportsHeartrate()) {
 //            getDevice().addDeviceInfo(new GenericItem(
 //                    getContext().getString(R.string.DEVINFO_HR_VER),
@@ -2907,5 +2974,9 @@ public class HuamiSupport extends AbstractBTLEDeviceSupport {
 
     public int getMTU() {
         return mMTU;
+    }
+
+    public int getActivitySampleSize() {
+        return mActivitySampleSize;
     }
 }

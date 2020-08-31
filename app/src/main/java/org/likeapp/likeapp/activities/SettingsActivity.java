@@ -49,8 +49,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import org.likeapp.likeapp.BuildConfig;
 import org.likeapp.likeapp.GBApplication;
@@ -402,11 +404,17 @@ public class SettingsActivity extends AbstractSettingsActivity {
         newValues[0] = "default";
 
         int i = 1;
+        Set<String> existingNames = new HashSet<>();
         for (ResolveInfo resolveInfo : mediaReceivers) {
-            newEntries[i] = resolveInfo.activityInfo.loadLabel(pm);
+            newEntries[i] = resolveInfo.activityInfo.loadLabel(pm) + " (" + resolveInfo.activityInfo.packageName + ")";
+            if (existingNames.contains(newEntries[i].toString().trim())) {
+                newEntries[i] = resolveInfo.activityInfo.loadLabel(pm) + " (" + resolveInfo.activityInfo.name + ")";
+            } else {
+                existingNames.add(newEntries[i].toString().trim());
+            }
             newValues[i] = resolveInfo.activityInfo.packageName;
 
-            if ("PSMediaButtonReceiver".contentEquals (newEntries[i]))
+            if (newEntries[i] != null && newEntries[i].toString ().startsWith ("PSMediaButtonReceiver"))
             {
                 newEntries[i] = "Poweramp";
             }

@@ -33,7 +33,8 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
-import org.likeapp.likeapp.service.receivers.AutoConnectIntervalReceiver;
+import androidx.annotation.Nullable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +46,6 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import androidx.annotation.Nullable;
 import org.likeapp.likeapp.GBApplication;
 import org.likeapp.likeapp.Logging;
 import org.likeapp.likeapp.impl.GBDevice;
@@ -383,9 +383,7 @@ public final class BtLEQueue {
         if (!transaction.isEmpty()) {
             List<AbstractTransaction> tail = new ArrayList<>(mTransactions.size() + 2);
             //mTransactions.drainTo(tail);
-            for( AbstractTransaction t : mTransactions) {
-                tail.add(t);
-            }
+            tail.addAll(mTransactions);
             mTransactions.clear();
             mTransactions.add(transaction);
             mTransactions.addAll(tail);

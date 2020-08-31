@@ -17,13 +17,17 @@
 package org.likeapp.likeapp.adapter;
 
 import android.content.Context;
+import android.text.format.DateUtils;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import de.greenrobot.dao.query.QueryBuilder;
 import org.likeapp.likeapp.GBApplication;
+import org.likeapp.likeapp.R;
 import org.likeapp.likeapp.database.DBHandler;
 import org.likeapp.likeapp.database.DBHelper;
 import org.likeapp.likeapp.entities.BaseActivitySummary;
@@ -36,10 +40,18 @@ import org.likeapp.likeapp.util.GB;
 
 public class ActivitySummariesAdapter extends AbstractItemAdapter<BaseActivitySummary> {
     private final GBDevice device;
+    private int activityKindFilter;
+    long dateFromFilter=0;
+    long dateToFilter=0;
+    String nameContainsFilter;
 
-    public ActivitySummariesAdapter(Context context, GBDevice device) {
+    public ActivitySummariesAdapter(Context context, GBDevice device, int activityKindFilter, long dateFromFilter, long dateToFilter, String nameContainsFilter) {
         super(context);
         this.device = device;
+        this.activityKindFilter = activityKindFilter;
+        this.dateFromFilter=dateFromFilter;
+        this.dateToFilter=dateToFilter;
+        this.nameContainsFilter=nameContainsFilter;
         loadItems();
     }
 
@@ -50,7 +62,28 @@ public class ActivitySummariesAdapter extends AbstractItemAdapter<BaseActivitySu
             Device dbDevice = DBHelper.findDevice(device, handler.getDaoSession());
 
             QueryBuilder<BaseActivitySummary> qb = summaryDao.queryBuilder();
-            qb.where(BaseActivitySummaryDao.Properties.DeviceId.eq(dbDevice.getId())).orderDesc(BaseActivitySummaryDao.Properties.StartTime);
+            qb.where(
+                    BaseActivitySummaryDao.Properties.DeviceId.eq(
+                            dbDevice.getId())).orderDesc(BaseActivitySummaryDao.Properties.StartTime);
+
+            if (activityKindFilter !=0) {
+                qb.where(
+                        BaseActivitySummaryDao.Properties.ActivityKind.eq(activityKindFilter));
+            }
+
+            if (dateFromFilter !=0) {
+                qb.where(
+                        BaseActivitySummaryDao.Properties.StartTime.gt(new Date(dateFromFilter)));
+            }
+            if (dateToFilter !=0) {
+                qb.where(
+                        BaseActivitySummaryDao.Properties.EndTime.lt(new Date(dateToFilter)));
+            }
+            if (nameContainsFilter !=null && nameContainsFilter.length() > 0) {
+                qb.where(
+                        BaseActivitySummaryDao.Properties.Name.like("%" + nameContainsFilter + "%"));
+            }
+
             List<BaseActivitySummary> allSummaries = qb.build().list();
             setItems(allSummaries, true);
         } catch (Exception e) {
@@ -58,23 +91,60 @@ public class ActivitySummariesAdapter extends AbstractItemAdapter<BaseActivitySu
         }
     }
 
+    public void setActivityKindFilter(int filter){
+        this.activityKindFilter=filter;
+    }
+    public void setDateFromFilter(long date){
+        this.dateFromFilter=date;
+    }
+    public void setDateToFilter(long date){
+        this.dateToFilter=date;
+    }
+    public void setNameContainsFilter(String name){
+        this.nameContainsFilter=name;
+    }
+
+
     @Override
     protected String getName(BaseActivitySummary item) {
         String name = item.getName();
-        if (name != null && name.length() > 0) {
-            return name;
+        if (name == null) name="";
+        String gpxTrack = item.getGpxTrack();
+        String hasGps = " ";
+        if (gpxTrack != null) {
+            hasGps=" 🛰️ ";
         }
-
-        Date startTime = item.getStartTime();
-        if (startTime != null) {
-            return DateTimeUtils.formatDateTime(startTime);
-        }
-        return "Unknown activity";
+        return ActivityKind.asString(item.getActivityKind(), getContext())+ hasGps + name;
     }
 
     @Override
     protected String getDetails(BaseActivitySummary item) {
-        return ActivityKind.asString(item.getActivityKind(), getContext());
+        Date startTime = item.getStartTime();
+
+        if (startTime != null) {
+            String activityDay;
+            String activityTime;
+            String activityDayTime;
+            Long duration = item.getEndTime().getTime() - item.getStartTime().getTime();
+
+            if (DateUtils.isToday(startTime.getTime())) {
+                activityDay = getContext().getString(R.string.activity_summary_today);
+            } else if (DateTimeUtils.isYesterday(startTime)) {
+                activityDay = getContext().getString(R.string.activity_summary_yesterday);
+            } else {
+                activityDay = DateTimeUtils.formatDate(startTime);
+            }
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(startTime);
+            int hours = calendar.get(Calendar.HOUR_OF_DAY);
+            int minutes = calendar.get(Calendar.MINUTE);
+
+            activityTime = DateTimeUtils.formatTime(hours, minutes);
+            activityDayTime = String.format("%s, %s", activityDay, activityTime);
+
+            return activityDayTime + " (" + DateTimeUtils.formatDurationHoursMinutes(duration, TimeUnit.MILLISECONDS) + ")";
+        }
+        return "Unknown time";
     }
 
     @Override

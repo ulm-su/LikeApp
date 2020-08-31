@@ -27,9 +27,9 @@
     <string name="hr_appname_stopwatch">Stopwatch</string>
     <string name="hr_appname_workout">Workout</string>
     <string name="hr_appname_wellness">Wellness</string>
-    <string name="pref_summary_custom_deviceicon">Show a device specific Android notification icon instead the Gadgetbridge icon when connected</string>
+    <string name="pref_summary_custom_deviceicon">Show a device specific Android notification icon instead the LikeApp icon when connected</string>
     <string name="pref_title_custom_deviceicon">Show device specific notification icon</string>
-    <string name="notification_channel_high_priority_name">Gadgetbridge notifications high priority</string>
+    <string name="notification_channel_high_priority_name">LikeApp notifications high priority</string>
     <string name="find_my_phone_notification">Find my phone</string>
     <string name="pref_summary_force_white_color_scheme">Useful if you your watch has dark hands</string>
     <string name="find_lost_device_you_found_it">Found it!</string>
@@ -137,7 +137,7 @@
     <string name="pref_summary_use_custom_font">Enable this if your device has a custom font firmware for emoji support</string>
     <string name="pref_title_use_custom_font">Use custom font</string>
     <string name="pref_title_expose_hr">3rd party realtime HR access</string>
-    <string name="pref_summary_expose_hr">Allows other apps to access HR data in realtime while Gadgetbridge is connected</string>
+    <string name="pref_summary_expose_hr">Allows other apps to access HR data in realtime while LikeApp is connected</string>
     <string name="menuitem_nfc">NFC</string>
     <string name="devicetype_mijia_lywsd02">Mijia Smart Clock</string>
     <string name="weeksleepchart_sleep_a_month">Sleep per month</string>
@@ -264,7 +264,7 @@
     <string name="devicetype_roidmi">Roidmi</string>
     <string name="controlcenter_change_fm_frequency">Change FM Frequency</string>
     <string name="warning">Warning!</string>
-    <string name="share_log_warning">Please keep in mind Gadgetbridge logs files that may contain lots of personal info, including but not limited to health data, unique identifiers (such as a device\'s MAC address), music preferences, etc. Consider editing the file and removing this info before sending the file to a public issue report.</string>
+    <string name="share_log_warning">Please keep in mind LikeApp logs files that may contain lots of personal info, including but not limited to health data, unique identifiers (such as a device\'s MAC address), music preferences, etc. Consider editing the file and removing this info before sending the file to a public issue report.</string>
     <string name="share_log">Share log</string>
     <string name="ok">OK</string>
     <string name="mi3_night_mode_sunset">At sunset</string>
@@ -360,7 +360,7 @@
     <string name="controlcenter_start_activity_tracks">Your activity tracks</string>
     <string name="on">On</string>
     <string name="devicetype_xwatch">XWatch</string>
-    <string name="notification_channel_name">Gadgetbridge notifications</string>
+    <string name="notification_channel_name">LikeApp notifications</string>
     <string name="spanish">Spanish</string>
     <string name="choose_auto_export_location">Choose export location</string>
     <string name="notif_export_failed_title">Export database failed! Please check your settings.</string>
@@ -562,7 +562,7 @@
     <string name="title_activity_notification_filter">Notification Filter</string>
     <string name="appwidget_setting_alarm">Setting alarm for %1$02d:%2$02d</string>
     <string name="devicetype_casiogb6900">Casio GB-6900</string>
-    <string name="debugactivity_really_factoryreset">Doing a factory reset will delete all data from the connected device (if supported). Xiaomi/Huami devices also change Bluetooth MAC address, so they appear as a new devices to Gadgetbridge.</string>
+    <string name="debugactivity_really_factoryreset">Doing a factory reset will delete all data from the connected device (if supported). Xiaomi/Huami devices also change Bluetooth MAC address, so they appear as a new devices to LikeApp.</string>
     <string name="debugactivity_really_factoryreset_title">Really factory reset\?</string>
     <string name="live_activity_max_heart_rate">Current / Max heart rate: %1$d / %2$d</string>
     <string name="no_data">No data</string>
@@ -646,7 +646,7 @@
     <string name="miband_prefs_alias">Name/Alias</string>
     <string name="candidate_item_device_image">Device image</string>
     <string name="discovery_note">Note:</string>
-    <string name="discovery_connected_devices_hint">Make your device discoverable. Currently connected devices will likely not be discovered. Activate location (e.g. GPS) on Android 6+. Disable Privacy Guard for Gadgetbridge, because it may crash and reboot your phone. If no device is found after a few minutes, try again after rebooting your mobile device.</string>
+    <string name="discovery_connected_devices_hint">Make your device discoverable. Currently connected devices will likely not be discovered. Activate location (e.g. GPS) on Android 6+. Disable Privacy Guard for LikeApp, because it may crash and reboot your phone. If no device is found after a few minutes, try again after rebooting your mobile device.</string>
     <string name="appinstaller_install">Install</string>
     <string name="miband_pairing_tap_hint">When your Mi Band vibrates and blinks, tap it a few times in a row.</string>
     <string name="miband_pairing_using_dummy_userdata">No valid user data given, using dummy user data for now.</string>
@@ -684,7 +684,7 @@
     <string name="installation_successful">Installed</string>
     <string name="installation_failed_">Installation failed</string>
     <string name="installing_binary_d_d">Installing binary %1$d/%2$d</string>
-    <string name="gadgetbridge_running">Gadgetbridge running</string>
+    <string name="gadgetbridge_running">LikeApp running</string>
     <string name="cannot_connect_bt_address_invalid_">Cannot connect. Bluetooth address invalid\?</string>
     <string name="tap_a_device_to_connect">Tap a device to connect</string>
     <string name="tap_connected_device_for_vibration">Tap connected device for vibration</string>
@@ -692,7 +692,7 @@
     <string name="tap_connected_device_for_app_mananger">Tap connected device for App manager</string>
     <string name="bluetooth_is_disabled_">Bluetooth is disabled.</string>
     <string name="bluetooth_is_not_supported_">Bluetooth is not supported.</string>
-    <string name="this_is_a_test_notification_from_gadgetbridge">This is a test notification from Gadgetbridge</string>
+    <string name="this_is_a_test_notification_from_gadgetbridge">This is a test notification from LikeApp</string>
     <string name="test_notification">Test notification</string>
     <string name="test">Test</string>
     <string name="_unknown_">(unknown)</string>
@@ -708,7 +708,7 @@
     <string name="pref_title_pebble_reconnect_attempts">Reconnection attempts</string>
     <string name="pref_summary_pebble_always_ack_pebblekit">Will cause messages that are sent to external 3rd party apps to be acknowledged always and immediately</string>
     <string name="pref_title_pebble_always_ack_pebblekit">Prematurely ACK PebbleKit</string>
-    <string name="pref_summary_pebble_enable_applogs">Will cause logs from watch apps to be logged by Gadgetbridge (requires reconnect)</string>
+    <string name="pref_summary_pebble_enable_applogs">Will cause logs from watch apps to be logged by LikeApp (requires reconnect)</string>
     <string name="pref_title_pebble_enable_applogs">Enable watch app logging</string>
     <string name="pref_summary_pebble_mtu_limit">If your Pebble 2/Pebble LE does not work as expected, try this setting to limit the MTU (valid range 20–512)</string>
     <string name="pref_title_pebble_mtu_limit">Pebble 2/LE GATT MTU limit</string>
@@ -779,24 +779,24 @@
     <string name="pref_header_notifications">Notifications</string>
     <string name="pref_summary_minimize_priority_on">The icon in the status bar and the notification in the lockscreen are hidden</string>
     <string name="pref_summary_minimize_priority_off">The icon in the status bar and the notification in the lockscreen are shown</string>
-    <string name="pref_title_minimize_priority">Hide the Gadgetbridge notification</string>
+    <string name="pref_title_minimize_priority">Hide the LikeApp notification</string>
     <string name="pref_title_language">Language</string>
     <string name="pref_theme_dark">Dark</string>
     <string name="pref_theme_light">Light</string>
     <string name="pref_title_theme">Theme</string>
-    <string name="pref_summary_datetime_syctimeonconnect">Sync time to Gadgetbridge device when connecting, and when time or time zone changes on Android device</string>
+    <string name="pref_summary_datetime_syctimeonconnect">Sync time to LikeApp device when connecting, and when time or time zone changes on Android device</string>
     <string name="pref_title_datetime_syctimeonconnect">Sync time</string>
     <string name="pref_header_datetime">Date and Time</string>
     <string name="pref_default">Default</string>
     <string name="pref_title_general_autostartonboot">Start automatically</string>
-    <string name="pref_title_general_autoconnectonbluetooth">Connect to Gadgetbridge device when Bluetooth is turned on</string>
+    <string name="pref_title_general_autoconnectonbluetooth">Connect to LikeApp device when Bluetooth is turned on</string>
     <string name="pref_header_general">General settings</string>
     <string name="title_activity_settings">Settings</string>
-    <string name="miband_firmware_suggest_whitelist">If you still want to proceed and things continue to work properly afterwards, please tell the Gadgetbridge developers to whitelist the %s firmware version.</string>
-    <string name="miband_firmware_unknown_warning">This firmware is untested and may not be compatible with Gadgetbridge.
+    <string name="miband_firmware_suggest_whitelist">If you still want to proceed and things continue to work properly afterwards, please tell the LikeApp developers to whitelist the %s firmware version.</string>
+    <string name="miband_firmware_unknown_warning">This firmware is untested and may not be compatible with LikeApp.
 \n
 \nYou are DISCOURAGED from flashing it!</string>
-    <string name="miband_firmware_known">This firmware has been tested and is known to be compatible with Gadgetbridge.</string>
+    <string name="miband_firmware_known">This firmware has been tested and is known to be compatible with LikeApp.</string>
     <string name="dbmanagementactivity_import_data_title">Import Data\?</string>
     <string name="dbmanagementactivity_error_exporting_shared">Error exporting preference: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">Error exporting DB: %1$s</string>
